@@ -1,0 +1,13 @@
+.playlistImage{
+  height: 200px;
+  width: 200px;
+}
+
+.test{
+  display: inline-block;
+  width: 200px;
+}
+
+.title{
+  font-weight: bold;
+}
