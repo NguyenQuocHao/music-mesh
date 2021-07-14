@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import MusicPadList from '../components/MusicPadList'
 
 // TODO: Display tracks, artists, podcasts (using components)
 class Spotify extends React.Component {
@@ -11,28 +12,14 @@ class Spotify extends React.Component {
     // this.search = this.search.bind(this);
   }
 
-  test = () => {
-    this.setState({ date: new Date() });
-    console.log(this.state.date)
-  }
-
   search = () => {
-    // var self = this;
-    // console.log(this.state.date)
-    axios.get('http://localhost:8888/playlists')
+    axios.get('http://localhost:8888/featuredPlaylists')
       .then((response) => {
         // handle success
         console.log(response);
-        var test = response.data.playlists.items;
+        var test = response.data.playlists.playlists.items;
         console.log(test); 
-        var res = test.map((id) =>
-          <div>
-            <iframe src={"https://open.spotify.com/embed/playlist/"+id.id} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-          </div>);
-        console.log(res);
-        this.setState({ playlists: res });
-        console.log("state playlist: " + this.state.playlists);
-
+        this.setState({ playlists: test });
       })
       .catch(function (error) {
         // handle error
@@ -50,7 +37,7 @@ class Spotify extends React.Component {
             Search
           </button>
           <div>
-            {this.state.playlists}
+            <MusicPadList data={this.state.playlists}></MusicPadList>
           </div>
         </div>
       </div>
