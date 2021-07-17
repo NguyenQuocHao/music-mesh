@@ -1,6 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 import MusicPadList from '../components/MusicPadList'
+import Login from '../components/Login'
+import Dashboard from '../components/Dashboard'
+
+const code = new URLSearchParams(window.location.search).get('code')
 
 // TODO: Display tracks, artists, podcasts (using components)
 class Spotify extends React.Component {
@@ -8,16 +12,26 @@ class Spotify extends React.Component {
     super(props);
     this.state = {
       playlists: [],
+      isLoggedIn: false,
     };
     // this.search = this.search.bind(this);
   }
 
+  componentDidMount(){
+    if(code){
+      this.setState({isLoggedIn: true});
+    }
+    else{
+      this.setState({isLoggedIn: false});
+    }
+  }
+
   search = () => {
-    axios.get('http://localhost:8888/featuredPlaylists')
+    axios.get('http://localhost:8888/allPopPlaylists')
       .then((response) => {
         // handle success
         console.log(response);
-        var test = response.data.playlists.playlists.items;
+        var test = response.data.data.playlists.items;
         console.log(test); 
         this.setState({ playlists: test });
       })
@@ -28,6 +42,15 @@ class Spotify extends React.Component {
   }
 
   render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let content;
+    if(isLoggedIn){
+      content = <Dashboard code={code}/>
+    }
+    else{
+      content = <Login/>
+    }
+
     return (
       <div>
         Spotify
@@ -37,7 +60,10 @@ class Spotify extends React.Component {
             Search
           </button>
           <div>
-            <MusicPadList data={this.state.playlists}></MusicPadList>
+            {/* <MusicPadList data={this.state.playlists}></MusicPadList> */}
+            {/* <Login/>
+            <Dashboard code={code}/> */}
+            {content}
           </div>
         </div>
       </div>
