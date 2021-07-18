@@ -35,4 +35,6 @@ export default function UserAuth(code) {
 
     return () => clearInterval(interval)
   }, [refreshToken, expiresIn])
+
+  return accessToken
 }
