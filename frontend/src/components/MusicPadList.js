@@ -12,7 +12,7 @@ export default class MusicPadList extends React.Component{
 
   render(){
     var res = this.props.data.map((item) =>
-      <a href={item.external_urls.spotify}><MusicPad className="list" image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad></a>);
+      <a href={item.external_urls.spotify}><MusicPad className="list" id={item.id} image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad></a>);
     return(
       <div>
         <h3>{this.props.title}</h3>
