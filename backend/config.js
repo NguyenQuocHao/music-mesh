@@ -18,7 +18,7 @@ module.exports = {
     token_uri: keys.web.token_uri,
     auth_provider_x509_cert_url: keys.web.auth_provider_x509_cert_url,
     client_secret: keys.web.client_secret,
-    redirect_uris: ["http://localhost:5000/oauth2callback"],
+    redirect_uris: [keys.web.redirect_uris[0]],
     scopes: ["https://www.googleapis.com/auth/youtube.readonly"]
   }
 };
