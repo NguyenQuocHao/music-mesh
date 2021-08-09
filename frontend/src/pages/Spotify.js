@@ -26,21 +26,6 @@ class Spotify extends React.Component {
     }
   }
 
-  search = () => {
-    axios.get('http://localhost:8888/allPopPlaylists')
-      .then((response) => {
-        // handle success
-        console.log(response);
-        var test = response.data.data.playlists.items;
-        console.log(test); 
-        this.setState({ playlists: test });
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-  }
-
   render() {
     const isLoggedIn = this.state.isLoggedIn;
     let content;
@@ -60,9 +45,6 @@ class Spotify extends React.Component {
             Search
           </button>
           <div>
-            {/* <MusicPadList data={this.state.playlists}></MusicPadList> */}
-            {/* <Login/>
-            <Dashboard code={code}/> */}
             {content}
           </div>
         </div>
