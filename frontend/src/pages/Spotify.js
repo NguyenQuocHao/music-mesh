@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import MusicPadList from '../components/MusicPadList'
 import Login from '../components/Login/Login'
-import Dashboard from '../components/Dashboard'
+import Dashboard from '../components/Dashboard/Dashboard'
 
 const code = new URLSearchParams(window.location.search).get('code')
 

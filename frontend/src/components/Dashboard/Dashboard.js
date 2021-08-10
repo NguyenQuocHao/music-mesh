@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import UseAuth from './useAuth'
-import MusicPadList from './MusicPadList'
+import UseAuth from '../useAuth'
+import MusicPadList from '../MusicPadList'
 import SpotifyWebApi from "spotify-web-api-node"
 
 const spotifyApi = new SpotifyWebApi({

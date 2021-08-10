@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Login2 from '../components/Login/Login2'
-import Dashboard2 from '../components/Dashboard2'
+import Dashboard2 from '../components/Dashboard/Dashboard2'
 
 const code = new URLSearchParams(window.location.search).get('code')
 
