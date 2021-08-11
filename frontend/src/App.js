@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import Youtube from './pages/Youtube'
 import Spotify from './pages/Spotify';
-import PlaylistPage from './components/PlaylistPage';
+import PlaylistPage from './components/Music/DisplayPage/PlaylistPage';
 
 function App() {
   return (
