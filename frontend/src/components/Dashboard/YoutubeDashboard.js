@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import UseAuth2 from '../Login/useAuth2'
+import YoutubeAuth from '../Login/YoutubeAuth'
 import axios from "axios"
 
-export default function Dashboard2({ code }) {
-  const accessToken = UseAuth2(code)
+export default function YoutubeDashboard({ code }) {
+  const accessToken = YoutubeAuth(code)
   const [popularSongs, setPopularSongs] = useState([])
 
   useEffect(() => {

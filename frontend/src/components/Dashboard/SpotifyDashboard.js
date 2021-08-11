@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import UseAuth from '../Login/useAuth'
+import SpotifyAuth from '../Login/SpotifyAuth'
 import MusicPadList from '../Music/MusicPad/MusicPadList'
 import SpotifyWebApi from "spotify-web-api-node"
 
@@ -7,8 +7,8 @@ const spotifyApi = new SpotifyWebApi({
   clientId: process.env.REACT_APP_CLIENT_ID,
 })
 
-export default function Dashboard({ code }) {
-  const accessToken = UseAuth(code)
+export default function SpotifyDashboard({ code }) {
+  const accessToken = SpotifyAuth(code)
   const playListLimit = 5
   const [userPlaylists, setUserPlaylists] = useState([])
   const [popPlaylists, setPopPlaylists] = useState([])

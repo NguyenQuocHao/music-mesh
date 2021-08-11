@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
-import Login from '../components/Login/Login'
-import Dashboard from '../components/Dashboard/Dashboard'
+import SpotifyLogin from '../components/Login/SpotifyLogin'
+import SpotifyDashboard from '../components/Dashboard/SpotifyDashboard'
 
 const code = new URLSearchParams(window.location.search).get('code')
 
@@ -29,10 +29,10 @@ class Spotify extends React.Component {
     const isLoggedIn = this.state.isLoggedIn;
     let content;
     if(isLoggedIn){
-      content = <Dashboard code={code}/>
+      content = <SpotifyDashboard code={code}/>
     }
     else{
-      content = <Login/>
+      content = <SpotifyLogin/>
     }
 
     return (
