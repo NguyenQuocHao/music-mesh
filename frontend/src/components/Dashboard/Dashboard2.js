@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import UseAuth2 from '../useAuth2'
+import UseAuth2 from '../Login/useAuth2'
 import axios from "axios"
 
 export default function Dashboard2({ code }) {
