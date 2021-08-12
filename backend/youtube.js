@@ -74,8 +74,6 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/popularSongs', function (req, res) {
-  console.log("Someone called me?")
-
   youtube.videos
     .list({
       auth: oauth2Client,
@@ -91,7 +89,24 @@ app.get('/popularSongs', function (req, res) {
     .catch(e => {
       console.log(e)
     });
-
 });
+
+app.get('/myPlaylists', (req, res) => {
+  youtube.playlists
+  .list({
+    auth: oauth2Client,
+    part: "snippet,contentDetails",
+    mine: true,
+    maxResults: 5
+  })
+  .then(data => {
+    res.send(data.data.items)
+  })
+  .catch(e => {
+    console.log(e)
+  });
+})
+
+
 
 app.listen(8001, () => console.log(`Server running at localhost: ${8001}!`))
