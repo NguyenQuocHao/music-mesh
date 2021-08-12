@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import YoutubeAuth from '../Login/YoutubeAuth'
 import axios from "axios"
 import SongList from '../Music/MusicPad/SongList'
+import './Dashboard.css'
 
 export default function YoutubeDashboard({ code }) {
   const accessToken = YoutubeAuth(code)
@@ -32,7 +33,7 @@ export default function YoutubeDashboard({ code }) {
   }, [accessToken])
 
   return (
-    <div>
+    <div className="dashboard">
       <SongList data={popularSongs} title="Popular songs"></SongList>
       <SongList data={myPlaylists} title="My Playlists"></SongList>
       <SongList data={randomPlaylists} title="Random playlists"></SongList>

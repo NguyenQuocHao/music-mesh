@@ -10,4 +10,9 @@
 
 .title{
   font-weight: bold;
+  color: rgba(245,245,245,255);
+}
+
+.subTitle{
+  color: rgba(166,166,166,255);
 }

@@ -23,7 +23,7 @@ export default class MusicPad extends React.Component {
         >
           <img src={this.props.image} className="playlistImage" />
           <div className={"title"}>{this.props.title}</div>
-          <div>{this.props.subTitle}</div>
+          <div className={"subTitle"}>{this.props.subTitle}</div>
         </Link>
       </div>)
   }
