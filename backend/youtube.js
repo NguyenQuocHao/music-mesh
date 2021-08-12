@@ -107,6 +107,20 @@ app.get('/myPlaylists', (req, res) => {
   });
 })
 
-
+app.get('/randomPlaylists', (req, res) => {
+  youtube.playlists
+  .list({
+    auth: oauth2Client,
+    part: "snippet,contentDetails",
+    channelId: "UC-9-kyTW8ZkZNDHQJ6FgpwQ", // Music channel Id
+    maxResults: 5
+  })
+  .then(data => {
+    res.send(data.data.items)
+  })
+  .catch(e => {
+    console.log(e)
+  });
+})
 
 app.listen(8001, () => console.log(`Server running at localhost: ${8001}!`))
