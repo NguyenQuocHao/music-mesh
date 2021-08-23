@@ -123,4 +123,21 @@ app.get('/randomPlaylists', (req, res) => {
   });
 })
 
+app.get('/relatedVideos', (req, res) => {
+  youtube.search.list({
+    auth: oauth2Client,
+    part: "snippet",
+    relatedToVideoId: req.body.videoId,
+    type: 'video',
+    videoCategoryId: 10,
+    maxResults: 20,
+  })
+  .then(data => {
+    res.send(data.data.items)
+  })
+  .catch(e => {
+    console.log(e)
+  });
+})
+
 app.listen(8001, () => console.log(`Server running at localhost: ${8001}!`))
