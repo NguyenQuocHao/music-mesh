@@ -16,6 +16,7 @@ function App() {
           <Route path='/youtube' component={Youtube}/>
           <Route path='/spotify' component={Spotify}/>
           <Route path='/spotify-playlist/:id' component={PlaylistPage}/>
+          <Route path='/youtube-playlist/:id' component={PlaylistPage}/>
         </Switch>
       </Router>
     </div>

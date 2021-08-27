@@ -10,14 +10,24 @@ export default class MusicPad extends React.Component {
     subTitle: PropTypes.string,
     className: PropTypes.string,
     id: PropTypes.string,
+    site: PropTypes.string,
   };
 
   render() {
+    let link;
+    if(this.props.site == "youtube"){
+      link = `youtube-playlist`;
+    }
+    else{
+      link = `spotify-playlist`;
+    }
+
+    console.log("Site type: " + this.props.site)
     return (
       <div className="test">
         <Link
           to={{
-            pathname: `/spotify-playlist/${this.props.id}`,
+            pathname: `/${link}/${this.props.id}`,
             state: { id: this.props.id }
           }}
         >
