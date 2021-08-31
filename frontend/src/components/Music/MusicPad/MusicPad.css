@@ -1,9 +1,21 @@
-.playlistImage{
+.dashboard-image{
   height: 200px;
   width: 200px;
 }
 
-.test{
+.display-image{
+  height: 75px;
+  float: left;
+}
+
+.display-page{
+  display:list-item;
+  font-size: small;
+  padding: 2px;
+  overflow: hidden;   
+}
+
+.dashboard-page{
   display: inline-block;
   width: 200px;
 }

@@ -1,0 +1,19 @@
+.background{
+  background-color: rgba(3,3,3,255);
+  height: 100%;
+}
+
+.main-media{
+  float: left;
+  margin: 100px;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: table;
+  margin: 0;
+}
