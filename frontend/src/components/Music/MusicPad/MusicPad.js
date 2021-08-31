@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import "./MusicPad.css";
 import { Link } from 'react-router-dom';
 
-export default function MusicPad({image, title, subTitle, className, id, site}){
+export default function MusicPad({image, title, subTitle, id, site, page}){
 
   function GetRedirectLink(){
     if(site == "youtube"){
@@ -14,16 +14,18 @@ export default function MusicPad({image, title, subTitle, className, id, site}){
   }
 
   return(
-      <div className="test">
+      <div className={page+"-page"}>
         <Link
           to={{
             pathname: `/${GetRedirectLink()}/${id}`,
             state: { id: id }
           }}
         >
-          <img src={image} className="playlistImage" />
-          <div className={"title"}>{title}</div>
-          <div className={"subTitle"}>{subTitle}</div>
+          <div>
+            <img src={image} className={page+"-image"} />
+            <div className={"title"}>{title}</div>
+            <div className={"subTitle"}>{subTitle}</div>
+          </div>
         </Link>
       </div>
   )

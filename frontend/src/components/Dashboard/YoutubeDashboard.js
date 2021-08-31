@@ -34,9 +34,9 @@ export default function YoutubeDashboard({ code }) {
 
   return (
     <div className="dashboard">
-      <SongList data={popularSongs} title="Popular songs"></SongList>
-      <SongList data={myPlaylists} title="My Playlists"></SongList>
-      <SongList data={randomPlaylists} title="Random playlists"></SongList>
+      <SongList data={popularSongs} title="Popular songs" site="youtube" page="dashboard"></SongList>
+      <SongList data={myPlaylists} title="My Playlists" site="youtube" page="dashboard"></SongList>
+      <SongList data={randomPlaylists} title="Random playlists" site="youtube" page="dashboard"></SongList>
     </div>
   )
 }
