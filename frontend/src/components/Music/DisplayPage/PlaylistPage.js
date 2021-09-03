@@ -20,9 +20,12 @@ export default function PlaylistPage() {
   //'https://open.spotify.com/embed/playlist/'+state.id;
   return (
     <div className="background">
-      <iframe className="main-media"
-      width="560" height="315" src={embededLink} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-      <SongList data={relatedVideos} title="Related music" site="youtube" page="display"></SongList>
+    <div className="main-media">
+      <iframe width="100%" src={embededLink} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+    </div>
+    <div className="song-list">      
+      <SongList data={relatedVideos} tiFtle="Related music" site="youtube" page="display"></SongList>
+    </div>
     </div>
   )
 }
