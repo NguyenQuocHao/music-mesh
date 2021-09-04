@@ -8,21 +8,21 @@ export default function SongList({ data, title, site, page }) {
   useEffect(() => {
     var res = data.map((item) => {
       var itemId;
-      if(page == "dashboard"){
+      if (page == "dashboard") {
         itemId = item.id;
       }
-      else{
+      else {
         itemId = item.id.videoId;
       }
 
       return (
-        <MusicPad key={itemId} className="list" id={itemId}
+        <MusicPad key={itemId} id={itemId}
           image={item.snippet.thumbnails.high.url}
           title={item.snippet.title}
           subTitle={item.snippet.channelTitle}
           site={site}
           page={page}
-          ></MusicPad>
+        ></MusicPad>
       )
     });
     setList(res)
@@ -30,9 +30,10 @@ export default function SongList({ data, title, site, page }) {
 
   return (
     <div>
-      <h3>{title}</h3>
-      {list}
-      
+      <h3 className="song-list-title">{title}</h3>
+      <div className={"song-list-" + page}>
+        {list}
+      </div>
     </div>
   )
 }

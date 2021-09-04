@@ -1,0 +1,9 @@
+.song-list-dashboard{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.song-list-title{
+  color: rgba(245,245,245,255);
+}
