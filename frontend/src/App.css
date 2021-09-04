@@ -14,3 +14,8 @@
   justify-content: center;
   font-size: 3rem;
 }
+
+html, body, #root, .App {
+  height: 100%;
+  margin: 0;
+}
