@@ -81,7 +81,7 @@ app.get('/popularSongs', function (req, res) {
       part: "id,snippet",
       videoCategoryId: 10,
       regionCode: "CA",
-      maxResults: 5
+      maxResults: 15
     })
     .then(data => {
       res.send(data.data.items)
@@ -97,7 +97,7 @@ app.get('/myPlaylists', (req, res) => {
     auth: oauth2Client,
     part: "snippet,contentDetails",
     mine: true,
-    maxResults: 5
+    maxResults: 15
   })
   .then(data => {
     res.send(data.data.items)
@@ -113,7 +113,7 @@ app.get('/randomPlaylists', (req, res) => {
     auth: oauth2Client,
     part: "snippet,contentDetails",
     channelId: "UC-9-kyTW8ZkZNDHQJ6FgpwQ", // Music channel Id
-    maxResults: 5
+    maxResults: 15
   })
   .then(data => {
     res.send(data.data.items)
@@ -130,7 +130,7 @@ app.get('/relatedVideos', (req, res) => {
     relatedToVideoId: req.body.videoId,
     type: 'video',
     videoCategoryId: 10,
-    maxResults: 20,
+    maxResults: 15,
   })
   .then(data => {
     res.send(data.data.items)
