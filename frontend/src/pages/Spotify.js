@@ -37,7 +37,6 @@ class Spotify extends React.Component {
 
     return (
       <div>
-        Spotify
         <div>
           <input></input>
           <button onClick={this.search}>

@@ -18,10 +18,9 @@ function Youtube() {
 
   return (
     <div>
-      Youtube
-      {/* <AuthButton isLoggedIn={isLoggedIn} /> */}
-      <YoutubeLogin />
-      <YoutubeDashboard code={code}/>
+      <AuthButton isLoggedIn={isLoggedIn} />
+      {/* <YoutubeLogin />
+      <YoutubeDashboard code={code}/> */}
     </div>
   )
 

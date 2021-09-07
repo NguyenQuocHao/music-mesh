@@ -1,0 +1,15 @@
+.background{
+  background-color: rgba(3,3,3,255);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.main-media{
+  width: 100%;
+  flex: 1;
+}
+
+.song-list{
+  flex: 2;
+}

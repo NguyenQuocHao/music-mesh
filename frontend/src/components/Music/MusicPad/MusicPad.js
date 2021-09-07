@@ -1,30 +1,32 @@
-import React from 'react';
-import PropTypes from "prop-types";
+import {useState, useEffect} from 'react';
 import "./MusicPad.css";
 import { Link } from 'react-router-dom';
 
-export default class MusicPad extends React.Component {
-  static propTypes = {
-    image: PropTypes.string,
-    title: PropTypes.string,
-    subTitle: PropTypes.string,
-    className: PropTypes.string,
-    id: PropTypes.string,
-  };
+export default function MusicPad({image, title, subTitle, id, site, page}){
 
-  render() {
-    return (
-      <div className="test">
+  function GetRedirectLink(){
+    if(site == "youtube"){
+      return `youtube-playlist`;
+    }
+    else{
+      return `spotify-playlist`;
+    }
+  }
+
+  return(
+      <div className={"musicpad musicpad-" + page}>
         <Link
           to={{
-            pathname: `/spotify-playlist/${this.props.id}`,
-            state: { id: this.props.id }
+            pathname: `/${GetRedirectLink()}/${id}`,
+            state: { id: id }
           }}
         >
-          <img src={this.props.image} className="playlistImage" />
-          <div className={"title"}>{this.props.title}</div>
-          <div>{this.props.subTitle}</div>
+          <div>
+            <img src={image} className={"musicpad-" + page + "-image"} />
+            <div className={"musicpad-title"}>{title}</div>
+            <div className={"musicpad-sub-title"}>{subTitle}</div>
+          </div>
         </Link>
-      </div>)
-  }
+      </div>
+  )
 }

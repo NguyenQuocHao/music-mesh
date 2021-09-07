@@ -1,0 +1,24 @@
+.song-list-dashboard{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.song-list-title{
+  color: rgba(245,245,245,255);
+}
+
+.icon-circle {
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon{
+  color: black;
+}

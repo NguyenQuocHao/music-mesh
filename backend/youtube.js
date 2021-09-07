@@ -74,8 +74,6 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/popularSongs', function (req, res) {
-  console.log("Someone called me?")
-
   youtube.videos
     .list({
       auth: oauth2Client,
@@ -83,7 +81,7 @@ app.get('/popularSongs', function (req, res) {
       part: "id,snippet",
       videoCategoryId: 10,
       regionCode: "CA",
-      maxResults: 5
+      maxResults: 15
     })
     .then(data => {
       res.send(data.data.items)
@@ -91,7 +89,55 @@ app.get('/popularSongs', function (req, res) {
     .catch(e => {
       console.log(e)
     });
-
 });
+
+app.get('/myPlaylists', (req, res) => {
+  youtube.playlists
+  .list({
+    auth: oauth2Client,
+    part: "snippet,contentDetails",
+    mine: true,
+    maxResults: 15
+  })
+  .then(data => {
+    res.send(data.data.items)
+  })
+  .catch(e => {
+    console.log(e)
+  });
+})
+
+app.get('/randomPlaylists', (req, res) => {
+  youtube.playlists
+  .list({
+    auth: oauth2Client,
+    part: "snippet,contentDetails",
+    channelId: "UC-9-kyTW8ZkZNDHQJ6FgpwQ", // Music channel Id
+    maxResults: 15
+  })
+  .then(data => {
+    res.send(data.data.items)
+  })
+  .catch(e => {
+    console.log(e)
+  });
+})
+
+app.get('/relatedVideos', (req, res) => {
+  youtube.search.list({
+    auth: oauth2Client,
+    part: "snippet",
+    relatedToVideoId: req.body.videoId,
+    type: 'video',
+    videoCategoryId: 10,
+    maxResults: 15,
+  })
+  .then(data => {
+    res.send(data.data.items)
+  })
+  .catch(e => {
+    console.log(e)
+  });
+})
 
 app.listen(8001, () => console.log(`Server running at localhost: ${8001}!`))
