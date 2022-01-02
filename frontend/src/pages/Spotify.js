@@ -38,10 +38,6 @@ class Spotify extends React.Component {
     return (
       <div>
         <div>
-          <input></input>
-          <button onClick={this.search}>
-            Search
-          </button>
           <div>
             {content}
           </div>
