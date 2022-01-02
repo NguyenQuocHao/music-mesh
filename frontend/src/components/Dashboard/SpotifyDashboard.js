@@ -101,7 +101,7 @@ export default function SpotifyDashboard({ code }) {
   }, [accessToken])
 
   return (
-    <div>
+    <div className="dashboard">
       <MusicPadList data={userPlaylists} title="Your playlists"></MusicPadList>
       <MusicPadList data={featuredPlaylists} title="Featured by Spotify"></MusicPadList>
       <MusicPadList data={popPlaylists} title="Pop"></MusicPadList>
