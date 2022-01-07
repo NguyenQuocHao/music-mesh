@@ -7,6 +7,7 @@ const google = require("googleapis").google;
 // Google's OAuth2 client
 const OAuth2 = google.auth.OAuth2
 const CONFIG = require("./config");
+const { authorize } = require('passport');
 const youtube = google.youtube("v3");
 const app = express();
 const oauth2Client = new OAuth2(
@@ -74,6 +75,7 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/popularSongs', function (req, res) {
+  authorize()
   youtube.videos
     .list({
       auth: oauth2Client,
