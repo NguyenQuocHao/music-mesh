@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import SpotifyLogin from '../components/Login/SpotifyLogin'
 import SpotifyDashboard from '../components/Dashboard/SpotifyDashboard'
 
+// TODO: Refactor this, use session, cookie.
 const code = new URLSearchParams(window.location.search).get('code')
 
 function Spotify() {
