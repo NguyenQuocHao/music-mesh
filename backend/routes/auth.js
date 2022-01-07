@@ -2,6 +2,7 @@ const router = require("express").Router();
 const passport = require("passport");
 
 const CLIENT_URL = "http://localhost:3000/youtube";
+const SPOTIFY_URL = "http://localhost:3000/spotify";
 
 router.get("/login/success", (req, res) => {
   if (req.user) {
@@ -38,6 +39,18 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     successRedirect: CLIENT_URL,
+    failureRedirect: "/login/failed",
+  })
+);
+
+router.get("/spotify", passport.authenticate("spotify", {
+  scope: ['user-read-email', 'user-read-private'],
+}));
+
+router.get(
+  "/spotify/callback",
+  passport.authenticate("spotify", {
+    successRedirect: SPOTIFY_URL,  
     failureRedirect: "/login/failed",
   })
 );
