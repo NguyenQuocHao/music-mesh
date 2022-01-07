@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
 import MusicPadList from '../Music/MusicPad/MusicPadList'
-import SpotifyWebApi from "spotify-web-api-node"
-
-const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.REACT_APP_CLIENT_ID,
-})
 
 export default function SpotifyDashboard({ }) {
   const [userPlaylists, setUserPlaylists] = useState([])

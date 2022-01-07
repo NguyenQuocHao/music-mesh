@@ -64,33 +64,6 @@ app.post('/refresh', (req, res) => {
     })
 })
 
-// app.post('/login', (req, res) => {
-//   const code = req.body.code
-//   // const spotifyApi = new SpotifyWebApi({
-//   //   redirectUri: process.env.SPOTIFY_REDIRECT_URI,
-//   //   clientId: process.env.SPOTIFY_CLIENT_ID,
-//   //   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-//   // })
-
-//   spotifyApi.authorizationCodeGrant(code)
-//     .then(data => {
-//       spotifyApi.setAccessToken(data.body.access_token)
-//       spotifyApi.setRefreshToken(data.body.refresh_token)
-//       // spotifyApi.expiresIn
-//       // res.json(
-//       //   {
-//       //     accessToken: data.body.access_token,
-//       //     refreshToken: data.body.refresh_token,
-//       //     expiresIn: data.body.expires_in,
-//       //   }
-//       // )
-//     })
-//     .catch(error => {
-//       console.log(error)
-//       res.sendStatus(400)
-//     })
-// })
-
 module.exports = function (app) {
   app.use(
     cors({
@@ -104,7 +77,6 @@ module.exports = function (app) {
     spotifyApi.getUserPlaylists()
       .then(function (data) {
         console.log('User playlists', data.body);
-        // res.send(data.body.playlists.items)
         res.send(data.body.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -118,7 +90,6 @@ module.exports = function (app) {
     spotifyApi.getPlaylistsForCategory('pop', { limit: playListLimit })
       .then(function (data) {
         console.log('Pop playlists', data.body);
-        // res.send(data.data.items)
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -132,7 +103,6 @@ module.exports = function (app) {
     spotifyApi.getPlaylistsForCategory('toplists', { limit: playListLimit })
       .then(function (data) {
         console.log('Top playlists', data.body);
-        // res.send(data.data.items)
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -146,7 +116,6 @@ module.exports = function (app) {
     spotifyApi.getPlaylistsForCategory('decades', { limit: playListLimit })
       .then(function (data) {
         console.log('Decades playlists', data.body);
-        // res.send(data.data.items)
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -160,7 +129,6 @@ module.exports = function (app) {
     spotifyApi.getPlaylistsForCategory('mood', { limit: playListLimit })
       .then(function (data) {
         console.log('Mood playlists', data.body);
-        // res.send(data.data.items)
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -171,7 +139,6 @@ module.exports = function (app) {
     spotifyApi.getPlaylistsForCategory('chill', { limit: playListLimit })
       .then(function (data) {
         console.log('Chill playlists', data.body);
-        // res.send(data.data.items)
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -182,7 +149,6 @@ module.exports = function (app) {
     spotifyApi.getFeaturedPlaylists({ limit: playListLimit })
       .then(function (data) {
         console.log('Featured playlists', data.body);
-        // res.send(data.data.items)
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);

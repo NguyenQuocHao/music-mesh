@@ -32,9 +32,6 @@ passport.use(
   )
 );
 
-
-
-
 // app.post('/refresh', (req, res) => {
 //   const refreshToken = req.body.refreshToken
 //   const spotifyApi = new SpotifyWebApi({
@@ -54,31 +51,6 @@ passport.use(
 //         console.log("The access token has been refreshed.")
 //       })
 //     .catch(() => {
-//       res.sendStatus(400)
-//     })
-// })
-
-
-// app.post('/login', (req, res) => {
-//   code = req.body.code // or req.query.code
-//   console.log("Body: " + req.body)
-
-//   oauth2Client.getToken(code).then(data => {
-//     oauth2Client.credentials = data.tokens;
-//     console.log("Credentials set!")
-//     console.log(oauth2Client.access_token)
-//     console.log(oauth2Client.credentials.access_token)
-
-//     res.json(
-//       {
-//         accessToken: data.tokens.access_token,
-//         refreshToken: data.tokens.refresh_token,
-//         expiresIn: data.tokens.expiry_date,
-//       }
-//     )
-//   })
-//     .catch(error => {
-//       console.log(error)
 //       res.sendStatus(400)
 //     })
 // })
