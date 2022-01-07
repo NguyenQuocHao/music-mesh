@@ -1,30 +1,36 @@
 require('dotenv').config()
-const express = require('express');
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const google = require("googleapis").google;
-
+const passport = require("passport");
 // Google's OAuth2 client
 const OAuth2 = google.auth.OAuth2
 const CONFIG = require("./config");
 const youtube = google.youtube("v3");
-const app = express();
 const oauth2Client = new OAuth2(
   CONFIG.oauth2Credentials.client_id,
   CONFIG.oauth2Credentials.client_secret,
   CONFIG.oauth2Credentials.redirect_uris[0]
 );
-var code;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
-app.use(cors())
-app.use(bodyParser.json())
+// app.use(cors())
+// app.use(bodyParser.json())
 
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "PUT, PATCH, DELETE");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// })
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/auth/google/callback",
+    },
+    function (accessToken, refreshToken, profile, done) {
+      oauth2Client.credentials.access_token = accessToken;
+      oauth2Client.credentials.refresh_token = refreshToken;
+      done(null, profile);
+    }
+  )
+);
 
 // app.post('/refresh', (req, res) => {
 //   const refreshToken = req.body.refreshToken
@@ -49,95 +55,80 @@ app.use(bodyParser.json())
 //     })
 // })
 
-app.post('/login', (req, res) => {
-  code = req.body.code // or req.query.code
-  console.log("Body: " + req.body)
-
-  oauth2Client.getToken(code).then(data => {
-    oauth2Client.credentials = data.tokens;
-    console.log("Credentials set!")
-    console.log(oauth2Client.access_token)
-    console.log(oauth2Client.credentials.access_token)
-
-    res.json(
-      {
-        accessToken: data.tokens.access_token,
-        refreshToken: data.tokens.refresh_token,
-        expiresIn: data.tokens.expiry_date,
-      }
-    )
-  })
-    .catch(error => {
-      console.log(error)
-      res.sendStatus(400)
+module.exports = function (app) {
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      methods: "GET,POST,PUT,DELETE",
+      credentials: true,
     })
-})
+  );
 
-app.get('/popularSongs', function (req, res) {
-  youtube.videos
-    .list({
+  app.get('/popularSongs', function (req, res) {
+    youtube.videos
+      .list({
+        auth: oauth2Client,
+        chart: 'mostPopular',
+        part: "id,snippet",
+        videoCategoryId: 10,
+        regionCode: "CA",
+        maxResults: 15
+      })
+      .then(data => {
+        res.send(data.data.items)
+      })
+      .catch(e => {
+        console.log(e)
+      });
+  });
+
+  app.get('/myPlaylists', (req, res) => {
+    youtube.playlists
+      .list({
+        auth: oauth2Client,
+        part: "snippet,contentDetails",
+        mine: true,
+        maxResults: 15
+      })
+      .then(data => {
+        res.send(data.data.items)
+      })
+      .catch(e => {
+        console.log(e)
+      });
+  })
+
+  app.get('/randomPlaylists', (req, res) => {
+    youtube.playlists
+      .list({
+        auth: oauth2Client,
+        part: "snippet,contentDetails",
+        channelId: "UC-9-kyTW8ZkZNDHQJ6FgpwQ", // Music channel Id
+        maxResults: 15
+      })
+      .then(data => {
+        res.send(data.data.items)
+      })
+      .catch(e => {
+        console.log(e)
+      });
+  })
+
+  app.get('/relatedVideos', (req, res) => {
+    youtube.search.list({
       auth: oauth2Client,
-      chart: 'mostPopular',
-      part: "id,snippet",
+      part: "snippet",
+      relatedToVideoId: req.body.videoId,
+      type: 'video',
       videoCategoryId: 10,
-      regionCode: "CA",
-      maxResults: 15
+      maxResults: 15,
     })
-    .then(data => {
-      res.send(data.data.items)
-    })
-    .catch(e => {
-      console.log(e)
-    });
-});
-
-app.get('/myPlaylists', (req, res) => {
-  youtube.playlists
-  .list({
-    auth: oauth2Client,
-    part: "snippet,contentDetails",
-    mine: true,
-    maxResults: 15
+      .then(data => {
+        res.send(data.data.items)
+      })
+      .catch(e => {
+        console.log(e)
+      });
   })
-  .then(data => {
-    res.send(data.data.items)
-  })
-  .catch(e => {
-    console.log(e)
-  });
-})
-
-app.get('/randomPlaylists', (req, res) => {
-  youtube.playlists
-  .list({
-    auth: oauth2Client,
-    part: "snippet,contentDetails",
-    channelId: "UC-9-kyTW8ZkZNDHQJ6FgpwQ", // Music channel Id
-    maxResults: 15
-  })
-  .then(data => {
-    res.send(data.data.items)
-  })
-  .catch(e => {
-    console.log(e)
-  });
-})
-
-app.get('/relatedVideos', (req, res) => {
-  youtube.search.list({
-    auth: oauth2Client,
-    part: "snippet",
-    relatedToVideoId: req.body.videoId,
-    type: 'video',
-    videoCategoryId: 10,
-    maxResults: 15,
-  })
-  .then(data => {
-    res.send(data.data.items)
-  })
-  .catch(e => {
-    console.log(e)
-  });
-})
-
-app.listen(8001, () => console.log(`Server running at localhost: ${8001}!`))
+}
+// app.listen(8001, () => console.log(`Server running at localhost: ${8001}!`))

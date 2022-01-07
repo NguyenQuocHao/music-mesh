@@ -1,15 +1,8 @@
 import { useState, useEffect } from 'react'
-import SpotifyAuth from '../Login/SpotifyAuth'
+import axios from "axios"
 import MusicPadList from '../Music/MusicPad/MusicPadList'
-import SpotifyWebApi from "spotify-web-api-node"
 
-const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.REACT_APP_CLIENT_ID,
-})
-
-export default function SpotifyDashboard({ code }) {
-  const accessToken = SpotifyAuth(code)
-  const playListLimit = 5
+export default function SpotifyDashboard({ }) {
   const [userPlaylists, setUserPlaylists] = useState([])
   const [popPlaylists, setPopPlaylists] = useState([])
   const [topPlaylists, setTopPlaylists] = useState([])
@@ -18,90 +11,73 @@ export default function SpotifyDashboard({ code }) {
   const [chillPlaylists, setChillPlaylists] = useState([])
   const [featuredPlaylists, setFeaturedPlaylists] = useState([])
 
+  const logout = () => {
+    window.open("http://localhost:5000/auth/logout", "_self");
+  };
 
   useEffect(() => {
-    if (!accessToken) return
-    console.log("Access token changes.")
-    spotifyApi.setAccessToken(accessToken)
-  }, [accessToken])
-
-  useEffect(() => {
-    console.log("access token: " + spotifyApi.getAccessToken())
-    spotifyApi.setAccessToken(accessToken)
-
-    // spotifyApi.getRecommendations({ min_energy: 0.4, seed_artists: ['6mfK6Q2tzLMEchAr0e9Uzu', '4DYFVNKZ1uixa6SQTvzQwJ'], min_popularity: 50 })
-    //   .then(function (data) {
-    //     console.log('Recommendations', data.body);
-    //   }, function (err) {
-    //     console.log('Something went wrong!', err);
-    //   })
-
-    // spotifyApi.getCategories()
-    //   .then(function (data) {
-    //     console.log('Categories: ', data.body);
-    //   }, function (err) {
-    //     console.log('Something went wrong!', err);
-    //   })
-
-    spotifyApi.getUserPlaylists()
+    axios.get('http://localhost:5000/spotify/userPlaylists')
       .then(function (data) {
-        console.log('User playlists', data.body);
-        setUserPlaylists(data.body.items);
+        console.log('User playlists', data.data);
+        setUserPlaylists(data.data);
       }, function (err) {
         console.log('Something went wrong!', err);
       })
 
-    spotifyApi.getPlaylistsForCategory('pop', { limit: playListLimit })
+    axios.get('http://localhost:5000/spotify/pop')
       .then(function (data) {
-        console.log('Pop playlists', data.body);
-        setPopPlaylists(data.body.playlists.items)
+        console.log('Pop playlists', data.data);
+        setPopPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
       })
 
-      spotifyApi.getPlaylistsForCategory('toplists', { limit: playListLimit })
+    axios.get('http://localhost:5000/spotify/topLists')
       .then(function (data) {
-        console.log('Top playlists', data.body);
-        setTopPlaylists(data.body.playlists.items)
+        console.log('Top playlists', data.data);
+        setTopPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
       })
 
-      spotifyApi.getPlaylistsForCategory('decades', { limit: playListLimit })
+    axios.get('http://localhost:5000/spotify/decades')
       .then(function (data) {
-        console.log('Decades playlists', data.body);
-        setDecadesPlaylists(data.body.playlists.items)
+        console.log('Decades playlists', data.data);
+        setDecadesPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
       })
 
-    spotifyApi.getPlaylistsForCategory('mood', { limit: playListLimit })
+    axios.get('http://localhost:5000/spotify/mood')
       .then(function (data) {
-        console.log('Mood playlists', data.body);
-        setMoodPlaylists(data.body.playlists.items)
+        console.log('Mood playlists', data.data);
+        setMoodPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
       })
 
-    spotifyApi.getPlaylistsForCategory('chill', { limit: playListLimit })
+    axios.get('http://localhost:5000/spotify/chill')
       .then(function (data) {
-        console.log('Chill playlists', data.body);
-        setChillPlaylists(data.body.playlists.items)
+        console.log('Chill playlists', data.data);
+        setChillPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
       })
 
-    spotifyApi.getFeaturedPlaylists({ limit: playListLimit })
+    axios.get('http://localhost:5000/spotify/featuredPlaylists')
       .then(function (data) {
-        console.log('Featured playlists', data.body);
-        setFeaturedPlaylists(data.body.playlists.items)
+        console.log('Featured playlists', data.data);
+        setFeaturedPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
       })
-  }, [accessToken])
+  }, [])
 
   return (
     <div className="dashboard">
+      <button onClick={logout}>
+        Logout
+      </button>
       <MusicPadList data={userPlaylists} title="Your playlists"></MusicPadList>
       <MusicPadList data={featuredPlaylists} title="Featured by Spotify"></MusicPadList>
       <MusicPadList data={popPlaylists} title="Pop"></MusicPadList>
