@@ -6,7 +6,11 @@ import { SidebarData } from './SidebarData';
 import './Navbar.css';
 import { IconContext } from 'react-icons';
 
-function Navbar() {
+const logout = () => {
+  window.open("http://localhost:5000/auth/logout", "_self");
+};
+
+function Navbar({user}) {
   const [sidebar, setSidebar] = useState(false);
   const { state } = useLocation();
   const showSidebar = () => setSidebar(!sidebar);
@@ -21,6 +25,25 @@ function Navbar() {
             }}>
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
+          {user ? (
+            <ul className="list loginNav">
+              <li className="listItem">
+                <img
+                  src={user.photos[0].value}
+                  alt=""
+                  className="avatar"
+                />
+              </li>
+              <li className="listItem">{user.displayName}</li>
+              <li className="listItem" onClick={logout}>
+                Logout
+              </li>
+            </ul>
+          ) : (
+            <Link className="link loginNav" to="login">
+              Login
+            </Link>
+          )}
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items' onClick={showSidebar}>
