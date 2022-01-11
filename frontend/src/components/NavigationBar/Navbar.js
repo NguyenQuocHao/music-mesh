@@ -10,10 +10,8 @@ const logout = () => {
   window.open("http://localhost:5000/auth/logout", "_self");
 };
 
-function Navbar({user}) {
-  const [sidebar, setSidebar] = useState(false);
+function Navbar({ user, sideBarHandler }) {
   const { state } = useLocation();
-  const showSidebar = () => setSidebar(!sidebar);
 
   return (
     <>
@@ -23,7 +21,7 @@ function Navbar({user}) {
             to={{
               state: state
             }}>
-            <FaIcons.FaBars onClick={showSidebar} />
+            <FaIcons.FaBars onClick={sideBarHandler} />
           </Link>
           {user ? (
             <ul className="list loginNav">
@@ -45,28 +43,6 @@ function Navbar({user}) {
             </Link>
           )}
         </div>
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          <ul className='nav-menu-items' onClick={showSidebar}>
-            <li className='navbar-toggle'>
-              <Link className='menu-bars'
-                to={{
-                  state: state
-                }}>
-                <AiIcons.AiOutlineClose />
-              </Link>
-            </li>
-            {SidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
       </IconContext.Provider>
     </>
   );

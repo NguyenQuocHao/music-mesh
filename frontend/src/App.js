@@ -1,6 +1,7 @@
 import './App.css';
 import { useEffect, useState } from "react";
 import Navbar from './components/NavigationBar/Navbar';
+import Sidebar from './components/NavigationBar/Sidebar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import Youtube from './pages/Youtube'
@@ -10,6 +11,9 @@ import PlaylistPage from './components/Music/DisplayPage/PlaylistPage';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [sidebar, setSidebar] = useState(false);
+
+  const showSidebar = () => setSidebar(!sidebar);
 
   useEffect(() => {
     const getUser = () => {
@@ -39,7 +43,8 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar user={user}/>
+        <Navbar user={user} sideBarHandler={showSidebar}/>
+        <Sidebar show={sidebar} sideBarHandler={showSidebar}/>
         <Switch>
           <Route path='/' exact component={Home}/>
           <Route path='/login' component={Login}/>
