@@ -11,10 +11,6 @@ export default function SpotifyDashboard({ }) {
   const [chillPlaylists, setChillPlaylists] = useState([])
   const [featuredPlaylists, setFeaturedPlaylists] = useState([])
 
-  const logout = () => {
-    window.open("http://localhost:5000/auth/logout", "_self");
-  };
-
   useEffect(() => {
     axios.get('http://localhost:5000/spotify/userPlaylists')
       .then(function (data) {
@@ -75,9 +71,6 @@ export default function SpotifyDashboard({ }) {
 
   return (
     <div className="dashboard">
-      <button onClick={logout}>
-        Logout
-      </button>
       <MusicPadList data={userPlaylists} title="Your playlists"></MusicPadList>
       <MusicPadList data={featuredPlaylists} title="Featured by Spotify"></MusicPadList>
       <MusicPadList data={popPlaylists} title="Pop"></MusicPadList>

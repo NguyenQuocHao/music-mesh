@@ -121,7 +121,7 @@ module.exports = function (app) {
         console.log('Something went wrong!', err);
       })
       .catch(e => {
-        console.log(e)
+        console.log(e) 
       });
   })
 

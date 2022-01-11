@@ -8,10 +8,6 @@ export default function YoutubeDashboard({ }) {
   const [popularSongs, setPopularSongs] = useState([])
   const [randomPlaylists, setRandomPlaylists] = useState([])
 
-  const logout = () => {
-    window.open("http://localhost:5000/auth/logout", "_self");
-  };
-
   useEffect(() => {
     axios.get('http://localhost:5000/popularSongs')
       .then(data => {
@@ -32,9 +28,6 @@ export default function YoutubeDashboard({ }) {
 
   return (
     <div className="dashboard">
-      <button onClick={logout}>
-        Logout
-      </button>
       <SongList data={popularSongs} title="Popular songs" site="youtube" page="dashboard"></SongList>
       <SongList data={myPlaylists} title="My Playlists" site="youtube" page="dashboard"></SongList>
       <SongList data={randomPlaylists} title="Random playlists" site="youtube" page="dashboard"></SongList>

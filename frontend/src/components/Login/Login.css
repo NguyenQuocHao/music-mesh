@@ -33,7 +33,64 @@
   }
 
   .center{
-    text-align: center;
-    margin: auto;
-    padding: 500px;  
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .login {
+    height: calc(100vh - 50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loginTitle{
+    position: absolute;
+    top: 150px;
+    color:lightgray
+  }
+
+  .wrapper {
+    width: 30%;
+    height: 30%;
+    -webkit-box-shadow: 0px 5px 33px -21px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 5px 33px -21px rgba(66, 68, 90, 1);
+    box-shadow: 0px 5px 33px -21px rgba(66, 68, 90, 1);
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+  }
+  .left,.right{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .loginButton{
+    width: 150px;
+    padding: 15px 25px;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  .google{
+    background-color: #df4930;
+  }
+  .spotify{
+    background-color: #1DB954;
+  }
+  
+  .icon{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
   }
