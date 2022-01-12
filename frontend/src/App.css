@@ -7,6 +7,10 @@
   font-family: 'Lato', sans-serif;
 }
 
+.appWrapper{
+  display: flex;
+}
+
 .home{
   display: flex;
   height: 90vh;
@@ -18,4 +22,9 @@
 html, body, #root, .App {
   height: 100%;
   margin: 0;
+}
+
+.mainWrapper{
+  width: 100%;
+  position: relative;
 }

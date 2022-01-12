@@ -9,7 +9,6 @@ function Navbar({show, sideBarHandler}) {
   const { state } = useLocation();
 
   return (
-    <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <nav className={show ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items' onClick={sideBarHandler}>
@@ -18,7 +17,7 @@ function Navbar({show, sideBarHandler}) {
                 to={{
                   state: state
                 }}>
-                <AiIcons.AiOutlineClose />
+                Music Mesh
               </Link>
             </li>
             {SidebarData.map((item, index) => {
@@ -34,7 +33,6 @@ function Navbar({show, sideBarHandler}) {
           </ul>
         </nav>
       </IconContext.Provider>
-    </>
   );
 }
 
