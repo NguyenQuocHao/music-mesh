@@ -1,5 +1,6 @@
 import Google from "../../assets/img/google.png";
 import Spotify from "../../assets/img/spotify.png";
+import './Login.css'
 
 const Login = () => {
   const google = () => {

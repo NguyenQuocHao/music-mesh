@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
-import YoutubeLogin from '../components/Login/YoutubeLogin'
+import Login from '../components/Login/Login';
 import YoutubeDashboard from '../components/Dashboard/YoutubeDashboard'
-
-const code = new URLSearchParams(window.location.search).get('code')
 
 function Youtube() {
   const [user, setUser] = useState(null)
@@ -32,24 +30,20 @@ function Youtube() {
     getUser();
   }, []);
 
-
   return (
     <div>
-      <AuthButton user={user} />
-      {/* <YoutubeLogin />
-      <YoutubeDashboard code={code}/> */}
+      <Display user={user} />
     </div>
   )
-
 }
 
-const AuthButton = props => {
+const Display = props => {
   let { user } = props;
 
   if (user) {
-    return <YoutubeDashboard code={code}/>;
+    return <YoutubeDashboard />;
   } else {
-    return <YoutubeLogin />;
+    return <Login />;
   }
 };
 

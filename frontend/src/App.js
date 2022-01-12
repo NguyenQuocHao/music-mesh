@@ -43,16 +43,24 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar user={user} sideBarHandler={showSidebar}/>
-        <Sidebar show={sidebar} sideBarHandler={showSidebar}/>
-        <Switch>
-          <Route path='/' exact component={Home}/>
-          <Route path='/login' component={Login}/>
-          <Route path='/youtube' component={Youtube}/>
-          <Route path='/spotify' component={Spotify}/>
-          <Route path='/spotify-playlist/:id' component={PlaylistPage}/>
-          <Route path='/youtube-playlist/:id' component={PlaylistPage}/>
-        </Switch>
+        <div className='appWrapper'>
+          <div className='sideWrapper'>
+            <Sidebar show={sidebar} sideBarHandler={showSidebar} />
+          </div>
+          <div className='mainWrapper'>
+            <Navbar user={user} sideBarHandler={showSidebar} />
+            <div className='main'>
+              <Switch>
+                <Route path='/' exact component={Home} />
+                <Route path='/login' component={Login} />
+                <Route path='/youtube' component={Youtube} />
+                <Route path='/spotify' component={Spotify} />
+                <Route path='/spotify-playlist/:id' component={PlaylistPage} />
+                <Route path='/youtube-playlist/:id' component={PlaylistPage} />
+              </Switch>
+            </div>
+          </div>
+        </div>
       </Router>
     </div>
   );

@@ -14,15 +14,15 @@ function Navbar({ user, sideBarHandler }) {
   const { state } = useLocation();
 
   return (
-    <>
-      <IconContext.Provider value={{ color: '#fff' }}>
+      // <IconContext.Provider value={{ color: '#fff' }}>
         <div className='navbar'>
           <Link className='menu-bars'
             to={{
               state: state
             }}>
-            <FaIcons.FaBars onClick={sideBarHandler} />
+            {/* <FaIcons.FaBars onClick={sideBarHandler} /> */}
           </Link>
+          <div className='userInfo'>
           {user ? (
             <ul className="list loginNav">
               <li className="listItem">
@@ -42,9 +42,9 @@ function Navbar({ user, sideBarHandler }) {
               Login
             </Link>
           )}
+          </div>
         </div>
-      </IconContext.Provider>
-    </>
+      // </IconContext.Provider>
   );
 }
 

@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react'
-import SpotifyLogin from '../components/Login/SpotifyLogin'
+import Login from '../components/Login/Login'
 import SpotifyDashboard from '../components/Dashboard/SpotifyDashboard'
-
-// TODO: Refactor this, use session, cookie.
-const code = new URLSearchParams(window.location.search).get('code')
 
 function Spotify() {
   const [user, setUser] = useState(null)
@@ -33,21 +30,20 @@ function Spotify() {
     getUser();
   }, []);
 
-
   return (
     <div>
-      <AuthButton user={user} />
+      <Display user={user} />
     </div>
   )
 }
 
-const AuthButton = props => {
+const Display = props => {
   let { user } = props;
 
   if (user) {
-    return <SpotifyDashboard code={code}/>;
+    return <SpotifyDashboard />;
   } else {
-    return <SpotifyLogin />;
+    return <Login />;
   }
 };
 
