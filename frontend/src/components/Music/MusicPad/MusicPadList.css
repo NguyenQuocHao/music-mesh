@@ -1,3 +1,7 @@
+.musicPadList{
+  color: white;
+}
+
 .song-list-dashboard{
     display: flex;
     flex-direction: row;

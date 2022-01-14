@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from "axios"
 import SongList from '../Music/MusicPad/SongList'
 import './Dashboard.scss'
+import vars from '../../variables.js'
 
 export default function YoutubeDashboard({ }) {
   const [myPlaylists, setMyPlaylists] = useState([])
@@ -28,9 +29,10 @@ export default function YoutubeDashboard({ }) {
 
   return (
     <div className="dashboard">
-      <SongList data={popularSongs} title="Popular songs" site="youtube" page="dashboard"></SongList>
-      <SongList data={myPlaylists} title="My Playlists" site="youtube" page="dashboard"></SongList>
-      <SongList data={randomPlaylists} title="Random playlists" site="youtube" page="dashboard"></SongList>
+      <iframe src="https://www.youtube.com/embed/vKhuzVQboe0" width="100%" height="380" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      <SongList data={popularSongs} title="Popular songs" site="youtube" page="dashboard" type={vars.song}></SongList>
+      <SongList data={myPlaylists} title="My Playlists" site="youtube" page="dashboard" type={vars.playlist}></SongList>
+      <SongList data={randomPlaylists} title="Random playlists" site="youtube" page="dashboard" type={vars.playlist}></SongList>
     </div>
   )
 }

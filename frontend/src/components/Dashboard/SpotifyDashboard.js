@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
 import MusicPadList from '../Music/MusicPad/MusicPadList'
+import vars from '../../variables'
 
 export default function SpotifyDashboard({ }) {
   const [userPlaylists, setUserPlaylists] = useState([])
@@ -71,13 +72,13 @@ export default function SpotifyDashboard({ }) {
 
   return (
     <div className="dashboard">
-      <MusicPadList data={userPlaylists} title="Your playlists"></MusicPadList>
-      <MusicPadList data={featuredPlaylists} title="Featured by Spotify"></MusicPadList>
-      <MusicPadList data={popPlaylists} title="Pop"></MusicPadList>
-      <MusicPadList data={moodPlaylists} title="Mood"></MusicPadList>
-      <MusicPadList data={chillPlaylists} title="Chill"></MusicPadList>
-      <MusicPadList data={topPlaylists} title="Top List"></MusicPadList>
-      <MusicPadList data={decadesPlaylists} title="Through the years..."></MusicPadList>
+      <MusicPadList data={userPlaylists} type={vars.playlist} title="Your playlists"></MusicPadList>
+      <MusicPadList data={featuredPlaylists} type={vars.playlist} title="Featured by Spotify"></MusicPadList>
+      <MusicPadList data={popPlaylists} type={vars.playlist} title="Pop"></MusicPadList>
+      <MusicPadList data={moodPlaylists} type={vars.playlist} title="Mood"></MusicPadList>
+      <MusicPadList data={chillPlaylists} type={vars.playlist} title="Chill"></MusicPadList>
+      <MusicPadList data={topPlaylists} type={vars.playlist} title="Top List"></MusicPadList>
+      <MusicPadList data={decadesPlaylists} type={vars.playlist} title="Through the years..."></MusicPadList>
     </div>
   )
 }
