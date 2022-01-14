@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
 import SongList from '../Music/MusicPad/SongList'
-import './Dashboard.css'
+import './Dashboard.scss'
 
 export default function YoutubeDashboard({ }) {
   const [myPlaylists, setMyPlaylists] = useState([])
