@@ -12,7 +12,7 @@ function Sidebar({ show, sideBarHandler, youtubePlaylists, spotifyPlaylists }) {
     <IconContext.Provider value={{ color: '#fff' }}>
       <nav className={show ? 'side-bar active' : 'side-bar'}>
         <ul className='side-bar-items' onClick={sideBarHandler}>
-          <li className='navbar-toggle'>
+          <li className='side-bar-toggle'>
             <Link className='menu-bars'
               to={{
                 state: state
@@ -30,7 +30,7 @@ function Sidebar({ show, sideBarHandler, youtubePlaylists, spotifyPlaylists }) {
               </li>
             );
           })}
-          <div className='nav-text'>My Playlists</div>
+          <div className='side-bar-text'>My Playlists</div>
         </ul>
       </nav>
     </IconContext.Provider>

@@ -29,8 +29,8 @@ export default function PlaylistList({ data, title, description, type, site }) {
   }
 
   return (
-    <div className='musicPadList'>
-      <h3>{title}</h3>
+    <div>
+      <h3 className="music-title">{title}</h3>
       <h5>{description}</h5>
       <div className="song-list-dashboard">
         <span className="icon icon-circle">{'<'}</span>

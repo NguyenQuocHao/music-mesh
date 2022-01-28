@@ -59,7 +59,7 @@ export default function TrackList({ data, title, site, page, type }) {
 
   return (
     <div>
-      <h3 className="song-list-title">{title}</h3>
+      <h3 className="music-title">{title}</h3>
       <div className={"song-list-" + page}>
         <span className="icon icon-circle" onClick={moveLeft}>{'<'}</span>
         {list}

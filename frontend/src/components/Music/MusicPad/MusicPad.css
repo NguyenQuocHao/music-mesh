@@ -12,6 +12,11 @@
   align-items: center;
 }
 
+.music-title{
+  font-weight: bold;
+  color: rgba(245,245,245,255);
+}
+
 .musicpad-dashboard {
   display: inline-block;
   width: 200px;
@@ -36,17 +41,8 @@
   float: left;
 }
 
-.musicpad-title{
-  font-weight: bold;
-  color: rgba(245,245,245,255);
-}
-
 .musicpad-sub-title{
   color: rgba(166,166,166,255);
-}
-
-.musicPadList{
-  color: white;
 }
 
 .song-list-dashboard{
@@ -54,8 +50,4 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
-  
-.song-list-title{
-  color: rgba(245,245,245,255);
 }
