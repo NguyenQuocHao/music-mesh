@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react'
 import { useLocation, Link } from "react-router-dom"
-import SongList from '../MusicPad/SongList'
+import TrackList from '../MusicPad/TrackList'
 import './PlaylistPage.scss'
 
 export default function PlaylistPage() {

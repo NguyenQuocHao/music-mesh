@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
-import MusicPadList from '../Music/MusicPad/MusicPadList'
+import PlaylistList from '../Music/MusicPad/PlaylistList'
 import vars from '../../variables'
-import SongList from '../Music/MusicPad/SongList'
+import TrackList from '../Music/MusicPad/TrackList'
 
 export default function SpotifyDashboard({ }) {
   const [spotifyPlaylists, setSpotifyPlaylists] = useState([])
@@ -55,12 +55,12 @@ export default function SpotifyDashboard({ }) {
 
   return (
     <div className="dashboard">
-      <MusicPadList data={spotifyPlaylists} type={vars.playlist} title="Your Spotify playlists"></MusicPadList>
-      <SongList data={youtubePlaylists} title="Your Youtube playlists" site="youtube" page="dashboard" type={vars.playlist}></SongList>
-      <SongList data={popularSongs} title="Popular songs on Youtube" site="youtube" page="dashboard" type={vars.song}></SongList>
-      <MusicPadList data={featuredPlaylists} type={vars.playlist} title="Featured by Spotify"></MusicPadList>
-      <MusicPadList data={topPlaylists} type={vars.playlist} title="Top From Spotify"></MusicPadList>
-      <SongList data={randomPlaylists} title="From Youtube with songs" site="youtube" page="dashboard" type={vars.playlist}></SongList>
+      <PlaylistList data={spotifyPlaylists} type={vars.playlist} title="Your Spotify playlists"></PlaylistList>
+      <TrackList data={youtubePlaylists} title="Your Youtube playlists" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
+      <TrackList data={popularSongs} title="Popular songs on Youtube" site="youtube" page="dashboard" type={vars.song}></TrackList>
+      <PlaylistList data={featuredPlaylists} type={vars.playlist} title="Featured by Spotify"></PlaylistList>
+      <PlaylistList data={topPlaylists} type={vars.playlist} title="Top From Spotify"></PlaylistList>
+      <TrackList data={randomPlaylists} title="From Youtube with songs" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
     </div>
   )
 }

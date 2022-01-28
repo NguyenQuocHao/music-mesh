@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import MusicPad from "./MusicPad";
-import './SongList.css';
 
-export default function SongList({ data, title, site, page, type }) {
+export default function TrackList({ data, title, site, page, type }) {
   const [list, setList] = useState([])
   const [maxIndex, setMaxIndex] = useState(5)
   const DEFAULT_LIST_LENGTH = 15;

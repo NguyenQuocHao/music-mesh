@@ -1,8 +1,15 @@
-.musicpad-display{
-  display:list-item;
-  font-size: small;
-  padding: 2px;
-  overflow: hidden;
+.icon{
+  color: black;
+}
+
+.icon-circle {
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .musicpad-dashboard {
@@ -17,6 +24,13 @@
   border-radius: 3px;
 }
 
+.musicpad-display{
+  display:list-item;
+  font-size: small;
+  padding: 2px;
+  overflow: hidden;
+}
+
 .musicpad-display-image{
   height: 75px;
   float: left;
@@ -29,4 +43,19 @@
 
 .musicpad-sub-title{
   color: rgba(166,166,166,255);
+}
+
+.musicPadList{
+  color: white;
+}
+
+.song-list-dashboard{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+  
+.song-list-title{
+  color: rgba(245,245,245,255);
 }

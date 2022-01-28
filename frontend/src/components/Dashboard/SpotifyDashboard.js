@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
-import MusicPadList from '../Music/MusicPad/MusicPadList'
+import PlaylistList from '../Music/MusicPad/PlaylistList'
 import vars from '../../variables'
 
 export default function SpotifyDashboard({ }) {
@@ -68,17 +68,25 @@ export default function SpotifyDashboard({ }) {
       }, function (err) {
         console.log('Something went wrong!', err);
       })
+
+      axios.get('http://localhost:5000/spotify/currentlyPlaying')
+      .then(function (data) {
+        console.log('Currently playing', data.data);
+        // setFeaturedPlaylists(data.data)
+      }, function (err) {
+        console.log('Something went wrong!', err);
+      })
   }, [])
 
   return (
     <div className="dashboard">
-      <MusicPadList data={userPlaylists} type={vars.playlist} title="Your playlists"></MusicPadList>
-      <MusicPadList data={featuredPlaylists} type={vars.playlist} title="Featured by Spotify"></MusicPadList>
-      <MusicPadList data={popPlaylists} type={vars.playlist} title="Pop"></MusicPadList>
-      <MusicPadList data={moodPlaylists} type={vars.playlist} title="Mood"></MusicPadList>
-      <MusicPadList data={chillPlaylists} type={vars.playlist} title="Chill"></MusicPadList>
-      <MusicPadList data={topPlaylists} type={vars.playlist} title="Top List"></MusicPadList>
-      <MusicPadList data={decadesPlaylists} type={vars.playlist} title="Through the years..."></MusicPadList>
+      <PlaylistList data={userPlaylists} type={vars.playlist} title="Your playlists" site="spotify"></PlaylistList>
+      <PlaylistList data={featuredPlaylists} type={vars.playlist} title="Featured by Spotify" site="spotify"></PlaylistList>
+      <PlaylistList data={popPlaylists} type={vars.playlist} title="Pop" site="spotify"></PlaylistList>
+      <PlaylistList data={moodPlaylists} type={vars.playlist} title="Mood" site="spotify"></PlaylistList>
+      <PlaylistList data={chillPlaylists} type={vars.playlist} title="Chill" site="spotify"></PlaylistList>
+      <PlaylistList data={topPlaylists} type={vars.playlist} title="Top List" site="spotify"></PlaylistList>
+      <PlaylistList data={decadesPlaylists} type={vars.playlist} title="Through the years..." site="spotify"></PlaylistList>
     </div>
   )
 }

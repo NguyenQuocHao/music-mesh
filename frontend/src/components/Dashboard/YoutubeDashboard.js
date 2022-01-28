@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
-import SongList from '../Music/MusicPad/SongList'
+import TrackList from '../Music/MusicPad/TrackList'
 import './Dashboard.scss'
 import vars from '../../variables.js'
 
@@ -29,9 +29,9 @@ export default function YoutubeDashboard({ }) {
 
   return (
     <div className="dashboard">
-      <SongList data={popularSongs} title="Popular songs" site="youtube" page="dashboard" type={vars.song}></SongList>
-      <SongList data={myPlaylists} title="My Playlists" site="youtube" page="dashboard" type={vars.playlist}></SongList>
-      <SongList data={randomPlaylists} title="Random playlists" site="youtube" page="dashboard" type={vars.playlist}></SongList>
+      <TrackList data={popularSongs} title="Popular songs" site="youtube" page="dashboard" type={vars.song}></TrackList>
+      <TrackList data={myPlaylists} title="My Playlists" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
+      <TrackList data={randomPlaylists} title="Random playlists" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
     </div>
   )
 }

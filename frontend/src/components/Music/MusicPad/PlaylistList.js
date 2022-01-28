@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import MusicPad from "./MusicPad";
-import './MusicPadList.css';
 import vars from '../../../variables'
 
-export default function MusicPadList({ data, title, description, type }) {
+export default function PlaylistList({ data, title, description, type, site }) {
   const [list, setList] = useState([])
 
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function MusicPadList({ data, title, description, type }) {
     var res = data.map((item) => {
       return (
         <div key={item.id}>
-          <MusicPad className="list" page="dashboard" site="spotify" type={vars.playlist} id={item.id} image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad>
+          <MusicPad className="list" page="dashboard" site={site} type={vars.playlist} id={item.id} image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad>
         </div>
       )
     });
