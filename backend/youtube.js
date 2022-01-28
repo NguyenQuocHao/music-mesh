@@ -64,7 +64,7 @@ module.exports = function (app) {
     })
   );
 
-  app.get('/popularSongs', function (req, res) {
+  app.get('/youtube/popularSongs', function (req, res) {
     youtube.videos
       .list({
         auth: oauth2Client,
@@ -82,7 +82,7 @@ module.exports = function (app) {
       });
   });
 
-  app.get('/myPlaylists', (req, res) => {
+  app.get('/youtube/myPlaylists', (req, res) => {
     youtube.playlists
       .list({
         auth: oauth2Client,
@@ -98,7 +98,7 @@ module.exports = function (app) {
       });
   })
 
-  app.get('/randomPlaylists', (req, res) => {
+  app.get('/youtube/randomPlaylists', (req, res) => {
     youtube.playlists
       .list({
         auth: oauth2Client,
@@ -114,7 +114,7 @@ module.exports = function (app) {
       });
   })
 
-  app.get('/relatedVideos', (req, res) => {
+  app.get('/youtube/relatedVideos', (req, res) => {
     youtube.search.list({
       auth: oauth2Client,
       part: "snippet",

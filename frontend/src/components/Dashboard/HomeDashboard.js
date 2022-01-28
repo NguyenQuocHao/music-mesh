@@ -37,17 +37,17 @@ export default function SpotifyDashboard({ }) {
         console.log('Something went wrong!', err);
       })
 
-    axios.get('http://localhost:5000/popularSongs')
+    axios.get('http://localhost:5000/youtube/popularSongs')
       .then(data => {
         setPopularSongs(data.data)
       })
 
-    axios.get('http://localhost:5000/myPlaylists')
+    axios.get('http://localhost:5000/youtube/myPlaylists')
       .then(data => {
         setYoutubePlaylists(data.data)
       })
 
-    axios.get('http://localhost:5000/randomPlaylists')
+    axios.get('http://localhost:5000/youtube/randomPlaylists')
       .then(data => {
         setRandomPlaylists(data.data)
       })

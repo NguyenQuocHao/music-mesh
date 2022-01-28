@@ -10,17 +10,17 @@ export default function YoutubeDashboard({ }) {
   const [randomPlaylists, setRandomPlaylists] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:5000/popularSongs')
+    axios.get('http://localhost:5000/youtube/popularSongs')
       .then(data => {
         setPopularSongs(data.data)
       })
 
-    axios.get('http://localhost:5000/myPlaylists')
+    axios.get('http://localhost:5000/youtube/myPlaylists')
       .then(data => {
         setMyPlaylists(data.data)
       })
 
-    axios.get('http://localhost:5000/randomPlaylists')
+    axios.get('http://localhost:5000/youtube/randomPlaylists')
       .then(data => {
         setRandomPlaylists(data.data)
       })

@@ -68,14 +68,6 @@ export default function SpotifyDashboard({ }) {
       }, function (err) {
         console.log('Something went wrong!', err);
       })
-
-      axios.get('http://localhost:5000/spotify/currentlyPlaying')
-      .then(function (data) {
-        console.log('Currently playing', data.data);
-        // setFeaturedPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
-      })
   }, [])
 
   return (
