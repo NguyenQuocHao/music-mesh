@@ -27,7 +27,7 @@ function Navbar({ user, sideBarHandler }) {
             <ul className="list loginNav">
               <li className="listItem">
                 <img
-                  src={user.photos[0].value}
+                  src={user.photos[0]?.value}
                   alt=""
                   className="avatar"
                 />
