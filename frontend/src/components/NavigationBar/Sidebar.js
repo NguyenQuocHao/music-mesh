@@ -4,36 +4,64 @@ import { useLocation, Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './Navbar.scss';
 import { IconContext } from 'react-icons';
+import { useDispatch, useSelector } from 'react-redux'
+import { playlist, getMyYoutubePlaylists } from '../../redux/slice'
+import GetRedirectLink from '../../utils/redirect'
 
 function Sidebar({ show, sideBarHandler, youtubePlaylists, spotifyPlaylists }) {
   const { state } = useLocation();
+  const myYoutubePlaylists = useSelector(playlist);
+
+  const getYoutubePlaylists = () => {
+    if (!Array.isArray(myYoutubePlaylists)) {
+      return;
+    }
+
+    return myYoutubePlaylists.map(item =>
+      <div className='side-bar-playlist-text side-bar-text-hover'>
+        <Link
+          to={{
+            pathname: `/${GetRedirectLink('youtube', 'playlist')}/${item.id}`,
+            state: { id: item.id }
+          }}>
+          {item.snippet.title}
+        </Link>
+      </div>);
+  }
 
   return (
-    <IconContext.Provider value={{ color: '#fff' }}>
-      <nav className={show ? 'side-bar active' : 'side-bar'}>
-        <ul className='side-bar-items' onClick={sideBarHandler}>
-          <li className='side-bar-toggle'>
-            <Link className='menu-bars'
-              to={{
-                state: state
-              }}>
-              Music Mesh
-            </Link>
-          </li>
-          {SidebarData.map((item, index) => {
-            return (
-              <li key={index} className={item.cName}>
-                <Link to={item.path}>
-                  {item.icon}
-                  <span>{item.title}</span>
-                </Link>
-              </li>
-            );
-          })}
-          <div className='side-bar-text'>My Playlists</div>
+    // <IconContext.Provider value={{ color: '#fff' }}>
+    <nav className={show ? 'side-bar active' : 'side-bar'}>
+      <ul className='side-bar-items' onClick={sideBarHandler}>
+        <li className='side-bar-toggle'>
+          <Link className='menu-bars'
+            to={{
+              state: state
+            }}>
+            Music Mesh
+          </Link>
+        </li>
+        {SidebarData.map((item, index) => {
+          return (
+            <li key={index} className={item.cName}>
+              <Link to={item.path}>
+                {item.icon}
+                <span>{item.title}</span>
+              </Link>
+            </li>
+          );
+        })}
+        <br></br>
+        <div>My Playlists</div>
+        <br></br>
+        <ul className='youtube-playlists'>
+          {
+            getYoutubePlaylists()
+          }
         </ul>
-      </nav>
-    </IconContext.Provider>
+      </ul>
+    </nav>
+    // </IconContext.Provider>
   );
 }
 

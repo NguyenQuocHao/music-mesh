@@ -8,19 +8,19 @@ export const SidebarData = [
     title: 'Home',
     path: '/',
     icon: <AiIcons.AiFillHome/>,
-    cName: 'side-bar-text'
+    cName: 'side-bar-menu-text side-bar-text-hover'
   },
   {
     title: 'Youtube',
     path: '/youtube',
     icon: <IoIcons.IoMdPeople/>,
-    cName: 'side-bar-text'
+    cName: 'side-bar-menu-text side-bar-text-hover'
   },
   {
     title: 'Spotify',
     path: '/spotify',
     icon: <FaIcons.FaEnvelopeOpenText/>,
-    cName: 'side-bar-text'
+    cName: 'side-bar-menu-text side-bar-text-hover'
   }
 ]
 

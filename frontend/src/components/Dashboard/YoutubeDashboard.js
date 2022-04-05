@@ -3,11 +3,16 @@ import axios from "axios"
 import TrackList from '../Music/MusicPad/TrackList'
 import './Dashboard.scss'
 import vars from '../../variables.js'
+import { useDispatch, useSelector } from 'react-redux'
+import {playlist, getMyYoutubePlaylists} from '../../redux/slice'
+import { configureStore } from '@reduxjs/toolkit'
 
 export default function YoutubeDashboard({ }) {
   const [myPlaylists, setMyPlaylists] = useState([])
   const [popularSongs, setPopularSongs] = useState([])
   const [randomPlaylists, setRandomPlaylists] = useState([])
+  const dispatch = useDispatch()
+  const playlists = useSelector(playlist)
 
   useEffect(() => {
     axios.get('http://localhost:5000/youtube/popularSongs')
@@ -17,6 +22,7 @@ export default function YoutubeDashboard({ }) {
 
     axios.get('http://localhost:5000/youtube/myPlaylists')
       .then(data => {
+        dispatch(getMyYoutubePlaylists(data.data))
         setMyPlaylists(data.data)
       })
 
@@ -24,7 +30,6 @@ export default function YoutubeDashboard({ }) {
       .then(data => {
         setRandomPlaylists(data.data)
       })
-
   }, [])
 
   return (

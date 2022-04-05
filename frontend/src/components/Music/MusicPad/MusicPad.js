@@ -1,37 +1,14 @@
 import { useState, useEffect } from 'react';
 import "./MusicPad.css";
 import { Link } from 'react-router-dom';
-import vars from '../../../variables'
+import GetRedirectLink from '../../../utils/redirect'
 
 export default function MusicPad({ image, title, subTitle, id, site, page, type }) {
-  function GetRedirectLink() {
-    var link = ""
-    switch (site) {
-      case vars.youtube:
-        link += vars.youtube;
-        break;
-      case vars.spotify:
-        link += vars.spotify;
-        break;
-    }
-
-    switch (type) {
-      case vars.playlist:
-        link += "-" + vars.playlist;
-        break;
-      case vars.song:
-        link += "-" + vars.song;
-        break;
-    }
-
-    return link
-  }
-
   return (
     <div className={"musicpad musicpad-" + page}>
       <Link
         to={{
-          pathname: `/${GetRedirectLink()}/${id}`,
+          pathname: `/${GetRedirectLink(site, type)}/${id}`,
           state: { id: id }
         }}
       >
