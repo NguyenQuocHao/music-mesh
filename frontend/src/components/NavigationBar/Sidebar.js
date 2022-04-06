@@ -5,19 +5,19 @@ import { SidebarData } from './SidebarData';
 import './Navbar.scss';
 import { IconContext } from 'react-icons';
 import { useDispatch, useSelector } from 'react-redux'
-import { playlist, getMyYoutubePlaylists } from '../../redux/slice'
+import { myYoutubePlaylists, getMyYoutubePlaylists } from '../../redux/youtubeSlice'
 import GetRedirectLink from '../../utils/redirect'
 
-function Sidebar({ show, sideBarHandler, youtubePlaylists, spotifyPlaylists }) {
+function Sidebar({ show, sideBarHandler }) {
   const { state } = useLocation();
-  const myYoutubePlaylists = useSelector(playlist);
+  const youtubePlaylists = useSelector(myYoutubePlaylists);
 
   const getYoutubePlaylists = () => {
-    if (!Array.isArray(myYoutubePlaylists)) {
+    if (!Array.isArray(youtubePlaylists)) {
       return;
     }
 
-    return myYoutubePlaylists.map(item =>
+    return youtubePlaylists.map(item =>
       <div className='side-bar-playlist-text side-bar-text-hover'>
         <Link
           to={{

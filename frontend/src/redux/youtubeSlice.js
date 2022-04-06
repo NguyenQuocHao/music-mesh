@@ -1,7 +1,7 @@
 import axios from "axios"
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-export const counterSlice = createSlice({
+export const YoutubeSlice = createSlice({
   name: 'playlist',
   initialState: {
     value: {}
@@ -15,7 +15,6 @@ export const counterSlice = createSlice({
 
 // the outside "thunk creator" function
 export const getYoutubePlaylists = () => {
-    console.log("Yes!!!!")
     // the inside "thunk function"
     return async (dispatch, getState) => {
       try {
@@ -38,7 +37,7 @@ export const getYoutubePlaylists = () => {
     }
   }
 
-  export const { getMyYoutubePlaylists, test, testTwo } = counterSlice.actions
-  export default counterSlice.reducer
+  export const { getMyYoutubePlaylists } = YoutubeSlice.actions
+  export default YoutubeSlice.reducer
 
-  export const playlist = state => state.playlist.value
+  export const myYoutubePlaylists = state => state.playlist.value
