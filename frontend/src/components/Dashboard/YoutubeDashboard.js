@@ -5,7 +5,6 @@ import './Dashboard.scss'
 import vars from '../../variables.js'
 import { useDispatch, useSelector } from 'react-redux'
 import {playlist, getMyYoutubePlaylists} from '../../redux/slice'
-import { configureStore } from '@reduxjs/toolkit'
 
 export default function YoutubeDashboard({ }) {
   const [myPlaylists, setMyPlaylists] = useState([])
