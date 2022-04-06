@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import playlistReducer from './reducers/youtubeSlice'
+import youtubeReducer from './reducers/youtubeSlice'
+import spotifyReducer from './reducers/spotifySlice'
 
 export default configureStore({
   reducer: {
-    playlist: playlistReducer
+    youtubePlaylist: youtubeReducer,
+    spotifyPlaylist: spotifyReducer
   },
 })

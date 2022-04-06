@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from "axios"
 import PlaylistList from '../Music/MusicPad/PlaylistList'
 import vars from '../../variables'
+import { useDispatch } from 'react-redux'
+import { getMySpotifyPlaylists } from '../../redux/reducers/spotifySlice'
 
 export default function SpotifyDashboard({ }) {
   const [userPlaylists, setUserPlaylists] = useState([])
@@ -11,11 +13,13 @@ export default function SpotifyDashboard({ }) {
   const [moodPlaylists, setMoodPlaylists] = useState([])
   const [chillPlaylists, setChillPlaylists] = useState([])
   const [featuredPlaylists, setFeaturedPlaylists] = useState([])
+  const dispatch = useDispatch()
 
   useEffect(() => {
     axios.get('http://localhost:5000/spotify/userPlaylists')
       .then(function (data) {
         console.log('User playlists', data.data);
+        dispatch(getMySpotifyPlaylists(data.data))
         setUserPlaylists(data.data);
       }, function (err) {
         console.log('Something went wrong!', err);

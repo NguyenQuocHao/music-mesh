@@ -2,9 +2,9 @@ import axios from "axios"
 import { createSlice } from '@reduxjs/toolkit'
 
 export const YoutubeSlice = createSlice({
-  name: 'playlist',
+  name: 'youtubePlaylist',
   initialState: {
-    value: {}
+    value: []
   },
   reducers: {
     getMyYoutubePlaylists: (state, action) => {
@@ -40,4 +40,4 @@ export const getYoutubePlaylists = () => {
   export const { getMyYoutubePlaylists } = YoutubeSlice.actions
   export default YoutubeSlice.reducer
 
-  export const myYoutubePlaylists = state => state.playlist.value
+  export const myYoutubePlaylists = (state) => state.youtubePlaylist.value
