@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import playlistReducer from './youtubeSlice'
+import playlistReducer from './reducers/youtubeSlice'
 
 export default configureStore({
   reducer: {

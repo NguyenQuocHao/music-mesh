@@ -5,7 +5,7 @@ import { SidebarData } from './SidebarData';
 import './Navbar.scss';
 import { IconContext } from 'react-icons';
 import { useDispatch, useSelector } from 'react-redux'
-import { myYoutubePlaylists, getMyYoutubePlaylists } from '../../redux/youtubeSlice'
+import { myYoutubePlaylists, getMyYoutubePlaylists } from '../../redux/reducers/youtubeSlice'
 import GetRedirectLink from '../../utils/redirect'
 
 function Sidebar({ show, sideBarHandler }) {
