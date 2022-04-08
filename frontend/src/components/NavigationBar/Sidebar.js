@@ -20,7 +20,7 @@ function Sidebar({ show, sideBarHandler }) {
     }
 
     return youtubePlaylists.map(item =>
-      <div className='side-bar-playlist-text side-bar-text-hover'>
+      <div className='side-bar-text'>
         <Link
           to={{
             pathname: `/${GetRedirectLink('youtube', 'playlist')}/${item.id}`,
@@ -37,7 +37,7 @@ function Sidebar({ show, sideBarHandler }) {
     }
 
     return spotifyPlaylists.map(item =>
-      <div className='side-bar-playlist-text side-bar-text-hover'>
+      <div className='side-bar-text'>
         <Link
           to={{
             pathname: `/${GetRedirectLink('spotify', 'playlist')}/${item.id}`,
@@ -60,6 +60,8 @@ function Sidebar({ show, sideBarHandler }) {
             Music Mesh
           </Link>
         </li>
+        <br></br>
+        <div>Main</div>
         {SidebarData.map((item, index) => {
           return (
             <li key={index} className={item.cName}>
@@ -72,7 +74,6 @@ function Sidebar({ show, sideBarHandler }) {
         })}
         <br></br>
         <div>My Playlists</div>
-        <br></br>
         <ul className='youtube-playlists'>
           {
             getYoutubePlaylists()
