@@ -40,7 +40,7 @@ function Spotify() {
 const Display = props => {
   let { user } = props;
 
-  if (user) {
+  if (user && user.provider == 'spotify') {
     return <SpotifyDashboard />;
   } else {
     return <Login />;
