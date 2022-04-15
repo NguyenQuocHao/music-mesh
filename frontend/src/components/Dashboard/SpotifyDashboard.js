@@ -18,7 +18,6 @@ export default function SpotifyDashboard({ }) {
   useEffect(() => {
     axios.get('http://localhost:5000/spotify/userPlaylists')
       .then(function (data) {
-        console.log('User playlists', data.data);
         dispatch(getMySpotifyPlaylists(data.data))
         setUserPlaylists(data.data);
       }, function (err) {
@@ -27,7 +26,6 @@ export default function SpotifyDashboard({ }) {
 
     axios.get('http://localhost:5000/spotify/pop')
       .then(function (data) {
-        console.log('Pop playlists', data.data);
         setPopPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -35,7 +33,6 @@ export default function SpotifyDashboard({ }) {
 
     axios.get('http://localhost:5000/spotify/topLists')
       .then(function (data) {
-        console.log('Top playlists', data.data);
         setTopPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -43,7 +40,6 @@ export default function SpotifyDashboard({ }) {
 
     axios.get('http://localhost:5000/spotify/decades')
       .then(function (data) {
-        console.log('Decades playlists', data.data);
         setDecadesPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -51,7 +47,6 @@ export default function SpotifyDashboard({ }) {
 
     axios.get('http://localhost:5000/spotify/mood')
       .then(function (data) {
-        console.log('Mood playlists', data.data);
         setMoodPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -59,7 +54,6 @@ export default function SpotifyDashboard({ }) {
 
     axios.get('http://localhost:5000/spotify/chill')
       .then(function (data) {
-        console.log('Chill playlists', data.data);
         setChillPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -67,7 +61,6 @@ export default function SpotifyDashboard({ }) {
 
     axios.get('http://localhost:5000/spotify/featuredPlaylists')
       .then(function (data) {
-        console.log('Featured playlists', data.data);
         setFeaturedPlaylists(data.data)
       }, function (err) {
         console.log('Something went wrong!', err);
