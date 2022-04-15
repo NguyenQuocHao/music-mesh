@@ -73,10 +73,15 @@ module.exports = function (app) {
     })
   );
 
+  app.get('/spotify/clearTokensCache', function (req, res) {
+    spotifyApi.setAccessToken(null)
+    spotifyApi.setRefreshToken(null)
+    res.sendStatus(200);
+  });
+
   app.get('/spotify/userPlaylists', function (req, res) {
     spotifyApi.getUserPlaylists()
       .then(function (data) {
-        console.log('User playlists', data.body);
         res.send(data.body.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -89,7 +94,6 @@ module.exports = function (app) {
   app.get('/spotify/pop', (req, res) => {
     spotifyApi.getPlaylistsForCategory('pop', { limit: playListLimit })
       .then(function (data) {
-        console.log('Pop playlists', data.body);
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -102,7 +106,6 @@ module.exports = function (app) {
   app.get('/spotify/topLists', (req, res) => {
     spotifyApi.getPlaylistsForCategory('toplists', { limit: playListLimit })
       .then(function (data) {
-        console.log('Top playlists', data.body);
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -115,7 +118,6 @@ module.exports = function (app) {
   app.get('/spotify/decades', (req, res) => {
     spotifyApi.getPlaylistsForCategory('decades', { limit: playListLimit })
       .then(function (data) {
-        console.log('Decades playlists', data.body);
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -128,7 +130,6 @@ module.exports = function (app) {
   app.get('/spotify/mood', (req, res) => {
     spotifyApi.getPlaylistsForCategory('mood', { limit: playListLimit })
       .then(function (data) {
-        console.log('Mood playlists', data.body);
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -138,7 +139,6 @@ module.exports = function (app) {
   app.get('/spotify/chill', function (req, res) {
     spotifyApi.getPlaylistsForCategory('chill', { limit: playListLimit })
       .then(function (data) {
-        console.log('Chill playlists', data.body);
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
@@ -148,7 +148,6 @@ module.exports = function (app) {
   app.get('/spotify/featuredPlaylists', function (req, res) {
     spotifyApi.getFeaturedPlaylists({ limit: playListLimit })
       .then(function (data) {
-        console.log('Featured playlists', data.body);
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);

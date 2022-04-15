@@ -64,6 +64,12 @@ module.exports = function (app) {
     })
   );
 
+  app.get('/youtube/clearTokensCache', function (req, res) {
+    oauth2Client.credentials.access_token = null;
+    oauth2Client.credentials.refresh_token = null;
+    res.sendStatus(200);
+  });
+
   app.get('/youtube/popularSongs', function (req, res) {
     youtube.videos
       .list({

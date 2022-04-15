@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
-
+const axios = require('axios');
 const CLIENT_URL = "http://localhost:3000/youtube";
 const SPOTIFY_URL = "http://localhost:3000/spotify";
 
@@ -23,6 +23,22 @@ router.get("/login/failed", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
+  axios.get('http://localhost:5000/spotify/clearTokensCache')
+  .then(data => {
+    console.log("Cleared Spotify cached.")
+  })
+  .catch(err => {
+    console.log(err)
+  })
+
+  axios.get('http://localhost:5000/youtube/clearTokensCache')
+  .then(data => {
+    console.log("Cleared Youtube cached.")
+  })
+  .catch(err => {
+    console.log(err)
+  })
+
   req.logout();
   res.redirect(CLIENT_URL);
 });
