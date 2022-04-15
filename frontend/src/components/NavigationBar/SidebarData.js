@@ -1,7 +1,6 @@
-import React, {useState} from 'react'
-import * as FaIcons from 'react-icons/fa'
+import React from 'react'
 import * as AiIcons from 'react-icons/ai'
-import * as IoIcons from 'react-icons/io'
+import {SiYoutube, SiSpotify} from 'react-icons/si'
 
 export const SidebarData = [
   {
@@ -13,13 +12,13 @@ export const SidebarData = [
   {
     title: 'Youtube',
     path: '/youtube',
-    icon: <IoIcons.IoMdPeople/>,
+    icon: <SiYoutube/>,
     cName: 'side-bar-text'
   },
   {
     title: 'Spotify',
     path: '/spotify',
-    icon: <FaIcons.FaEnvelopeOpenText/>,
+    icon: <SiSpotify/>,
     cName: 'side-bar-text'
   }
 ]
