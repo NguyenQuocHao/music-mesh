@@ -40,7 +40,7 @@ function Youtube() {
 const Display = props => {
   let { user } = props;
 
-  if (user) {
+  if (user && user.provider == 'google') {
     return <YoutubeDashboard />;
   } else {
     return <Login />;

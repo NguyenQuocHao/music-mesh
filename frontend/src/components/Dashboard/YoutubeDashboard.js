@@ -1,36 +1,40 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
-import SongList from '../Music/MusicPad/SongList'
-import './Dashboard.css'
+import TrackList from '../Music/MusicPad/TrackList'
+import './Dashboard.scss'
+import vars from '../../variables.js'
+import { useDispatch } from 'react-redux'
+import { getMyYoutubePlaylists} from '../../redux/reducers/youtubeSlice'
 
 export default function YoutubeDashboard({ }) {
   const [myPlaylists, setMyPlaylists] = useState([])
   const [popularSongs, setPopularSongs] = useState([])
   const [randomPlaylists, setRandomPlaylists] = useState([])
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    axios.get('http://localhost:5000/popularSongs')
+    axios.get('http://localhost:5000/youtube/popularSongs')
       .then(data => {
         setPopularSongs(data.data)
       })
 
-    axios.get('http://localhost:5000/myPlaylists')
+    axios.get('http://localhost:5000/youtube/myPlaylists')
       .then(data => {
+        dispatch(getMyYoutubePlaylists(data.data))
         setMyPlaylists(data.data)
       })
 
-    axios.get('http://localhost:5000/randomPlaylists')
+    axios.get('http://localhost:5000/youtube/randomPlaylists')
       .then(data => {
         setRandomPlaylists(data.data)
       })
-
   }, [])
 
   return (
     <div className="dashboard">
-      <SongList data={popularSongs} title="Popular songs" site="youtube" page="dashboard"></SongList>
-      <SongList data={myPlaylists} title="My Playlists" site="youtube" page="dashboard"></SongList>
-      <SongList data={randomPlaylists} title="Random playlists" site="youtube" page="dashboard"></SongList>
+      <TrackList data={popularSongs} title="Popular songs" site="youtube" page="dashboard" type={vars.song}></TrackList>
+      <TrackList data={myPlaylists} title="My Playlists" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
+      <TrackList data={randomPlaylists} title="Random playlists" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
     </div>
   )
 }

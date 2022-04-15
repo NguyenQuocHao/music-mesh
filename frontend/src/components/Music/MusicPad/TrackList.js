@@ -1,36 +1,39 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import MusicPad from "./MusicPad";
-import './SongList.css';
 
-export default function SongList({ data, title, site, page }) {
+export default function TrackList({ data, title, site, page, type }) {
   const [list, setList] = useState([])
-  const [maxIndex, setMaxIndex] = useState(5)
-  const DEFAULT_LIST_LENGTH = 15;
-  const moveRight = useCallback(
-    () => {
-      if (maxIndex == DEFAULT_LIST_LENGTH) {
-        setMaxIndex(5)
-      }
-      else {
-        setMaxIndex(maxIndex + 5)
-      }
-    }, [maxIndex],
-  );
+  const [firstIndex, setFirstIndex] = useState(0)
+  const DEFAULT_RANGE = 5;
 
-  const moveLeft = useCallback(
+  const moveRight = () => {
+    var index = firstIndex
+    index += DEFAULT_RANGE
+
+    if (index >= data.length) {
+      setFirstIndex(0)
+    }
+    else {
+      setFirstIndex(index)
+    }
+  }
+
+  const moveLeft =
     () => {
-      if (maxIndex - 5 == 0) {
-        setMaxIndex(DEFAULT_LIST_LENGTH)
+      var index = firstIndex
+      index -= DEFAULT_RANGE
+
+      if (index < 0) {
+        setFirstIndex(data.length - DEFAULT_RANGE)
       }
       else {
-        setMaxIndex(maxIndex - 5)
+        setFirstIndex(index)
       }
-    }, [maxIndex],
-  );
+    }
 
   useEffect(() => {
     updateList();
-  }, [maxIndex, data])
+  }, [firstIndex, data])
 
   const updateList = () => {
     var res = data.map((item, index) => {
@@ -44,8 +47,8 @@ export default function SongList({ data, title, site, page }) {
 
       return (
         <div key={itemId}>
-          {maxIndex - 6 < index && index < maxIndex ?
-            <MusicPad id={itemId}
+          {firstIndex <= index && index < firstIndex + DEFAULT_RANGE ?
+            <MusicPad type={type} id={itemId}
               image={item.snippet.thumbnails.high.url}
               title={item.snippet.title}
               subTitle={item.snippet.channelTitle}
@@ -60,7 +63,7 @@ export default function SongList({ data, title, site, page }) {
 
   return (
     <div>
-      <h3 className="song-list-title">{title}</h3>
+      <h3 className="music-title">{title}-{data.length}</h3>
       <div className={"song-list-" + page}>
         <span className="icon icon-circle" onClick={moveLeft}>{'<'}</span>
         {list}

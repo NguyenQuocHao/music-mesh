@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import MusicPad from "./MusicPad";
-import './MusicPadList.css';
+import vars from '../../../variables'
 
-export default function MusicPadList({ data, title, description }) {
+export default function PlaylistList({ data, title, description, type, site }) {
   const [list, setList] = useState([])
 
   useEffect(() => {
     var res = data.map((item) =>
       <div key={item.id}>
-        <MusicPad className="list" page="dashboard" id={item.id} image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad>
+        <MusicPad className="list" page="dashboard" type={type} id={item.id} image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad>
       </div>)
     // setList(res)
   })
@@ -21,7 +21,7 @@ export default function MusicPadList({ data, title, description }) {
     var res = data.map((item) => {
       return (
         <div key={item.id}>
-          <MusicPad className="list" page="dashboard" id={item.id} image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad>
+          <MusicPad className="list" page="dashboard" site={site} type={vars.playlist} id={item.id} image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad>
         </div>
       )
     });
@@ -30,7 +30,7 @@ export default function MusicPadList({ data, title, description }) {
 
   return (
     <div>
-      <h3>{title}</h3>
+      <h3 className="music-title">{title}</h3>
       <h5>{description}</h5>
       <div className="song-list-dashboard">
         <span className="icon icon-circle">{'<'}</span>

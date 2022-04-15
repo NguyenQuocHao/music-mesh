@@ -1,8 +1,11 @@
+@import '../../../variables.scss';
+
 .background{
   background-color: rgba(3,3,3,255);
   display: flex;
   flex-direction: column;
   height: 100%;
+  height: calc(100vh - #{$navbarHeight}); 
 }
 
 .main-media{
