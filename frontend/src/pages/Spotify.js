@@ -20,8 +20,13 @@ function Spotify() {
           if (response.status === 200) return response.json();
           throw new Error("authentication has been failed!");
         })
-        .then((resObject) => {
-          setUser(resObject.user);
+        .then((data) => {
+          if (data.user.linkedAccount && data.user.linkedAccount.provider == 'spotify') {
+            setUser(data.user.linkedAccount);
+          }
+          else {
+            setUser(data.user);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -39,12 +44,15 @@ function Spotify() {
 
 const Display = props => {
   let { user } = props;
+  if (user) {
+    if (user.provider == 'spotify') {
+      return <SpotifyDashboard />;
+    }
 
-  if (user && user.provider == 'spotify') {
-    return <SpotifyDashboard />;
-  } else {
-    return <Login />;
+    return <Login site={user.provider} />
   }
+
+  return <Login />;
 };
 
 export default Spotify
