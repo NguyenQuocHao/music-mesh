@@ -1,7 +1,7 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
-const cors = require('cors')
-const bodyParser = require('body-parser')
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const SpotifyWebApi = require('spotify-web-api-node');
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const passport = require('passport')
@@ -10,25 +10,18 @@ const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 })
-const playListLimit = 5
+const ITEM_LIMIT = 5
 
 const app = express();
 app.use(cors())
 app.use(bodyParser.json())
-
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "PUT, PATCH, DELETE");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// })
 
 passport.use(
   new SpotifyStrategy(
     {
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: 'http://localhost:5000/auth/spotify/callback'
+      callbackURL: 'http://localhost:5000/auth/spotify/signin/callback'
     },
     function (accessToken, refreshToken, expires_in, profile, done) {
       spotifyApi.setAccessToken(accessToken)
@@ -39,6 +32,24 @@ passport.use(
     }
   )
 );
+
+passport.use('spotify-authz',
+  new SpotifyStrategy(
+    {
+      clientID: process.env.SPOTIFY_CLIENT_ID,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+      callbackURL: 'http://localhost:5000/auth/spotify/connect/callback'
+    },
+    function (accessToken, refreshToken, expires_in, profile, done) {
+      spotifyApi.setAccessToken(accessToken)
+      spotifyApi.setRefreshToken(refreshToken)
+      // spotifyApi.expiresIn = expires_in
+
+      done(null, profile);
+    }
+  )
+);
+
 
 
 app.post('/refresh', (req, res) => {
@@ -92,7 +103,7 @@ module.exports = function (app) {
   });
 
   app.get('/spotify/pop', (req, res) => {
-    spotifyApi.getPlaylistsForCategory('pop', { limit: playListLimit })
+    spotifyApi.getPlaylistsForCategory('pop', { limit: ITEM_LIMIT })
       .then(function (data) {
         res.send(data.body.playlists.items)
       }, function (err) {
@@ -104,7 +115,7 @@ module.exports = function (app) {
   })
 
   app.get('/spotify/topLists', (req, res) => {
-    spotifyApi.getPlaylistsForCategory('toplists', { limit: playListLimit })
+    spotifyApi.getPlaylistsForCategory('toplists', { limit: ITEM_LIMIT })
       .then(function (data) {
         res.send(data.body.playlists.items)
       }, function (err) {
@@ -116,19 +127,19 @@ module.exports = function (app) {
   })
 
   app.get('/spotify/decades', (req, res) => {
-    spotifyApi.getPlaylistsForCategory('decades', { limit: playListLimit })
+    spotifyApi.getPlaylistsForCategory('decades', { limit: ITEM_LIMIT })
       .then(function (data) {
         res.send(data.body.playlists.items)
       }, function (err) {
         console.log('Something went wrong!', err);
       })
       .catch(e => {
-        console.log(e) 
+        console.log(e)
       });
   })
 
   app.get('/spotify/mood', (req, res) => {
-    spotifyApi.getPlaylistsForCategory('mood', { limit: playListLimit })
+    spotifyApi.getPlaylistsForCategory('mood', { limit: ITEM_LIMIT })
       .then(function (data) {
         res.send(data.body.playlists.items)
       }, function (err) {
@@ -137,7 +148,7 @@ module.exports = function (app) {
   })
 
   app.get('/spotify/chill', function (req, res) {
-    spotifyApi.getPlaylistsForCategory('chill', { limit: playListLimit })
+    spotifyApi.getPlaylistsForCategory('chill', { limit: ITEM_LIMIT })
       .then(function (data) {
         res.send(data.body.playlists.items)
       }, function (err) {
@@ -146,7 +157,7 @@ module.exports = function (app) {
   });
 
   app.get('/spotify/featuredPlaylists', function (req, res) {
-    spotifyApi.getFeaturedPlaylists({ limit: playListLimit })
+    spotifyApi.getFeaturedPlaylists({ limit: ITEM_LIMIT })
       .then(function (data) {
         res.send(data.body.playlists.items)
       }, function (err) {
