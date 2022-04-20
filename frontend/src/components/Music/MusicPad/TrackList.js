@@ -62,9 +62,9 @@ export default function TrackList({ data, title, site, page, type }) {
     <div>
       <h3 className="music-title">{title}</h3>
       <div className={"song-list-" + page}>
-        <NavButton isLeft handler={moveLeft}></NavButton>
+        {firstIndex >= DEFAULT_RANGE ? <NavButton isLeft handler={moveLeft}></NavButton> : null}
         {list}
-        <NavButton handler={moveRight}></NavButton>
+        {firstIndex + 5 < data.length ? <NavButton handler={moveRight}></NavButton> : null}
       </div>
     </div>
   )
