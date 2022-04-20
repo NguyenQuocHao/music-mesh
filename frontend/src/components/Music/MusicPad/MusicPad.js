@@ -5,17 +5,15 @@ import GetRedirectLink from '../../../utils/redirect'
 export default function MusicPad({ image, title, subTitle, id, site, page, type }) {
   return (
     <div className={"musicpad musicpad-" + page}>
-      <Link
+      <Link style={{textDecoration: 'none'}}
         to={{
           pathname: `/${GetRedirectLink(site, type)}/${id}`,
           state: { id: id }
         }}
       >
-        <div>
-          <img src={image} alt="Empty" className={"musicpad-" + page + "-image"} />
-          <div className={"music-title"}>{title}</div>
-          <div className={"musicpad-sub-title"}>{subTitle}</div>
-        </div>
+        <img src={image} alt="Empty" className={"musicpad-" + page + "-image"} />
+        <div className={"music-title"}>{title}</div>
+        <div className={"musicpad-sub-title"}>{subTitle}</div>
       </Link>
     </div>
   )
