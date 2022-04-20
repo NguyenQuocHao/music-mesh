@@ -1,9 +1,11 @@
-export const youtube = "youtube"
-export const spotify = "spotify"
-export const playlist = "playlist"
-export const song = "song"
+const youtube = "youtube"
+const spotify = "spotify"
+const playlist = "playlist"
+const song = "song"
 
-export default {
+const exportedObject = {
     youtube, spotify, playlist, song
-}
+};
+
+export default exportedObject;
 

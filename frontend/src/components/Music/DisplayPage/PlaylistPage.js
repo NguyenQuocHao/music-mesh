@@ -1,24 +1,15 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react'
-import { useLocation, Link } from "react-router-dom"
-import TrackList from '../MusicPad/TrackList'
+import { useLocation } from "react-router-dom"
 import './PlaylistPage.scss'
 
 export default function PlaylistPage() {
   const { state } = useLocation();
-  const [relatedVideos, setRelatedVideos] = useState([])
   const [url, setUrl] = useState("")
 
   useEffect(() => {
     var embededLink = ""
     const currentLink = window.location.href
     if (currentLink.includes("youtube")) {
-      
-      // axios.get('http://localhost:8001/relatedVideos')
-      //   .then(data => {
-      //     setRelatedVideos(data.data)
-      //   })
-
       if (currentLink.includes("song")) {
         embededLink = "https://www.youtube.com/embed/" + state.id
       }

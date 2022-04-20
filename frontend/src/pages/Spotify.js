@@ -21,7 +21,7 @@ function Spotify() {
           throw new Error("authentication has been failed!");
         })
         .then((data) => {
-          if (data.user.linkedAccount && data.user.linkedAccount.provider == 'spotify') {
+          if (data.user.linkedAccount && data.user.linkedAccount.provider === 'spotify') {
             setUser(data.user.linkedAccount);
           }
           else {
@@ -45,7 +45,7 @@ function Spotify() {
 const Display = props => {
   let { user } = props;
   if (user) {
-    if (user.provider == 'spotify') {
+    if (user.provider === 'spotify') {
       return <SpotifyDashboard />;
     }
 

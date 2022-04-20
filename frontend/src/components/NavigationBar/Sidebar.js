@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import * as AiIcons from 'react-icons/ai';
+import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './Navbar.scss';
-import { IconContext } from 'react-icons';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { myYoutubePlaylists } from '../../redux/reducers/youtubeSlice'
 import { mySpotifyPlaylists } from '../../redux/reducers/spotifySlice'
 import GetRedirectLink from '../../utils/redirect'
@@ -20,7 +18,7 @@ function Sidebar({ show, sideBarHandler }) {
     }
 
     return youtubePlaylists.map(item =>
-      <div className='side-bar-text'>
+      <div className='side-bar-text' key={item.id}>
         <Link
           to={{
             pathname: `/${GetRedirectLink('youtube', 'playlist')}/${item.id}`,
@@ -37,7 +35,7 @@ function Sidebar({ show, sideBarHandler }) {
     }
 
     return spotifyPlaylists.map(item =>
-      <div className='side-bar-text'>
+      <div className='side-bar-text'  key={item.id}>
         <Link
           to={{
             pathname: `/${GetRedirectLink('spotify', 'playlist')}/${item.id}`,

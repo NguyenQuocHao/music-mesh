@@ -6,7 +6,7 @@ import vars from '../../variables.js'
 import { useDispatch } from 'react-redux'
 import { getMyYoutubePlaylists} from '../../redux/reducers/youtubeSlice'
 
-export default function YoutubeDashboard({ }) {
+export default function YoutubeDashboard() {
   const [myPlaylists, setMyPlaylists] = useState([])
   const [popularSongs, setPopularSongs] = useState([])
   const [randomPlaylists, setRandomPlaylists] = useState([])

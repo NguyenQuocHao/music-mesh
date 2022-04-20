@@ -4,7 +4,7 @@ import PlaylistList from '../Music/MusicPad/PlaylistList'
 import vars from '../../variables'
 import TrackList from '../Music/MusicPad/TrackList'
 
-export default function SpotifyDashboard({ }) {
+export default function SpotifyDashboard() {
   const [spotifyPlaylists, setSpotifyPlaylists] = useState([])
   const [topPlaylists, setTopPlaylists] = useState([])
   const [featuredPlaylists, setFeaturedPlaylists] = useState([])
@@ -15,26 +15,17 @@ export default function SpotifyDashboard({ }) {
   useEffect(() => {
     axios.get('http://localhost:5000/spotify/userPlaylists')
       .then(function (data) {
-        console.log('User playlists', data.data);
         setSpotifyPlaylists(data.data);
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/topLists')
       .then(function (data) {
-        console.log('Top playlists', data.data);
         setTopPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/featuredPlaylists')
       .then(function (data) {
-        console.log('Featured playlists', data.data);
         setFeaturedPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/youtube/popularSongs')

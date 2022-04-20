@@ -22,8 +22,8 @@ function Home() {
           if (response.status === 200) return response.json();
           throw new Error("authentication has been failed!");
         })
-        .then((resObject) => {
-          setUser(resObject.user);
+        .then(data => {
+          setUser(data.user);
         })
         .catch((err) => {
           console.log(err);

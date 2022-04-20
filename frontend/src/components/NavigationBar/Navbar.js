@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
+import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { SidebarData } from './SidebarData';
 import './Navbar.scss';
-import { IconContext } from 'react-icons';
 
 const logout = () => {
   window.open("http://localhost:5000/auth/logout", "_self");

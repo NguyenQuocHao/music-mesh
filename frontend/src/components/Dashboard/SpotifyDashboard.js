@@ -5,7 +5,7 @@ import vars from '../../variables'
 import { useDispatch } from 'react-redux'
 import { getMySpotifyPlaylists } from '../../redux/reducers/spotifySlice'
 
-export default function SpotifyDashboard({ }) {
+export default function SpotifyDashboard() {
   const [userPlaylists, setUserPlaylists] = useState([])
   const [popPlaylists, setPopPlaylists] = useState([])
   const [topPlaylists, setTopPlaylists] = useState([])
@@ -20,50 +20,36 @@ export default function SpotifyDashboard({ }) {
       .then(function (data) {
         dispatch(getMySpotifyPlaylists(data.data))
         setUserPlaylists(data.data);
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/pop')
       .then(function (data) {
         setPopPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/topLists')
       .then(function (data) {
         setTopPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/decades')
       .then(function (data) {
         setDecadesPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/mood')
       .then(function (data) {
         setMoodPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/chill')
       .then(function (data) {
         setChillPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/featuredPlaylists')
       .then(function (data) {
         setFeaturedPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
   }, [])
 

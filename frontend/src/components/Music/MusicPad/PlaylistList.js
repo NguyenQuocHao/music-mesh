@@ -6,18 +6,6 @@ export default function PlaylistList({ data, title, description, type, site }) {
   const [list, setList] = useState([])
 
   useEffect(() => {
-    var res = data.map((item) =>
-      <div key={item.id}>
-        <MusicPad className="list" page="dashboard" type={type} id={item.id} image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad>
-      </div>)
-    // setList(res)
-  })
-
-  useEffect(() => {
-    updateList();
-  }, [data])
-
-  const updateList = () => {
     var res = data.map((item) => {
       return (
         <div key={item.id}>
@@ -25,8 +13,9 @@ export default function PlaylistList({ data, title, description, type, site }) {
         </div>
       )
     });
+
     setList(res)
-  }
+  }, [data])
 
   return (
     <div>

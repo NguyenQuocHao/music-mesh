@@ -18,27 +18,22 @@ export default function TrackList({ data, title, site, page, type }) {
     }
   }
 
-  const moveLeft =
-    () => {
-      var index = firstIndex
-      index -= DEFAULT_RANGE
+  const moveLeft = () => {
+    var index = firstIndex
+    index -= DEFAULT_RANGE
 
-      if (index < 0) {
-        setFirstIndex(data.length - DEFAULT_RANGE)
-      }
-      else {
-        setFirstIndex(index)
-      }
+    if (index < 0) {
+      setFirstIndex(data.length - DEFAULT_RANGE)
     }
+    else {
+      setFirstIndex(index)
+    }
+  }
 
   useEffect(() => {
-    updateList();
-  }, [firstIndex, data])
-
-  const updateList = () => {
     var res = data.map((item, index) => {
       var itemId;
-      if (page == "dashboard") {
+      if (page === "dashboard") {
         itemId = item.id;
       }
       else {
@@ -58,8 +53,9 @@ export default function TrackList({ data, title, site, page, type }) {
         </div>
       )
     });
+
     setList(res)
-  }
+  }, [firstIndex, data])
 
   return (
     <div>

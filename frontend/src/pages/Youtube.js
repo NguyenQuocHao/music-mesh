@@ -21,7 +21,7 @@ function Youtube() {
           throw new Error("Authentication has been failed!");
         })
         .then((data) => {
-          if (data.user.linkedAccount && data.user.linkedAccount.provider == 'google') {
+          if (data.user.linkedAccount && data.user.linkedAccount.provider === 'google') {
             setUser(data.user.linkedAccount);
           }
           else {
@@ -45,7 +45,7 @@ function Youtube() {
 const Display = props => {
   let { user } = props;
   if (user) {
-    if (user.provider == 'google') {
+    if (user.provider === 'google') {
       return <YoutubeDashboard />
     }
 
