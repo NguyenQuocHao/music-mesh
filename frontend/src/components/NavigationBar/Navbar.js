@@ -34,9 +34,7 @@ function Navbar({ user, sideBarHandler }) {
               </li>
             </ul>
           ) : (
-            <Link className="link loginNav" to="login">
-              Login
-            </Link>
+            null
           )}
           </div>
         </div>

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { myYoutubePlaylists } from '../../redux/reducers/youtubeSlice'
 import { mySpotifyPlaylists } from '../../redux/reducers/spotifySlice'
 import GetRedirectLink from '../../utils/redirect'
+import Logo from "../../assets/img/music mesh-logos_transparent.png";
 
 function Sidebar({ show, sideBarHandler }) {
   const { state } = useLocation();
@@ -35,7 +36,7 @@ function Sidebar({ show, sideBarHandler }) {
     }
 
     return spotifyPlaylists.map(item =>
-      <div className='side-bar-text'  key={item.id}>
+      <div className='side-bar-text' key={item.id}>
         <Link
           to={{
             pathname: `/${GetRedirectLink('spotify', 'playlist')}/${item.id}`,
@@ -51,12 +52,9 @@ function Sidebar({ show, sideBarHandler }) {
     <nav className={show ? 'side-bar active' : 'side-bar'}>
       <ul className='side-bar-items' onClick={sideBarHandler}>
         <li className='side-bar-toggle'>
-          <Link className='menu-bars'
-            to={{
-              state: state
-            }}>
-            Music Mesh
-          </Link>
+          <a className='menu-bars' href='/'>
+            <img src={Logo} height='100px' />
+          </a>
         </li>
         <br></br>
         <div>Main</div>
