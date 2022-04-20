@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import MusicPad from "./MusicPad";
+import NavButton from '../../NavigationBar/NavButton';
 
 export default function TrackList({ data, title, site, page, type }) {
   const [list, setList] = useState([])
@@ -61,9 +62,9 @@ export default function TrackList({ data, title, site, page, type }) {
     <div>
       <h3 className="music-title">{title}</h3>
       <div className={"song-list-" + page}>
-        <span className="icon icon-circle" onClick={moveLeft}>{'<'}</span>
+        <NavButton isLeft handler={moveLeft}></NavButton>
         {list}
-        <span className="icon icon-circle" onClick={moveRight}>{'>'}</span>
+        <NavButton handler={moveRight}></NavButton>
       </div>
     </div>
   )
