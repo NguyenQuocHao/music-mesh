@@ -1,7 +1,7 @@
 import './App.scss';
 import { useEffect, useState } from "react";
-import Navbar from './components/NavigationBar/Navbar';
-import Sidebar from './components/NavigationBar/Sidebar';
+import Navbar from './components/Navigation/Navbar';
+import Sidebar from './components/Navigation/Sidebar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import Youtube from './pages/Youtube'

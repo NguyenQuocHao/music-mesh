@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import MusicPad from "./MusicPad";
-import NavButton from '../../NavigationBar/NavButton';
+import NavButton from '../../Navigation/NavButton';
 
 export default function TrackList({ data, title, site, page, type }) {
   const [list, setList] = useState([])

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import MusicPad from "./MusicPad";
 import vars from '../../../variables';
-import NavButton from '../../NavigationBar/NavButton';
+import NavButton from '../../Navigation/NavButton';
 
 export default function PlaylistList({ data, title, description, type, site }) {
   const [list, setList] = useState([])
