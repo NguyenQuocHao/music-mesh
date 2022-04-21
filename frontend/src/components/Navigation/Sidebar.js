@@ -25,7 +25,7 @@ function Sidebar({ show, sideBarHandler }) {
             pathname: `/${GetRedirectLink('youtube', 'playlist')}/${item.id}`,
             state: { id: item.id }
           }}>
-          {item.snippet.title}
+          {item.title}
         </Link>
       </div>);
   }

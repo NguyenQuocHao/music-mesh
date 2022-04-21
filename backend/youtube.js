@@ -13,6 +13,7 @@ const oauth2Client = new OAuth2(
   CONFIG.oauth2Credentials.redirect_uris[0]
 );
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const MusicItem = require('./musicItem.js')
 
 // app.use(cors())
 // app.use(bodyParser.json())
@@ -97,7 +98,14 @@ module.exports = function (app) {
         maxResults: 15
       })
       .then(data => {
-        res.send(data.data.items)
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+        res.send(sendData)
       })
       .catch(e => {
         console.log(e)
@@ -113,7 +121,14 @@ module.exports = function (app) {
         maxResults: 15
       })
       .then(data => {
-        res.send(data.data.items)
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+        res.send(sendData)
       })
       .catch(e => {
         console.log(e)
@@ -129,7 +144,14 @@ module.exports = function (app) {
         maxResults: 15
       })
       .then(data => {
-        res.send(data.data.items)
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+        res.send(sendData)
       })
       .catch(e => {
         console.log(e)
@@ -146,7 +168,14 @@ module.exports = function (app) {
       maxResults: 15,
     })
       .then(data => {
-        res.send(data.data.items)
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+        res.send(sendData)
       })
       .catch(e => {
         console.log(e)

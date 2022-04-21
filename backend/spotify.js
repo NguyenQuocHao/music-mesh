@@ -4,13 +4,14 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const SpotifyWebApi = require('spotify-web-api-node');
 const SpotifyStrategy = require('passport-spotify').Strategy;
-const passport = require('passport')
+const passport = require('passport');
 const spotifyApi = new SpotifyWebApi({
   redirectUri: process.env.SPOTIFY_REDIRECT_URI,
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-})
-const ITEM_LIMIT = 5
+});
+const MusicItem = require('./musicItem.js');
+const ITEM_LIMIT = 15;
 
 const app = express();
 app.use(cors())
@@ -93,9 +94,17 @@ module.exports = function (app) {
   app.get('/spotify/userPlaylists', function (req, res) {
     spotifyApi.getUserPlaylists()
       .then(function (data) {
-        res.send(data.body.items)
+        const sendData = data.body.items.map(item =>
+          new MusicItem(item.id,
+            item.name,
+            item.description,
+            item.owner.display_name,
+            item.images[0]?.url
+          ))
+
+        res.send(sendData)
       }, function (err) {
-        console.log('Something went wrong!', err);
+        console.log('Failed to fetch user\'s playlists', err);
       })
       .catch(e => {
         console.log(e)
@@ -105,9 +114,17 @@ module.exports = function (app) {
   app.get('/spotify/pop', (req, res) => {
     spotifyApi.getPlaylistsForCategory('pop', { limit: ITEM_LIMIT })
       .then(function (data) {
-        res.send(data.body.playlists.items)
+        const sendData = data.body.playlists.items.map(item =>
+          new MusicItem(item.id,
+            item.name,
+            item.description,
+            item.owner.display_name,
+            item.images[0]?.url
+          ))
+
+        res.send(sendData)
       }, function (err) {
-        console.log('Something went wrong!', err);
+        console.log('Failed to fetch pop playlists', err);
       })
       .catch(e => {
         console.log(e)
@@ -117,9 +134,17 @@ module.exports = function (app) {
   app.get('/spotify/topLists', (req, res) => {
     spotifyApi.getPlaylistsForCategory('toplists', { limit: ITEM_LIMIT })
       .then(function (data) {
-        res.send(data.body.playlists.items)
+        const sendData = data.body.playlists.items.map(item =>
+          new MusicItem(item.id,
+            item.name,
+            item.description,
+            item.owner.display_name,
+            item.images[0]?.url
+          ))
+
+        res.send(sendData)
       }, function (err) {
-        console.log('Something went wrong!', err);
+        console.log('Failed to fetch top playlists', err);
       })
       .catch(e => {
         console.log(e)
@@ -129,9 +154,17 @@ module.exports = function (app) {
   app.get('/spotify/decades', (req, res) => {
     spotifyApi.getPlaylistsForCategory('decades', { limit: ITEM_LIMIT })
       .then(function (data) {
-        res.send(data.body.playlists.items)
+        const sendData = data.body.playlists.items.map(item =>
+          new MusicItem(item.id,
+            item.name,
+            item.description,
+            item.owner.display_name,
+            item.images[0]?.url
+          ))
+
+        res.send(sendData)
       }, function (err) {
-        console.log('Something went wrong!', err);
+        console.log('Failed to fetch decades playlists', err);
       })
       .catch(e => {
         console.log(e)
@@ -141,28 +174,51 @@ module.exports = function (app) {
   app.get('/spotify/mood', (req, res) => {
     spotifyApi.getPlaylistsForCategory('mood', { limit: ITEM_LIMIT })
       .then(function (data) {
-        res.send(data.body.playlists.items)
+        const sendData = data.body.playlists.items.map(item =>
+          new MusicItem(item.id,
+            item.name,
+            item.description,
+            item.owner.display_name,
+            item.images[0]?.url
+          ))
+
+        res.send(sendData)
       }, function (err) {
-        console.log('Something went wrong!', err);
+        console.log('Failed to fetch mood playlists.', err);
       })
   })
 
   app.get('/spotify/chill', function (req, res) {
     spotifyApi.getPlaylistsForCategory('chill', { limit: ITEM_LIMIT })
       .then(function (data) {
-        res.send(data.body.playlists.items)
+        const sendData = data.body.playlists.items.map(item =>
+          new MusicItem(item.id,
+            item.name,
+            item.description,
+            item.owner.display_name,
+            item.images[0]?.url
+          ))
+
+        res.send(sendData)
       }, function (err) {
-        console.log('Something went wrong!', err);
+        console.log('Failed to fetch chill playlists', err);
       })
   });
 
   app.get('/spotify/featuredPlaylists', function (req, res) {
     spotifyApi.getFeaturedPlaylists({ limit: ITEM_LIMIT })
       .then(function (data) {
-        res.send(data.body.playlists.items)
+        const sendData = data.body.playlists.items.map(item =>
+          new MusicItem(item.id,
+            item.name,
+            item.description,
+            item.owner.display_name,
+            item.images[0]?.url
+          ))
+
+        res.send(sendData)
       }, function (err) {
-        console.log('Something went wrong!', err);
+        console.log('Failed to fetch featured playlists.', err);
       })
   });
 }
-// app.listen(8000, () => console.log(`Server running at localhost: ${8000}!`))

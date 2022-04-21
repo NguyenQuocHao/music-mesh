@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import MusicPad from "./MusicPad";
-import vars from '../../../variables';
 import NavButton from '../../Navigation/NavButton';
 
-export default function PlaylistList({ data, title, description, type, site }) {
+export default function PadList({ data, title, source, location, type }) {
   const [list, setList] = useState([])
   const [firstIndex, setFirstIndex] = useState(0)
   const DEFAULT_RANGE = 5;
@@ -33,22 +32,36 @@ export default function PlaylistList({ data, title, description, type, site }) {
   }
 
   useEffect(() => {
-    var res = data.map((item) => {
+    var res = data.map((item, index) => {
+      var itemId;
+      if (location === "dashboard") {
+        itemId = item.id;
+      }
+      else {
+        itemId = item.id.videoId;
+      }
+
       return (
-        <div key={item.id}>
-          <MusicPad className="list" page="dashboard" site={site} type={vars.playlist} id={item.id} image={item.images[0]?.url} title={item.name} subTitle={item.description}></MusicPad>
+        <div key={itemId}>
+          {firstIndex <= index && index < firstIndex + DEFAULT_RANGE ?
+            <MusicPad type={type} id={itemId}
+              image={item.image}
+              title={item.title}
+              subTitle={item.artist}
+              site={source}
+              page={location}
+            ></MusicPad> : null}
         </div>
       )
     });
 
     setList(res)
-  }, [data])
+  }, [firstIndex, data])
 
   return (
     <div>
       <h3 className="music-title">{title}</h3>
-      <h5>{description}</h5>
-      <div className="song-list-dashboard">
+      <div className={"song-list-" + location}>
         {firstIndex >= DEFAULT_RANGE ? <NavButton isLeft handler={moveLeft}></NavButton> : null}
         {list}
         {firstIndex + 5 < data.length ? <NavButton handler={moveRight}></NavButton> : null}
