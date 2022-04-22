@@ -41,30 +41,32 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Router>
-        <div className='appWrapper'>
-          <div className='sideWrapper'>
-            <Sidebar show={sidebar} sideBarHandler={showSidebar} />
-          </div>
-          <div className='mainWrapper'>
-            <Navbar user={user} sideBarHandler={showSidebar} />
-            <div className='main'>
-              <Switch>
-                <Route path='/' exact component={Home} />
-                <Route path='/login' component={Login} />
-                <Route path='/youtube' component={Youtube} />
-                <Route path='/spotify' component={Spotify} />
-                <Route path='/spotify-playlist/:id' component={PlaylistPage} />
-                <Route path='/spotify-song/:id' component={PlaylistPage} />
-                <Route path='/youtube-playlist/:id' component={PlaylistPage} />
-                <Route path='/youtube-song/:id' component={PlaylistPage} />
-              </Switch>
+    <Router>
+      <div className="App">
+        {
+          user ? <div className='appWrapper'>
+            <div className='sideWrapper'>
+              <Sidebar show={sidebar} sideBarHandler={showSidebar} />
             </div>
-          </div>
-        </div>
-      </Router>
-    </div>
+            <div className='mainWrapper'>
+              <Navbar user={user} sideBarHandler={showSidebar} />
+              <div className='main'>
+                <Switch>
+                  <Route path='/' exact component={Home} />
+                  <Route path='/youtube' component={Youtube} />
+                  <Route path='/spotify' component={Spotify} />
+                  <Route path='/spotify-playlist/:id' component={PlaylistPage} />
+                  <Route path='/spotify-song/:id' component={PlaylistPage} />
+                  <Route path='/youtube-playlist/:id' component={PlaylistPage} />
+                  <Route path='/youtube-song/:id' component={PlaylistPage} />
+                </Switch>
+              </div>
+            </div>
+          </div> :
+            <Login />
+        }
+      </div>
+    </Router>
   );
 }
 
