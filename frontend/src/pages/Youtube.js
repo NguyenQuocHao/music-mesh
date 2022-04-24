@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Login from '../components/Login/Login';
+import Login from '../components/Login/Login'
 import YoutubeDashboard from '../components/Dashboard/YoutubeDashboard'
 
 function Youtube() {
@@ -18,10 +18,15 @@ function Youtube() {
       })
         .then((response) => {
           if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
+          throw new Error("Authentication has been failed!");
         })
-        .then((resObject) => {
-          setUser(resObject.user);
+        .then((data) => {
+          if (data.user.linkedAccount && data.user.linkedAccount.provider === 'google') {
+            setUser(data.user.linkedAccount);
+          }
+          else {
+            setUser(data.user);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -39,12 +44,15 @@ function Youtube() {
 
 const Display = props => {
   let { user } = props;
+  if (user) {
+    if (user.provider === 'google') {
+      return <YoutubeDashboard />
+    }
 
-  if (user && user.provider == 'google') {
-    return <YoutubeDashboard />;
-  } else {
-    return <Login />;
+    return <Login site={user.provider} />
   }
+
+  return <Login />
 };
 
 export default Youtube

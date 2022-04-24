@@ -1,17 +1,3 @@
-.icon{
-  color: black;
-}
-
-.icon-circle {
-  height: 30px;
-  width: 30px;
-  background-color: white;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .music-title{
   font-weight: bold;
   color: rgba(245,245,245,255);

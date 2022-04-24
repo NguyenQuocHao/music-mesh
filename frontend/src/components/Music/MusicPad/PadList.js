@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import MusicPad from "./MusicPad";
+import NavButton from '../../Navigation/NavButton';
 
-export default function TrackList({ data, title, site, page, type }) {
+export default function PadList({ data, title, source, location, type }) {
   const [list, setList] = useState([])
   const [firstIndex, setFirstIndex] = useState(0)
   const DEFAULT_RANGE = 5;
@@ -18,27 +19,22 @@ export default function TrackList({ data, title, site, page, type }) {
     }
   }
 
-  const moveLeft =
-    () => {
-      var index = firstIndex
-      index -= DEFAULT_RANGE
+  const moveLeft = () => {
+    var index = firstIndex
+    index -= DEFAULT_RANGE
 
-      if (index < 0) {
-        setFirstIndex(data.length - DEFAULT_RANGE)
-      }
-      else {
-        setFirstIndex(index)
-      }
+    if (index < 0) {
+      setFirstIndex(data.length - DEFAULT_RANGE)
     }
+    else {
+      setFirstIndex(index)
+    }
+  }
 
   useEffect(() => {
-    updateList();
-  }, [firstIndex, data])
-
-  const updateList = () => {
     var res = data.map((item, index) => {
       var itemId;
-      if (page == "dashboard") {
+      if (location === "dashboard") {
         itemId = item.id;
       }
       else {
@@ -49,25 +45,26 @@ export default function TrackList({ data, title, site, page, type }) {
         <div key={itemId}>
           {firstIndex <= index && index < firstIndex + DEFAULT_RANGE ?
             <MusicPad type={type} id={itemId}
-              image={item.snippet.thumbnails.high.url}
-              title={item.snippet.title}
-              subTitle={item.snippet.channelTitle}
-              site={site}
-              page={page}
+              image={item.image}
+              title={item.title}
+              subTitle={item.artist}
+              site={source}
+              page={location}
             ></MusicPad> : null}
         </div>
       )
     });
+
     setList(res)
-  }
+  }, [firstIndex, data])
 
   return (
     <div>
-      <h3 className="music-title">{title}-{data.length}</h3>
-      <div className={"song-list-" + page}>
-        <span className="icon icon-circle" onClick={moveLeft}>{'<'}</span>
+      <h3 className="music-title">{title}</h3>
+      <div className={"song-list-" + location}>
+        {firstIndex >= DEFAULT_RANGE ? <NavButton isLeft handler={moveLeft}></NavButton> : null}
         {list}
-        <span className="icon icon-circle" onClick={moveRight}>{'>'}</span>
+        {firstIndex + 5 < data.length ? <NavButton handler={moveRight}></NavButton> : null}
       </div>
     </div>
   )

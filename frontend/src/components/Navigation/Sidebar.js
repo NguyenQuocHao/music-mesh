@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
-import * as AiIcons from 'react-icons/ai';
+import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './Navbar.scss';
-import { IconContext } from 'react-icons';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { myYoutubePlaylists } from '../../redux/reducers/youtubeSlice'
 import { mySpotifyPlaylists } from '../../redux/reducers/spotifySlice'
 import GetRedirectLink from '../../utils/redirect'
+import Logo from "../../assets/img/music mesh-logos_transparent.png";
 
 function Sidebar({ show, sideBarHandler }) {
   const { state } = useLocation();
@@ -20,13 +19,13 @@ function Sidebar({ show, sideBarHandler }) {
     }
 
     return youtubePlaylists.map(item =>
-      <div className='side-bar-text'>
+      <div className='sidebar-text' key={item.id}>
         <Link
           to={{
             pathname: `/${GetRedirectLink('youtube', 'playlist')}/${item.id}`,
             state: { id: item.id }
           }}>
-          {item.snippet.title}
+          {item.title}
         </Link>
       </div>);
   }
@@ -37,28 +36,24 @@ function Sidebar({ show, sideBarHandler }) {
     }
 
     return spotifyPlaylists.map(item =>
-      <div className='side-bar-text'>
+      <div className='sidebar-text' key={item.id}>
         <Link
           to={{
             pathname: `/${GetRedirectLink('spotify', 'playlist')}/${item.id}`,
             state: { id: item.id }
           }}>
-          {item.name}
+          {item.title}
         </Link>
       </div>);
   }
 
   return (
-    // <IconContext.Provider value={{ color: '#fff' }}>
-    <nav className={show ? 'side-bar active' : 'side-bar'}>
-      <ul className='side-bar-items' onClick={sideBarHandler}>
-        <li className='side-bar-toggle'>
-          <Link className='menu-bars'
-            to={{
-              state: state
-            }}>
-            Music Mesh
-          </Link>
+    <nav className={show ? 'sidebar active' : 'sidebar'}>
+      <ul className='sidebar-items' onClick={sideBarHandler}>
+        <li className='sidebar-toggle'>
+          <a className='menu-bars' href='/'>
+            <img src={Logo} height='100px' />
+          </a>
         </li>
         <br></br>
         <div>Main</div>
@@ -74,19 +69,18 @@ function Sidebar({ show, sideBarHandler }) {
         })}
         <br></br>
         <div>My Playlists</div>
-        <ul className='youtube-playlists'>
+        <ul className='sidebar-youtube-playlists'>
           {
             getYoutubePlaylists()
           }
         </ul>
-        <ul className='spotify-playlists'>
+        <ul className='sidebar-spotify-playlists'>
           {
             getSpotifyPlaylists()
           }
         </ul>
       </ul>
     </nav>
-    // </IconContext.Provider>
   );
 }
 

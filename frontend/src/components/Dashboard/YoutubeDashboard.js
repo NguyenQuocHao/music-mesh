@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
-import TrackList from '../Music/MusicPad/TrackList'
 import './Dashboard.scss'
 import vars from '../../variables.js'
 import { useDispatch } from 'react-redux'
-import { getMyYoutubePlaylists} from '../../redux/reducers/youtubeSlice'
+import { getMyYoutubePlaylists } from '../../redux/reducers/youtubeSlice'
+import PadList from '../Music/MusicPad/PadList'
 
-export default function YoutubeDashboard({ }) {
+export default function YoutubeDashboard() {
   const [myPlaylists, setMyPlaylists] = useState([])
   const [popularSongs, setPopularSongs] = useState([])
   const [randomPlaylists, setRandomPlaylists] = useState([])
@@ -32,9 +32,9 @@ export default function YoutubeDashboard({ }) {
 
   return (
     <div className="dashboard">
-      <TrackList data={popularSongs} title="Popular songs" site="youtube" page="dashboard" type={vars.song}></TrackList>
-      <TrackList data={myPlaylists} title="My Playlists" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
-      <TrackList data={randomPlaylists} title="Random playlists" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
+      <PadList data={popularSongs} title="Popular songs" source="youtube" location="dashboard" type={vars.song}></PadList>
+      <PadList data={myPlaylists} title="My Playlists" source="youtube" location="dashboard" type={vars.playlist}></PadList>
+      <PadList data={randomPlaylists} title="Random playlists" source="youtube" location="dashboard" type={vars.playlist}></PadList>
     </div>
   )
 }

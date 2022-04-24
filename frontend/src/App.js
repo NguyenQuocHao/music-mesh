@@ -1,7 +1,7 @@
 import './App.scss';
 import { useEffect, useState } from "react";
-import Navbar from './components/NavigationBar/Navbar';
-import Sidebar from './components/NavigationBar/Sidebar';
+import Navbar from './components/Navigation/Navbar';
+import Sidebar from './components/Navigation/Sidebar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import Youtube from './pages/Youtube'
@@ -41,30 +41,32 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Router>
-        <div className='appWrapper'>
-          <div className='sideWrapper'>
-            <Sidebar show={sidebar} sideBarHandler={showSidebar} />
-          </div>
-          <div className='mainWrapper'>
-            <Navbar user={user} sideBarHandler={showSidebar} />
-            <div className='main'>
-              <Switch>
-                <Route path='/' exact component={Home} />
-                <Route path='/login' component={Login} />
-                <Route path='/youtube' component={Youtube} />
-                <Route path='/spotify' component={Spotify} />
-                <Route path='/spotify-playlist/:id' component={PlaylistPage} />
-                <Route path='/spotify-song/:id' component={PlaylistPage} />
-                <Route path='/youtube-playlist/:id' component={PlaylistPage} />
-                <Route path='/youtube-song/:id' component={PlaylistPage} />
-              </Switch>
+    <Router>
+      <div className="App">
+        {
+          user ? <div className='appWrapper'>
+            <div className='sideWrapper'>
+              <Sidebar show={sidebar} sideBarHandler={showSidebar} />
             </div>
-          </div>
-        </div>
-      </Router>
-    </div>
+            <div className='mainWrapper'>
+              <Navbar user={user} sideBarHandler={showSidebar} />
+              <div className='main'>
+                <Switch>
+                  <Route path='/' exact component={Home} />
+                  <Route path='/youtube' component={Youtube} />
+                  <Route path='/spotify' component={Spotify} />
+                  <Route path='/spotify-playlist/:id' component={PlaylistPage} />
+                  <Route path='/spotify-song/:id' component={PlaylistPage} />
+                  <Route path='/youtube-playlist/:id' component={PlaylistPage} />
+                  <Route path='/youtube-song/:id' component={PlaylistPage} />
+                </Switch>
+              </div>
+            </div>
+          </div> :
+            <Login />
+        }
+      </div>
+    </Router>
   );
 }
 

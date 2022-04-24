@@ -1,5 +1,6 @@
 require('dotenv').config()
 const cookieSession = require("cookie-session");
+const cookieParser = require('cookie-parser');
 const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
@@ -8,9 +9,13 @@ const app = express();
 const youtube = require("./youtube")(app)
 const spotify = require("./spotify")(app)
 
+app.use(cookieParser());
+
 app.use(
-  cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+  // cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 }),
+  cookieSession({ name: "domixi", keys: ["test", "test2"], maxAge: 24 * 60 * 60 * 100 })
 );
+
 
 app.use(passport.initialize());
 app.use(passport.session());

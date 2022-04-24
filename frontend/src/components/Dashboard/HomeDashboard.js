@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
-import PlaylistList from '../Music/MusicPad/PlaylistList'
 import vars from '../../variables'
-import TrackList from '../Music/MusicPad/TrackList'
+import PadList from '../Music/MusicPad/PadList'
 
-export default function SpotifyDashboard({ }) {
+export default function SpotifyDashboard() {
   const [spotifyPlaylists, setSpotifyPlaylists] = useState([])
   const [topPlaylists, setTopPlaylists] = useState([])
   const [featuredPlaylists, setFeaturedPlaylists] = useState([])
@@ -15,26 +14,17 @@ export default function SpotifyDashboard({ }) {
   useEffect(() => {
     axios.get('http://localhost:5000/spotify/userPlaylists')
       .then(function (data) {
-        console.log('User playlists', data.data);
         setSpotifyPlaylists(data.data);
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/topLists')
       .then(function (data) {
-        console.log('Top playlists', data.data);
         setTopPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/spotify/featuredPlaylists')
       .then(function (data) {
-        console.log('Featured playlists', data.data);
         setFeaturedPlaylists(data.data)
-      }, function (err) {
-        console.log('Something went wrong!', err);
       })
 
     axios.get('http://localhost:5000/youtube/popularSongs')
@@ -55,12 +45,12 @@ export default function SpotifyDashboard({ }) {
 
   return (
     <div className="dashboard">
-      <PlaylistList data={spotifyPlaylists} type={vars.playlist} title="Your Spotify playlists"></PlaylistList>
-      <TrackList data={youtubePlaylists} title="Your Youtube playlists" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
-      <TrackList data={popularSongs} title="Popular songs on Youtube" site="youtube" page="dashboard" type={vars.song}></TrackList>
-      <PlaylistList data={featuredPlaylists} type={vars.playlist} title="Featured by Spotify"></PlaylistList>
-      <PlaylistList data={topPlaylists} type={vars.playlist} title="Top From Spotify"></PlaylistList>
-      <TrackList data={randomPlaylists} title="From Youtube with songs" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
+      <PadList data={spotifyPlaylists} title="Your Spotify playlists" source="spotify" location="dashboard" type={vars.playlist}></PadList>
+      <PadList data={youtubePlaylists} title="Your Youtube playlists" source="youtube" location="dashboard" type={vars.playlist}></PadList>
+      <PadList data={popularSongs} title="Popular songs on Youtube" source="youtube" location="dashboard" type={vars.song}></PadList>
+      <PadList data={featuredPlaylists} title="Featured by Spotify" source="spotify" location="dashboard" type={vars.playlist}></PadList>
+      <PadList data={topPlaylists} title="Top From Spotify" source="spotify" location="dashboard" type={vars.playlist}></PadList>
+      <PadList data={randomPlaylists} title="From Youtube with songs" source="youtube" location="dashboard" type={vars.playlist}></PadList>
     </div>
   )
 }

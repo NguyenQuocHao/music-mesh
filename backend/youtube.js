@@ -1,10 +1,10 @@
-require('dotenv').config()
-const cors = require('cors')
-const bodyParser = require('body-parser')
+require('dotenv').config();
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const google = require("googleapis").google;
 const passport = require("passport");
 // Google's OAuth2 client
-const OAuth2 = google.auth.OAuth2
+const OAuth2 = google.auth.OAuth2;
 const CONFIG = require("./config");
 const youtube = google.youtube("v3");
 const oauth2Client = new OAuth2(
@@ -13,6 +13,7 @@ const oauth2Client = new OAuth2(
   CONFIG.oauth2Credentials.redirect_uris[0]
 );
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const MusicItem = require('./musicItem.js')
 
 // app.use(cors())
 // app.use(bodyParser.json())
@@ -22,7 +23,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback",
+      callbackURL: "/auth/google/signin/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       oauth2Client.credentials.access_token = accessToken;
@@ -31,6 +32,22 @@ passport.use(
     }
   )
 );
+
+passport.use("google-authz",
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/auth/google/connect/callback"
+    },
+    function (accessToken, refreshToken, profile, done) {
+      oauth2Client.credentials.access_token = accessToken;
+      oauth2Client.credentials.refresh_token = refreshToken;
+      done(null, profile);
+    }
+  )
+);
+
 
 // app.post('/refresh', (req, res) => {
 //   const refreshToken = req.body.refreshToken
@@ -64,6 +81,12 @@ module.exports = function (app) {
     })
   );
 
+  app.get('/youtube/clearTokensCache', function (req, res) {
+    oauth2Client.credentials.access_token = null;
+    oauth2Client.credentials.refresh_token = null;
+    res.sendStatus(200);
+  });
+
   app.get('/youtube/popularSongs', function (req, res) {
     youtube.videos
       .list({
@@ -75,7 +98,14 @@ module.exports = function (app) {
         maxResults: 15
       })
       .then(data => {
-        res.send(data.data.items)
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+        res.send(sendData)
       })
       .catch(e => {
         console.log(e)
@@ -91,7 +121,14 @@ module.exports = function (app) {
         maxResults: 15
       })
       .then(data => {
-        res.send(data.data.items)
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+        res.send(sendData)
       })
       .catch(e => {
         console.log(e)
@@ -107,7 +144,14 @@ module.exports = function (app) {
         maxResults: 15
       })
       .then(data => {
-        res.send(data.data.items)
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+        res.send(sendData)
       })
       .catch(e => {
         console.log(e)
@@ -124,7 +168,14 @@ module.exports = function (app) {
       maxResults: 15,
     })
       .then(data => {
-        res.send(data.data.items)
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+        res.send(sendData)
       })
       .catch(e => {
         console.log(e)
