@@ -51,13 +51,6 @@ export default function SpotifyDashboard() {
       <PadList data={featuredPlaylists} title="Featured by Spotify" source="spotify" location="dashboard" type={vars.playlist}></PadList>
       <PadList data={topPlaylists} title="Top From Spotify" source="spotify" location="dashboard" type={vars.playlist}></PadList>
       <PadList data={randomPlaylists} title="From Youtube with songs" source="youtube" location="dashboard" type={vars.playlist}></PadList>
-
-      {/* <PlaylistList data={spotifyPlaylists} type={vars.playlist} title="Your Spotify playlists"></PlaylistList>
-      <TrackList data={youtubePlaylists} title="Your Youtube playlists" site="youtube" page="dashboard" type={vars.playlist}></TrackList>
-      <TrackList data={popularSongs} title="Popular songs on Youtube" site="youtube" page="dashboard" type={vars.song}></TrackList>
-      <PlaylistList data={featuredPlaylists} type={vars.playlist} title="Featured by Spotify"></PlaylistList>
-      <PlaylistList data={topPlaylists} type={vars.playlist} title="Top From Spotify"></PlaylistList>
-      <TrackList data={randomPlaylists} title="From Youtube with songs" site="youtube" page="dashboard" type={vars.playlist}></TrackList> */}
     </div>
   )
 }

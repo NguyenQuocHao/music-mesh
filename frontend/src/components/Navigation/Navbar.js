@@ -11,23 +11,19 @@ function Navbar({ user, sideBarHandler }) {
 
   return (
     <div className='navbar'>
-      <Link className='menu-bars'
-        to={{
-          state: state
-        }}>
-      </Link>
-      <div className='userInfo'>
+      <div></div>
+      <div>
         {user ? (
-          <ul className="list loginNav">
-            <li className="listItem">
+          <ul className="navbar-list login-nav">
+            <li className="navbar-list-item">
               <img
                 src={user.photos[0]?.value}
                 alt=""
                 className="avatar"
               />
             </li>
-            <li className="listItem">{user.displayName}</li>
-            <li className="listItem" onClick={logout}>
+            <li className="navbar-list-item">{user.displayName}</li>
+            <li className="navbar-list-item" onClick={logout}>
               Logout
             </li>
           </ul>

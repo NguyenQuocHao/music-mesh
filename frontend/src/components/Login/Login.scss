@@ -1,13 +1,5 @@
 @import '../../variables.scss';
 
-.center {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
 .login-main {
   display: flex;
   align-items: center;
@@ -27,12 +19,6 @@
   margin-bottom: 20px;
 }
 
-.login-title {
-  position: absolute;
-  top: 150px;
-  color: black;
-}
-
 .login-wrapper {
   width: 300px;
   height: 350px;
@@ -47,8 +33,7 @@
   position: fixed;
 }
 
-.left,
-.right {
+.login-wrapper-content {
   flex: 1;
   display: flex;
   flex-direction: column;

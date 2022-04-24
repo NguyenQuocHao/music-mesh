@@ -19,7 +19,7 @@ function Sidebar({ show, sideBarHandler }) {
     }
 
     return youtubePlaylists.map(item =>
-      <div className='side-bar-text' key={item.id}>
+      <div className='sidebar-text' key={item.id}>
         <Link
           to={{
             pathname: `/${GetRedirectLink('youtube', 'playlist')}/${item.id}`,
@@ -36,22 +36,21 @@ function Sidebar({ show, sideBarHandler }) {
     }
 
     return spotifyPlaylists.map(item =>
-      <div className='side-bar-text' key={item.id}>
+      <div className='sidebar-text' key={item.id}>
         <Link
           to={{
             pathname: `/${GetRedirectLink('spotify', 'playlist')}/${item.id}`,
             state: { id: item.id }
           }}>
-          {item.name}
+          {item.title}
         </Link>
       </div>);
   }
 
   return (
-    // <IconContext.Provider value={{ color: '#fff' }}>
-    <nav className={show ? 'side-bar active' : 'side-bar'}>
-      <ul className='side-bar-items' onClick={sideBarHandler}>
-        <li className='side-bar-toggle'>
+    <nav className={show ? 'sidebar active' : 'sidebar'}>
+      <ul className='sidebar-items' onClick={sideBarHandler}>
+        <li className='sidebar-toggle'>
           <a className='menu-bars' href='/'>
             <img src={Logo} height='100px' />
           </a>
@@ -70,19 +69,18 @@ function Sidebar({ show, sideBarHandler }) {
         })}
         <br></br>
         <div>My Playlists</div>
-        <ul className='youtube-playlists'>
+        <ul className='sidebar-youtube-playlists'>
           {
             getYoutubePlaylists()
           }
         </ul>
-        <ul className='spotify-playlists'>
+        <ul className='sidebar-spotify-playlists'>
           {
             getSpotifyPlaylists()
           }
         </ul>
       </ul>
     </nav>
-    // </IconContext.Provider>
   );
 }
 

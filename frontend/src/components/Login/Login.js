@@ -46,7 +46,7 @@ const Login = ({ site }) => {
       </div>
 
       <div className="login-wrapper">
-        <div className="left">
+        <div className="login-wrapper-content">
           <h4 className="login-header">
             {site != undefined ? 'Link your account' : 'Please choose a Login Method'}
           </h4>

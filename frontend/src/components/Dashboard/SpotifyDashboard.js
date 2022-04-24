@@ -60,7 +60,7 @@ export default function SpotifyDashboard() {
       <PadList data={moodPlaylists} title="Pop" source="spotify" location="dashboard" type={vars.playlist}></PadList>
       <PadList data={chillPlaylists} title="Mood" source="spotify" location="dashboard" type={vars.playlist}></PadList>
       <PadList data={topPlaylists} title="Chill" source="spotify" location="dashboard" type={vars.playlist}></PadList>
-      <PadList data={decadesPlaylists} title="Top List" source="spotify" location="dashboard" type={vars.playlist}></PadList>
+      <PadList data={popPlaylists} title="Top List" source="spotify" location="dashboard" type={vars.playlist}></PadList>
       <PadList data={decadesPlaylists} title="Through the years..." source="spotify" location="dashboard" type={vars.playlist}></PadList>
     </div>
   )
