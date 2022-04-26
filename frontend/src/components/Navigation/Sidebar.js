@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './Navbar.scss';
 import { useSelector } from 'react-redux'
@@ -9,7 +9,6 @@ import GetRedirectLink from '../../utils/redirect'
 import Logo from "../../assets/img/music mesh-logos_transparent.png";
 
 function Sidebar({ show, sideBarHandler }) {
-  const { state } = useLocation();
   const youtubePlaylists = useSelector(myYoutubePlaylists);
   const spotifyPlaylists = useSelector(mySpotifyPlaylists);
 
