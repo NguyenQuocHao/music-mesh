@@ -22,6 +22,39 @@ router.get("/login/failed", (req, res) => {
   });
 });
 
+router.get("/unconnect", (req, res) => {
+  if (!req.user.linkedAccount) {
+    next();
+  }
+
+  var redirectLink;
+  if (req.user.linkedAccount.provider === "google") {
+    axios.get('http://localhost:5000/youtube/clearTokensCache')
+      .then(data => {
+        console.log("Cleared Youtube cached.")
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+      redirectLink = CLIENT_URL;
+  }
+  else if (req.user.linkedAccount.provider === "spotify") {
+    axios.get('http://localhost:5000/spotify/clearTokensCache')
+      .then(data => {
+        console.log("Cleared Spotify cached.")
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+      redirectLink = SPOTIFY_URL;
+  }
+
+  req.user.linkedAccount = null
+  res.redirect(redirectLink);
+});
+
 router.get("/logout", (req, res) => {
   axios.get('http://localhost:5000/spotify/clearTokensCache')
     .then(data => {
@@ -38,8 +71,6 @@ router.get("/logout", (req, res) => {
     .catch(err => {
       console.log(err)
     })
-
-  req.session.account = null;
 
   req.logout();
   res.redirect(CLIENT_URL);
