@@ -181,5 +181,29 @@ module.exports = function (app) {
         console.log(e)
       });
   })
+
+  app.get('/youtube/search/:query', (req, res) => {
+    youtube.search.list({
+      q: req.params.query,
+      auth: oauth2Client,
+      part: "snippet",
+      type: 'video',
+      videoCategoryId: 10,
+      maxResults: 15,
+    })
+      .then(data => {
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id.videoId,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+
+        res.send(sendData)
+      })
+      .catch(e => {
+        console.log(e)
+      });
+  })
 }
-// app.listen(8001, () => console.log(`Server running at localhost: ${8001}!`))

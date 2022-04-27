@@ -5,10 +5,24 @@ import './Navbar.scss';
 
 function Navbar({ user, sideBarHandler }) {
   const { state } = useLocation();
+  const [query, setQuery] = useState("");
+
+  const search = () => {
+    window.open("http://localhost:3000/search/" + query, "_self");
+  }
+
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      search()
+    }
+  }
 
   return (
     <div className='navbar'>
-      <div></div>
+      <div>
+        <input type="search" className="search-input" onInput={e => setQuery(e.target.value)} onKeyPress={handleEnterKey}></input>
+        <button onClick={search} className="search-button">Search</button>
+      </div>
       <div>
         {user ? (
           <ul className="navbar-list login-nav">

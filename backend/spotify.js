@@ -221,4 +221,35 @@ module.exports = function (app) {
         console.log('Failed to fetch featured playlists.', err);
       })
   });
+
+  app.get('/spotify/search/:query', function (req, res) {
+    spotifyApi.search(req.params.query, ['track', 'playlist'], { limit: ITEM_LIMIT })
+      .then(function (data) {
+        const tracks = data.body.tracks.items.map(item =>
+          new MusicItem(item.id,
+            item.name,
+            item.description,
+            item.album.artists[0].name,
+            item.album.images[0].url
+          ))
+
+        const playlists = data.body.playlists.items.map(item =>
+          new MusicItem(item.id,
+            item.name,
+            item.description,
+            item.owner?.display_name,
+            item.images[0]?.url
+          ))
+
+        const sendData = {
+          tracks,
+          playlists,
+        }
+
+        res.send(sendData)
+      })
+      .catch(err => {
+        console.log('Failed to fetch featured playlists.', err);
+      })
+  });
 }
