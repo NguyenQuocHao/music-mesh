@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import Navbar from './components/Navigation/Navbar';
 import Sidebar from './components/Navigation/Sidebar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './pages/Home'
-import Youtube from './pages/Youtube'
+import Home from './pages/Home';
+import Youtube from './pages/Youtube';
 import Spotify from './pages/Spotify';
-import Login from './components/Login/Login'
+import Login from './components/Login/Login';
 import PlaylistPage from './components/Music/DisplayPage/PlaylistPage';
+import SearchPage from './components/Dashboard/SearchPage';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -59,6 +60,7 @@ function App() {
                   <Route path='/spotify-song/:id' component={PlaylistPage} />
                   <Route path='/youtube-playlist/:id' component={PlaylistPage} />
                   <Route path='/youtube-song/:id' component={PlaylistPage} />
+                  <Route path='/search/:query' component={SearchPage} />
                 </Switch>
               </div>
             </div>
