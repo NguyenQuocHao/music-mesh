@@ -1,28 +1,33 @@
 import { useState, useEffect } from 'react'
-import { useLocation } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import './PlaylistPage.scss'
 
 export default function PlaylistPage() {
-  const { state } = useLocation();
   const [url, setUrl] = useState("")
+  const {id} = useParams()
 
   useEffect(() => {
     var embededLink = ""
     const currentLink = window.location.href
     if (currentLink.includes("youtube")) {
       if (currentLink.includes("song")) {
-        embededLink = "https://www.youtube.com/embed/" + state.id
+        embededLink = "https://www.youtube.com/embed/" + id
       }
       else if (currentLink.includes("playlist")) {
-        embededLink = "https://www.youtube.com/embed/videoseries?list=" + state.id
+        embededLink = "https://www.youtube.com/embed/videoseries?list=" + id
       }
     }
     else {
-      embededLink = "https://open.spotify.com/embed/playlist/" + state.id
+      if (currentLink.includes("song")) {
+        embededLink = "https://open.spotify.com/embed/track/" + id
+      }
+      else if (currentLink.includes("playlist")) {
+        embededLink = "https://open.spotify.com/embed/playlist/" + id
+      }
     }
 
     setUrl(embededLink)
-  }, [state])
+  }, [id])
 
   return (
     <div className="background">

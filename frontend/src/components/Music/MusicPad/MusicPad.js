@@ -7,8 +7,7 @@ export default function MusicPad({ image, title, subTitle, id, site, page, type 
     <div className={"musicpad musicpad-" + page}>
       <Link style={{textDecoration: 'none'}}
         to={{
-          pathname: `/${GetRedirectLink(site, type)}/${id}`,
-          state: { id: id }
+          pathname: `/${site}/${type}/${id}`
         }}
       >
         <img src={image} alt="Empty" className={"musicpad-" + page + "-image"} />

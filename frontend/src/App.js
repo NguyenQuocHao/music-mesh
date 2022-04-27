@@ -54,12 +54,12 @@ function App() {
               <div className='main'>
                 <Switch>
                   <Route path='/' exact component={Home} />
-                  <Route path='/youtube' component={Youtube} />
-                  <Route path='/spotify' component={Spotify} />
-                  <Route path='/spotify-playlist/:id' component={PlaylistPage} />
-                  <Route path='/spotify-song/:id' component={PlaylistPage} />
-                  <Route path='/youtube-playlist/:id' component={PlaylistPage} />
-                  <Route path='/youtube-song/:id' component={PlaylistPage} />
+                  <Route exact path='/youtube' component={Youtube} />
+                  <Route exact path='/spotify' component={Spotify} />
+                  <Route path='/spotify/playlist/:id' component={PlaylistPage} />
+                  <Route path='/spotify/song/:id' component={PlaylistPage} />
+                  <Route path='/youtube/playlist/:id' component={PlaylistPage} />
+                  <Route path='/youtube/song/:id' component={PlaylistPage} />
                   <Route path='/search/:query' component={SearchPage} />
                 </Switch>
               </div>
