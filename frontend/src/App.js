@@ -9,6 +9,7 @@ import Spotify from './pages/Spotify';
 import Login from './components/Login/Login';
 import PlaylistPage from './components/Music/DisplayPage/PlaylistPage';
 import SearchPage from './components/Dashboard/SearchPage';
+import QueuePage from './components/Music/DisplayPage/QueuePage';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -61,6 +62,7 @@ function App() {
                   <Route path='/youtube/playlist/:id' component={PlaylistPage} />
                   <Route path='/youtube/song/:id' component={PlaylistPage} />
                   <Route path='/search/:query' component={SearchPage} />
+                  <Route path='/myQueue' component={QueuePage} />
                 </Switch>
               </div>
             </div>

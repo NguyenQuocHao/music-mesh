@@ -1,18 +1,35 @@
 @import '../../../variables.scss';
 
-.background{
-  background-color: rgba(3,3,3,255);
+.background {
+  overflow-y: auto;
+  background-color: rgba(3, 3, 3, 255);
+  height: calc(100vh - #{$navbarHeight});
+}
+
+.more-options{
+}
+
+.queue {
+  height: 75px;
+  width: 75px;
+}
+
+.queue-item {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  height: calc(100vh - #{$navbarHeight}); 
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px 20px;
 }
 
-.main-media{
-  width: 100%;
-  flex: 1;
+.queue-item-left {
+  display: flex;
+  align-items: center;
 }
 
-.song-list{
-  flex: 2;
+.unactive-track {
+  opacity: 50%;
+}
+
+.artist-name{
+  color: rgba(166,166,166,255);
 }
