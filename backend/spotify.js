@@ -91,6 +91,13 @@ module.exports = function (app) {
     res.sendStatus(200);
   });
 
+
+  app.get('/spotify/getToken', function (req, res) {
+    var token = spotifyApi.getAccessToken()
+    console.log(token)
+    res.send(token)
+  });
+
   app.get('/spotify/userPlaylists', function (req, res) {
     spotifyApi.getUserPlaylists()
       .then(function (data) {
@@ -221,6 +228,27 @@ module.exports = function (app) {
         console.log('Failed to fetch featured playlists.', err);
       })
   });
+
+  app.get('/spotify/getTrack/:id', (req, res) => {
+    spotifyApi.getTrack(req.params.id)
+      .then(function (data) {
+        const responseData = data.body;
+        const sendData = new MusicItem(responseData.id,
+          responseData.name,
+          "",
+          responseData.artists[0].name,
+          responseData.album.images[0]?.url
+        )
+        console.log(sendData)
+
+        res.send(sendData)
+      }, function (err) {
+        console.log('Failed to fetch top playlists', err);
+      })
+      .catch(e => {
+        console.log(e)
+      });
+  })
 
   app.get('/spotify/search/:query', function (req, res) {
     spotifyApi.search(req.params.query, ['track', 'playlist'], { limit: ITEM_LIMIT })

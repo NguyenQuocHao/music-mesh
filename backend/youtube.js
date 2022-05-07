@@ -182,12 +182,35 @@ module.exports = function (app) {
       });
   })
 
+  app.get('/youtube/getTrack/:id', (req, res) => {
+    youtube.videos.list({
+      auth: oauth2Client,
+      part: "snippet",
+      id: req.params.id,
+      videoCategoryId: 10,
+      maxResults: 1,
+    })
+      .then(data => {
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.id,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high.url
+          ))
+        res.send(sendData)
+      })
+      .catch(e => {
+        console.log(e)
+      });
+  })
+
   app.get('/youtube/search/:query', (req, res) => {
     youtube.search.list({
-      q: req.params.query,
       auth: oauth2Client,
       part: "snippet",
       type: 'video',
+      q: req.params.query,
       videoCategoryId: 10,
       maxResults: 15,
     })

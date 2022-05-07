@@ -6,10 +6,9 @@
   height: calc(100vh - #{$navbarHeight});
 }
 
-.more-options{
-}
+.more-options {}
 
-.queue {
+.queue-item-image {
   height: 75px;
   width: 75px;
 }
@@ -30,6 +29,11 @@
   opacity: 50%;
 }
 
-.artist-name{
-  color: rgba(166,166,166,255);
+.artist-name {
+  color: rgba(166, 166, 166, 255);
+}
+
+.player {
+  height: 380px;
+  width: 100%;
 }
