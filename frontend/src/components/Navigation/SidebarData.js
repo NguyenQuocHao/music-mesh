@@ -1,12 +1,13 @@
-import React from 'react'
-import * as AiIcons from 'react-icons/ai'
-import {SiYoutube, SiSpotify} from 'react-icons/si'
+import React from 'react';
+import {AiFillHome} from 'react-icons/ai';
+import {SiYoutube, SiSpotify} from 'react-icons/si';
+import { MdQueueMusic } from "react-icons/md";
 
 export const SidebarData = [
   {
     title: 'Home',
     path: '/',
-    icon: <AiIcons.AiFillHome/>,
+    icon: <AiFillHome/>,
     cName: 'sidebar-text'
   },
   {
@@ -19,6 +20,12 @@ export const SidebarData = [
     title: 'Spotify',
     path: '/spotify',
     icon: <SiSpotify/>,
+    cName: 'sidebar-text'
+  },
+  {
+    title: 'My Queue',
+    path: '/myQueue',
+    icon: <MdQueueMusic/>,
     cName: 'sidebar-text'
   }
 ]

@@ -1,28 +1,75 @@
-import { useState, useEffect } from 'react'
-import { useLocation } from "react-router-dom"
-import './PlaylistPage.scss'
+import { useState, useEffect, useReducer } from 'react';
+import { useParams } from "react-router-dom";
+import './PlaylistPage.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTrack, } from '../../../redux/reducers/queue';
+import axios from 'axios';
+import { FaEllipsisH, FaTrashAlt } from "react-icons/fa";
+import { CSSTransition } from 'react-transition-group';
 
 export default function PlaylistPage() {
-  const { state } = useLocation();
   const [url, setUrl] = useState("")
+  const { id } = useParams()
+  const dispatch = useDispatch();
+  const [info, setInfo] = useState();
+  const [showNoti, setShowNoti] = useState(false);
+  const [showDropDown, setShowDropDown] = useState(false);
+  const notificationsMessage = "Track added ✔";
 
   useEffect(() => {
     var embededLink = ""
     const currentLink = window.location.href
     if (currentLink.includes("youtube")) {
       if (currentLink.includes("song")) {
-        embededLink = "https://www.youtube.com/embed/" + state.id
+        embededLink = "https://www.youtube.com/embed/" + id
+
+        axios.get('http://localhost:5000/youtube/getTrack/' + id)
+          .then(data => {
+            setInfo({
+              id: data.data[0].id,
+              title: data.data[0].title,
+              image: data.data[0].image,
+              artist: data.data[0].artist,
+              source: 'youtube',
+            })
+          })
       }
       else if (currentLink.includes("playlist")) {
-        embededLink = "https://www.youtube.com/embed/videoseries?list=" + state.id
+        embededLink = "https://www.youtube.com/embed/videoseries?list=" + id
       }
     }
     else {
-      embededLink = "https://open.spotify.com/embed/playlist/" + state.id
+      if (currentLink.includes("song")) {
+        embededLink = "https://open.spotify.com/embed/track/" + id
+
+        axios.get('http://localhost:5000/spotify/getTrack/' + id)
+          .then(data => {
+            console.log(data)
+            setInfo({
+              id: data.data.id,
+              title: data.data.title,
+              image: data.data.image,
+              artist: data.data.artist,
+              source: 'spotify',
+            })
+          })
+      }
+      else if (currentLink.includes("playlist")) {
+        embededLink = "https://open.spotify.com/embed/playlist/" + id
+      }
     }
 
     setUrl(embededLink)
-  }, [state])
+  }, [id])
+
+  const addTrackToQueue = () => {
+    dispatch(addTrack(info));
+    console.log(info)
+  }
+
+  const closeNoti = () => {
+    setShowNoti(false)
+  }
 
   return (
     <div className="background">
@@ -32,6 +79,19 @@ export default function PlaylistPage() {
       {/* <div className="song-list">
         <SongList data={relatedVideos} tiFtle="Related music" site="youtube" page="display"></SongList>
       </div> */}
+      {!window.location.href.includes("playlist") &&
+        <div className='ellipsis'>
+          <FaEllipsisH onClick={() => { setShowDropDown(!showDropDown); }} />
+          {showDropDown &&
+            <div className='track-dropdown'>
+              <div className='track-dropdown-item' onClick={() => { addTrackToQueue(); setShowNoti(true); setTimeout(closeNoti, 2000)}}>Add to Queue</div>
+            </div>}
+        </div>
+      }
+      {/* <CSSTransition in={showNoti} classNames="noti-effect" onEnter={() => {setTimeout(closeNoti, 1000); }} unmountOnExit>
+        <div className='notifications' id="float">{notificationsMessage}</div>
+      </CSSTransition> */}
+      { showNoti && <div className='notifications float'>{notificationsMessage}</div>}
     </div>
   )
 }

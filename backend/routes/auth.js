@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const axios = require('axios');
-const CLIENT_URL = "http://localhost:3000/youtube";
+const YOUTUBE_URL = "http://localhost:3000/youtube";
 const SPOTIFY_URL = "http://localhost:3000/spotify";
 
 router.get("/login/success", (req, res) => {
@@ -37,7 +37,7 @@ router.get("/unconnect", (req, res) => {
         console.log(err)
       })
 
-      redirectLink = CLIENT_URL;
+      redirectLink = YOUTUBE_URL;
   }
   else if (req.user.linkedAccount.provider === "spotify") {
     axios.get('http://localhost:5000/spotify/clearTokensCache')
@@ -73,7 +73,7 @@ router.get("/logout", (req, res) => {
     })
 
   req.logout();
-  res.redirect(CLIENT_URL);
+  res.redirect(YOUTUBE_URL);
 });
 
 router.get("/google/signin", passport.authenticate("google", {
@@ -87,7 +87,7 @@ router.get("/google/signin", passport.authenticate("google", {
 router.get(
   "/google/signin/callback",
   passport.authenticate("google", {
-    successRedirect: CLIENT_URL,
+    successRedirect: YOUTUBE_URL,
     failureRedirect: "/login/failed",
   }));
 
@@ -102,7 +102,7 @@ router.get('/google/connect/callback',
   passport.authorize('google-authz', { failureRedirect: "/login/failed" }),
   function (req, res) {
     req.user.linkedAccount = req.account;
-    res.redirect(CLIENT_URL)
+    res.redirect(YOUTUBE_URL)
   }
 );
 

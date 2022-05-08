@@ -15,10 +15,10 @@ export default function GetRedirectLink(site, type) {
 
   switch (type) {
     case vars.playlist:
-      link += "-" + vars.playlist;
+      link += "/" + vars.playlist;
       break;
     case vars.song:
-      link += "-" + vars.song;
+      link += "/" + vars.song;
       break;
     default:
       break;
