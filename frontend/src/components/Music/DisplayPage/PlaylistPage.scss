@@ -37,3 +37,89 @@
   height: 380px;
   width: 100%;
 }
+
+.ellipsis {
+  color: white;
+  float: right;
+  margin: 30px 50px;
+  cursor: pointer;
+}
+
+.track-dropdown {
+  position: absolute;
+  width: 200px;
+  background-color: #242526;
+  right: 35px;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.track-dropdown-item {
+  opacity: 70%;
+}
+
+.track-dropdown-item:hover {
+  opacity: 100%;
+}
+
+.notifications {
+  padding: 0.5rem 1rem;
+  background-color: #242526;
+  color: white;
+  text-align: center;
+  position: fixed;
+  top: 90%;
+  left: 50%;
+  opacity: 70%;
+  border-radius: 8px;
+}
+
+.noti-effect-enter {
+  position: absolute;
+  opacity: 0%;
+}
+
+.noti-effect-enter-active {
+  transform: translateY(0%);
+  transition: opacity 200ms;
+  opacity: 70%;
+}
+
+.noti-effect-exit {
+  position: absolute;
+  opacity: 70%;
+}
+
+.noti-effect-exit-active {
+  // transform: translateX(-110%);
+  transition: opacity 200ms;
+  opacity: 0%;
+}
+
+.float {
+  // position: relative;
+  -webkit-animation: floatBubble 0.7s 1 normal ease-out;
+  animation: floatBubble 0.7s 1 normal ease-out;
+}
+
+@-webkit-keyframes floatBubble {
+  0% {
+    top: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    top: 90%;
+  }
+}
+
+@keyframes floatBubble {
+  0% {
+    top: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    top: 90%;
+  }
+}

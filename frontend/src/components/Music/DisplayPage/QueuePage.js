@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
-import './PlaylistPage.scss'
+import { useState, useEffect } from 'react';
+import './PlaylistPage.scss';
 import ReactPlayer from 'react-player/youtube';
 import { myQueue } from '../../../redux/reducers/queue';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeTrackByIndex } from '../../../redux/reducers/queue';
+import { FaTrashAlt } from "react-icons/fa";
 
 export default function QueuePage() {
     const queue = useSelector(myQueue);
@@ -44,12 +45,11 @@ export default function QueuePage() {
                                         <div className='artist-name'>{track.artist}</div>
                                     </span>
                                 </a>
-                                <a href='#' onClick={() => { removeTrack(index) }} className='more-options'>Remove</a>
+                                <a href='#' onClick={() => { removeTrack(index) }} className='more-options'><FaTrashAlt style={{marginRight: '5px'}}/>Remove</a>
                             </div>
                         </div>)}
                     </div>
                 </div>}
-
         </div>
     )
 }

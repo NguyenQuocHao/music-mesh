@@ -1,39 +1,39 @@
-.music-title{
+.music-title {
   font-weight: bold;
-  color: rgba(245,245,245,255);
+  color: rgba(245, 245, 245, 255);
 }
 
 .musicpad-dashboard {
   display: inline-block;
   width: 200px;
-  margin: 20px;  
+  margin: 20px;
 }
 
-.musicpad-dashboard-image{
+.musicpad-dashboard-image {
   height: 200px;
   width: 200px;
   border-radius: 3px;
 }
 
-.musicpad-display{
-  display:list-item;
+.musicpad-display {
+  display: list-item;
   font-size: small;
   padding: 2px;
   overflow: hidden;
 }
 
-.musicpad-display-image{
+.musicpad-display-image {
   height: 75px;
   float: left;
 }
 
-.musicpad-sub-title{
-  color: rgba(166,166,166,255);
+.musicpad-sub-title {
+  color: rgba(166, 166, 166, 255);
 }
 
-.song-list-dashboard{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.song-list-dashboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
