@@ -13,7 +13,7 @@ const oauth2Client = new OAuth2(
   CONFIG.oauth2Credentials.redirect_uris[0]
 );
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const MusicItem = require('./musicItem.js')
+const MusicItem = require('./musicItem.js');
 
 // app.use(cors())
 // app.use(bodyParser.json())
@@ -48,29 +48,15 @@ passport.use("google-authz",
   )
 );
 
+// oauth2Client.on('tokens', (tokens) => {
+//   if (tokens.refresh_token) {
+//     // store the refresh_token in your secure persistent database
+//     console.log(tokens.refresh_token);
+//   }
 
-// app.post('/refresh', (req, res) => {
-//   const refreshToken = req.body.refreshToken
-//   const spotifyApi = new SpotifyWebApi({
-//     redirectUri: process.env.REDIRECT_URI,
-//     clientId: process.env.CLIENT_ID,
-//     clientSecret: process.env.CLIENT_SECRET,
-//     refreshToken
-//   })
-
-//   spotifyApi.refreshAccessToken().
-//     then(
-//       data => {
-//         res.json({
-//           accessToken: data.body.accessToken,
-//           expiresIn: data.body.expiresIn
-//         })
-//         console.log("The access token has been refreshed.")
-//       })
-//     .catch(() => {
-//       res.sendStatus(400)
-//     })
-// })
+//   console.log("On tokens event");
+//   console.log(tokens.access_token);
+// });
 
 module.exports = function (app) {
   app.use(
@@ -86,6 +72,16 @@ module.exports = function (app) {
     oauth2Client.credentials.refresh_token = null;
     res.sendStatus(200);
   });
+
+  app.get('/youtube/refreshToken', (req, res) => {
+    oauth2Client.refreshToken(oauth2Client.credentials.refresh_token)
+      .then(data => {
+        oauth2Client.credentials.access_token = data.tokens.access_token
+      })
+      .catch(() => {
+        res.sendStatus(400)
+      })
+  })
 
   app.get('/youtube/popularSongs', function (req, res) {
     youtube.videos

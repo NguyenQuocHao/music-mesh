@@ -51,31 +51,6 @@ passport.use('spotify-authz',
   )
 );
 
-
-
-app.post('/refresh', (req, res) => {
-  const refreshToken = req.body.refreshToken
-  const spotifyApi = new SpotifyWebApi({
-    redirectUri: process.env.SPOTIFY_REDIRECT_URI,
-    clientId: process.env.SPOTIFY_CLIENT_ID,
-    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-    refreshToken
-  })
-
-  spotifyApi.refreshAccessToken().
-    then(
-      data => {
-        res.json({
-          accessToken: data.body.accessToken,
-          expiresIn: data.body.expiresIn
-        })
-        console.log("The access token has been refreshed.")
-      })
-    .catch(() => {
-      res.sendStatus(400)
-    })
-})
-
 module.exports = function (app) {
   app.use(
     cors({
@@ -91,6 +66,15 @@ module.exports = function (app) {
     res.sendStatus(200);
   });
 
+  app.get('/spotify/refreshToken', (req, res) => {
+    spotifyApi.refreshAccessToken().
+      then(data => {
+        spotifyApi.setAccessToken(data.body.access_token)
+      })
+      .catch(() => {
+        res.sendStatus(400)
+      })
+  });
 
   app.get('/spotify/getToken', function (req, res) {
     var token = spotifyApi.getAccessToken()
