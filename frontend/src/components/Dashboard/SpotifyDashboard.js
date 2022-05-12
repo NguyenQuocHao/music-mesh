@@ -16,6 +16,10 @@ export default function SpotifyDashboard() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    axios.get('http://localhost:5000/spotify/refresh')
+      .then(data => {
+      })
+
     axios.get('http://localhost:5000/spotify/userPlaylists')
       .then(function (data) {
         dispatch(getMySpotifyPlaylists(data.data))
