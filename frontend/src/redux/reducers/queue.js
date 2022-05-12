@@ -12,10 +12,13 @@ export const queueSlice = createSlice({
     removeTrackByIndex: (state, action) => {
       state.value = state.value.filter((_, index) => index != action.payload)
     },
+    clearQueue: (state) => {
+      state.value = []
+    },
   }
 })
 
-  export const { addTrack, removeTrackByIndex } = queueSlice.actions
+  export const { addTrack, removeTrackByIndex, clearQueue } = queueSlice.actions
   export default queueSlice.reducer
 
   export const myQueue = (state) => state.queue.value

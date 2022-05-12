@@ -9,6 +9,9 @@ export const SpotifySlice = createSlice({
     getMySpotifyPlaylists: (state, action) => {
       state.value = action.payload
     },
+    clearMySpotifyPlaylists: (state, action) => {
+      state.value = []
+    },
   }
 })
 
@@ -36,7 +39,7 @@ export const SpotifySlice = createSlice({
 //     }
 //   }
 
-  export const { getMySpotifyPlaylists } = SpotifySlice.actions
+  export const { getMySpotifyPlaylists, clearMySpotifyPlaylists } = SpotifySlice.actions
   export default SpotifySlice.reducer
 
   export const mySpotifyPlaylists = (state) => state.spotifyPlaylist.value
