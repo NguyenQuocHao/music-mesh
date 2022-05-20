@@ -3,16 +3,49 @@ const passport = require("passport");
 const axios = require('axios');
 const YOUTUBE_URL = "http://localhost:3000/youtube";
 const SPOTIFY_URL = "http://localhost:3000/spotify";
+const dbo = require('../db/conn');
 
-router.get("/login/success", (req, res) => {
+router.get("/login/success", async function (req, res) {
   if (req.user) {
-    res.status(200).json({
-      success: true,
-      message: "successfull",
-      user: req.user,
-      account: req.session.account
-    });
+    // try {
+    if (req.user.provider === "google") {
+      await axios.get("http://localhost:5000/spotify/getInfo")
+        .then(res => {
+          req.user.linkedAccount = {
+            displayName: res.data.display_name,
+            photos: [{ value: res.data.images[0].url }],
+            provider: "spotify"
+          }
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+    }
+    else if (req.user.provider === "spotify") {
+      await axios.get("http://localhost:5000/youtube/getInfo")
+        .then(res => {
+          req.user.linkedAccount = {
+            displayName: res.data.name,
+            photos: [{ value: res.data.picture }],
+            provider: "google"
+          }
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
+    }
+    // }
+    // catch (error) {
+    //   console.log("Can't connect old account")
+    //   console.log(error)
+    // }
   }
+
+  res.status(200).json({
+    success: true,
+    message: "successfull",
+    user: req.user
+  });
 });
 
 router.get("/login/failed", (req, res) => {
@@ -22,22 +55,34 @@ router.get("/login/failed", (req, res) => {
   });
 });
 
-router.get("/unconnect", (req, res) => {
+router.get("/unconnect", async function (req, res) {
   if (!req.user.linkedAccount) {
     next();
   }
 
+  // Remove linked account from database
+  const dbConnect = dbo.getDb();
+  const update = {
+    $unset: {
+      linkedAccount: ""
+    },
+  };
+
+  const result = await dbConnect.collection('users').updateOne({ username: req.user.id }, update);
+  console.log("Unlinked account for user with id:" + req.user.id)
+
   var redirectLink;
+  // Clear token cache
   if (req.user.linkedAccount.provider === "google") {
     axios.get('http://localhost:5000/youtube/clearTokensCache')
       .then(data => {
         console.log("Cleared Youtube cached.")
       })
       .catch(err => {
-        console.log(err)
+        console.log(err.response)
       })
 
-      redirectLink = YOUTUBE_URL;
+    redirectLink = YOUTUBE_URL;
   }
   else if (req.user.linkedAccount.provider === "spotify") {
     axios.get('http://localhost:5000/spotify/clearTokensCache')
@@ -48,7 +93,7 @@ router.get("/unconnect", (req, res) => {
         console.log(err)
       })
 
-      redirectLink = SPOTIFY_URL;
+    redirectLink = SPOTIFY_URL;
   }
 
   req.user.linkedAccount = null

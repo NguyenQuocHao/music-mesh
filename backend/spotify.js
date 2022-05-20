@@ -12,6 +12,8 @@ const spotifyApi = new SpotifyWebApi({
 });
 const MusicItem = require('./musicItem.js');
 const ITEM_LIMIT = 15;
+const dbo = require('./db/conn');
+const axios = require('axios');
 
 const app = express();
 app.use(cors())
@@ -24,10 +26,29 @@ passport.use(
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       callbackURL: 'http://localhost:5000/auth/spotify/signin/callback'
     },
-    function (accessToken, refreshToken, expires_in, profile, done) {
+    async function (accessToken, refreshToken, expires_in, profile, done) {
       spotifyApi.setAccessToken(accessToken)
       spotifyApi.setRefreshToken(refreshToken)
-      // spotifyApi.expiresIn = expires_in
+
+      const user = {
+        username: profile.id,
+        provider: "spotify",
+      }
+
+      const dbConnect = dbo.getDb();
+      const existingUser = await dbConnect.collection('users').findOne(user);
+      if (existingUser) {
+        if (existingUser.linkedAccount) {
+          await axios.get('http://localhost:5000/youtube/setRefreshToken/' + existingUser.linkedAccount.refreshToken)
+          await axios.get('http://localhost:5000/youtube/refreshToken')
+        }
+      }
+      else {
+        const returnedUser = await dbConnect
+          .collection('users')
+          .insertOne(user);
+        console.log("Created user with id:" + returnedUser.insertedId)
+      }
 
       done(null, profile);
     }
@@ -39,18 +60,43 @@ passport.use('spotify-authz',
     {
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: 'http://localhost:5000/auth/spotify/connect/callback'
+      callbackURL: 'http://localhost:5000/auth/spotify/connect/callback',
+      passReqToCallback: true
     },
-    function (accessToken, refreshToken, expires_in, profile, done) {
+    async function (req, accessToken, refreshToken, expires_in, profile, done) {
       spotifyApi.setAccessToken(accessToken)
       spotifyApi.setRefreshToken(refreshToken)
-      // spotifyApi.expiresIn = expires_in
+
+      const user = {
+        username: profile.id,
+        provider: "spotify",
+      }
+
+      const dbConnect = dbo.getDb();
+      const existingUser = await dbConnect.collection('users').findOne({ username: req.user.id });
+      if (existingUser) {
+        const update = {
+          $set: {
+            linkedAccount: {
+              ...user,
+              refreshToken: refreshToken,
+            }
+          },
+        };
+
+        const result = await dbConnect.collection('users').updateOne({ username: req.user.id }, update);
+        console.log("Add linked account for user with id:" + req.user.id)
+      }
+      else {
+        // TODO: Handle error
+      }
 
       done(null, profile);
     }
   )
 );
 
+exports.spotifyApi = spotifyApi;
 module.exports = function (app) {
   app.use(
     cors({
@@ -66,12 +112,37 @@ module.exports = function (app) {
     res.sendStatus(200);
   });
 
+  app.get('/spotify/setRefreshToken/:refreshToken(*)', (req, res) => {
+    spotifyApi.setRefreshToken(req.params.refreshToken)
+    res.sendStatus(200)
+  });
+
   app.get('/spotify/refreshToken', (req, res) => {
-    spotifyApi.refreshAccessToken().
-      then(data => {
+    spotifyApi.refreshAccessToken()
+      .then(data => {
         spotifyApi.setAccessToken(data.body.access_token)
+        console.log("Refreshed Spotify access token.")
+        res.sendStatus(200)
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log("Cannot refresh access token.")
+        console.log(error)
+        res.sendStatus(400)
+      })
+  });
+
+  app.get('/spotify/getInfo', (req, res) => {
+    if (!spotifyApi.getAccessToken()) {
+      res.sendStatus(401);
+    }
+
+    spotifyApi.getMe()
+      .then(data => {
+        res.send(data.body)
+      })
+      .catch((error) => {
+        console.log("Cannot refresh access token.")
+        console.log(error)
         res.sendStatus(400)
       })
   });

@@ -14,7 +14,8 @@ const oauth2Client = new OAuth2(
 );
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const MusicItem = require('./musicItem.js');
-
+const dbo = require('./db/conn');
+const axios = require('axios');
 // app.use(cors())
 // app.use(bodyParser.json())
 
@@ -25,9 +26,30 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/signin/callback",
     },
-    function (accessToken, refreshToken, profile, done) {
+    async function (accessToken, refreshToken, profile, done) {
       oauth2Client.credentials.access_token = accessToken;
       oauth2Client.credentials.refresh_token = refreshToken;
+
+      const user = {
+        username: profile.id,
+        provider: "google",
+      }
+
+      const dbConnect = dbo.getDb();
+      const existingUser = await dbConnect.collection('users').findOne(user);
+      if (existingUser) {
+        if (existingUser.linkedAccount) {
+          await axios.get('http://localhost:5000/spotify/setRefreshToken/' + existingUser.linkedAccount.refreshToken)
+          await axios.get('http://localhost:5000/spotify/refreshToken')
+        }
+      }
+      else {
+        const returnedUser = await dbConnect
+          .collection('users')
+          .insertOne(user);
+        console.log("Created user with id:" + returnedUser.insertedId)
+      }
+
       done(null, profile);
     }
   )
@@ -38,11 +60,37 @@ passport.use("google-authz",
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/connect/callback"
+      callbackURL: "/auth/google/connect/callback",
+      passReqToCallback: true
     },
-    function (accessToken, refreshToken, profile, done) {
+    async function (req, accessToken, refreshToken, profile, done) {
       oauth2Client.credentials.access_token = accessToken;
       oauth2Client.credentials.refresh_token = refreshToken;
+
+      const user = {
+        username: profile.id,
+        provider: "google",
+      }
+      const dbConnect = dbo.getDb();
+
+      const existingUser = await dbConnect.collection('users').findOne({ username: req.user.id });
+      if (existingUser) {
+        const update = {
+          $set: {
+            linkedAccount: {
+              ...user,
+              refreshToken: refreshToken,
+            }
+          },
+        };
+
+        const result = await dbConnect.collection('users').updateOne({ username: req.user.id }, update);
+        console.log("Add linked account for user with id:" + req.user.id)
+      }
+      else {
+        // TODO: Handle error
+      }
+
       done(null, profile);
     }
   )
@@ -67,16 +115,41 @@ module.exports = function (app) {
     })
   );
 
+  app.get('/youtube/getInfo', (req, res) => {
+    if (!oauth2Client.credentials.access_token) {
+      res.sendStatus(401);
+    }
+
+    var oauth2 = google.oauth2({
+      auth: oauth2Client,
+      version: 'v2'
+    })
+
+    oauth2.userinfo.get()
+      .then((result) => {
+        res.send(result.data)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  });
+
   app.get('/youtube/clearTokensCache', function (req, res) {
     oauth2Client.credentials.access_token = null;
     oauth2Client.credentials.refresh_token = null;
     res.sendStatus(200);
   });
 
+  app.get('/youtube/setRefreshToken/:refreshToken(*)', (req, res) => {
+    oauth2Client.credentials.refresh_token = req.params.refreshToken;
+    res.sendStatus(200)
+  });
+
   app.get('/youtube/refreshToken', (req, res) => {
     oauth2Client.refreshToken(oauth2Client.credentials.refresh_token)
       .then(data => {
         oauth2Client.credentials.access_token = data.tokens.access_token
+        res.sendStatus(200)
       })
       .catch(() => {
         res.sendStatus(400)

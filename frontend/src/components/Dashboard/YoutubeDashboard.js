@@ -13,9 +13,7 @@ export default function YoutubeDashboard() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    axios.get('http://localhost:5000/youtube/refresh')
-      .then(data => {
-      })
+    axios.get('http://localhost:5000/youtube/refreshToken')
 
     axios.get('http://localhost:5000/youtube/popularSongs')
       .then(data => {

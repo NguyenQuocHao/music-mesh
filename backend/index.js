@@ -8,6 +8,8 @@ const authRoute = require("./routes/auth");
 const app = express();
 const youtube = require("./youtube")(app)
 const spotify = require("./spotify")(app)
+const dbo = require('./db/conn');
+const PORT = process.env.PORT || 5000;
 
 app.use(cookieParser());
 
@@ -38,9 +40,14 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
+dbo.connectToServer(function (err) {
+  if (err) {
+    console.error(err);
+    process.exit();
+  }
+});
 
-
-
-app.listen("5000", () => {
-  console.log("Server is running!");
+// Start the Express server
+app.listen(PORT, () => {
+  console.log(`Server is running on port: ${PORT}`);
 });
