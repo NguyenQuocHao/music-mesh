@@ -14,12 +14,12 @@ export default function SearchPage() {
             title: "Spotify Tracks",
             data: spotifyTracks,
             source: "spotify",
-            type: vars.playlist,
+            type: vars.song,
         },
         {
             title: "Spotify Playlists",
             data: spotifyPlaylists,
-            source: "youtube",
+            source: "spotify",
             type: vars.playlist
         },
         {
