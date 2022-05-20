@@ -1,23 +1,16 @@
 require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const SpotifyWebApi = require('spotify-web-api-node');
-const SpotifyStrategy = require('passport-spotify').Strategy;
 const passport = require('passport');
+const SpotifyStrategy = require('passport-spotify').Strategy;
+const SpotifyWebApi = require('spotify-web-api-node');
 const spotifyApi = new SpotifyWebApi({
-  redirectUri: process.env.SPOTIFY_REDIRECT_URI,
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+  redirectUri: process.env.SPOTIFY_REDIRECT_URI,
 });
 const MusicItem = require('./musicItem.js');
 const ITEM_LIMIT = 15;
 const dbo = require('./db/conn');
 const axios = require('axios');
-
-const app = express();
-app.use(cors())
-app.use(bodyParser.json())
 
 passport.use(
   new SpotifyStrategy(
@@ -27,6 +20,7 @@ passport.use(
       callbackURL: 'http://localhost:5000/auth/spotify/signin/callback'
     },
     async function (accessToken, refreshToken, expires_in, profile, done) {
+      // Set tokens
       spotifyApi.setAccessToken(accessToken)
       spotifyApi.setRefreshToken(refreshToken)
 
@@ -64,6 +58,7 @@ passport.use('spotify-authz',
       passReqToCallback: true
     },
     async function (req, accessToken, refreshToken, expires_in, profile, done) {
+      // Set tokens
       spotifyApi.setAccessToken(accessToken)
       spotifyApi.setRefreshToken(refreshToken)
 
@@ -73,6 +68,7 @@ passport.use('spotify-authz',
       }
 
       const dbConnect = dbo.getDb();
+      // Find main user, and add 2nd account
       const existingUser = await dbConnect.collection('users').findOne({ username: req.user.id });
       if (existingUser) {
         const update = {
@@ -96,16 +92,7 @@ passport.use('spotify-authz',
   )
 );
 
-exports.spotifyApi = spotifyApi;
 module.exports = function (app) {
-  app.use(
-    cors({
-      origin: "http://localhost:3000",
-      methods: "GET,POST,PUT,DELETE",
-      credentials: true,
-    })
-  );
-
   app.get('/spotify/clearTokensCache', function (req, res) {
     spotifyApi.setAccessToken(null)
     spotifyApi.setRefreshToken(null)
@@ -141,16 +128,10 @@ module.exports = function (app) {
         res.send(data.body)
       })
       .catch((error) => {
-        console.log("Cannot refresh access token.")
+        console.log("Cannot get Spotify profile.")
         console.log(error)
         res.sendStatus(400)
       })
-  });
-
-  app.get('/spotify/getToken', function (req, res) {
-    var token = spotifyApi.getAccessToken()
-    console.log(token)
-    res.send(token)
   });
 
   app.get('/spotify/userPlaylists', function (req, res) {
@@ -165,12 +146,10 @@ module.exports = function (app) {
           ))
 
         res.send(sendData)
-      }, function (err) {
+      })
+      .catch(function (err) {
         console.log('Failed to fetch user\'s playlists', err);
       })
-      .catch(e => {
-        console.log(e)
-      });
   });
 
   app.get('/spotify/pop', (req, res) => {
@@ -185,11 +164,9 @@ module.exports = function (app) {
           ))
 
         res.send(sendData)
-      }, function (err) {
-        console.log('Failed to fetch pop playlists', err);
       })
-      .catch(e => {
-        console.log(e)
+      .catch(function (err) {
+        console.log('Failed to fetch pop playlists', err);
       });
   })
 
@@ -205,11 +182,9 @@ module.exports = function (app) {
           ))
 
         res.send(sendData)
-      }, function (err) {
-        console.log('Failed to fetch top playlists', err);
       })
-      .catch(e => {
-        console.log(e)
+      .catch(function (err) {
+        console.log('Failed to fetch top playlists', err);
       });
   })
 
@@ -225,11 +200,9 @@ module.exports = function (app) {
           ))
 
         res.send(sendData)
-      }, function (err) {
-        console.log('Failed to fetch decades playlists', err);
       })
-      .catch(e => {
-        console.log(e)
+      .catch(function (err) {
+        console.log('Failed to fetch decades playlists', err);
       });
   })
 
@@ -245,9 +218,10 @@ module.exports = function (app) {
           ))
 
         res.send(sendData)
-      }, function (err) {
-        console.log('Failed to fetch mood playlists.', err);
       })
+      .catch(function (err) {
+        console.log('Failed to fetch mood playlists.', err);
+      });
   })
 
   app.get('/spotify/chill', function (req, res) {
@@ -262,9 +236,10 @@ module.exports = function (app) {
           ))
 
         res.send(sendData)
-      }, function (err) {
-        console.log('Failed to fetch chill playlists', err);
       })
+      .catch(function (err) {
+        console.log('Failed to fetch chill playlists', err);
+      });
   });
 
   app.get('/spotify/featuredPlaylists', function (req, res) {
@@ -279,9 +254,10 @@ module.exports = function (app) {
           ))
 
         res.send(sendData)
-      }, function (err) {
-        console.log('Failed to fetch featured playlists.', err);
       })
+      .catch(function (err) {
+        console.log('Failed to fetch featured playlists.', err);
+      });
   });
 
   app.get('/spotify/getTrack/:id', (req, res) => {
@@ -297,11 +273,9 @@ module.exports = function (app) {
         console.log(sendData)
 
         res.send(sendData)
-      }, function (err) {
-        console.log('Failed to fetch top playlists', err);
       })
-      .catch(e => {
-        console.log(e)
+      .catch(function (err) {
+        console.log('Failed to fetch top playlists', err);
       });
   })
 

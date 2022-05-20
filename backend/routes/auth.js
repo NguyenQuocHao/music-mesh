@@ -7,7 +7,6 @@ const dbo = require('../db/conn');
 
 router.get("/login/success", async function (req, res) {
   if (req.user) {
-    // try {
     if (req.user.provider === "google") {
       await axios.get("http://localhost:5000/spotify/getInfo")
         .then(res => {
@@ -34,11 +33,6 @@ router.get("/login/success", async function (req, res) {
           console.log(error.response)
         })
     }
-    // }
-    // catch (error) {
-    //   console.log("Can't connect old account")
-    //   console.log(error)
-    // }
   }
 
   res.status(200).json({
@@ -75,24 +69,10 @@ router.get("/unconnect", async function (req, res) {
   // Clear token cache
   if (req.user.linkedAccount.provider === "google") {
     axios.get('http://localhost:5000/youtube/clearTokensCache')
-      .then(data => {
-        console.log("Cleared Youtube cached.")
-      })
-      .catch(err => {
-        console.log(err.response)
-      })
-
     redirectLink = YOUTUBE_URL;
   }
   else if (req.user.linkedAccount.provider === "spotify") {
     axios.get('http://localhost:5000/spotify/clearTokensCache')
-      .then(data => {
-        console.log("Cleared Spotify cached.")
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
     redirectLink = SPOTIFY_URL;
   }
 
@@ -102,27 +82,13 @@ router.get("/unconnect", async function (req, res) {
 
 router.get("/logout", (req, res) => {
   axios.get('http://localhost:5000/spotify/clearTokensCache')
-    .then(data => {
-      console.log("Cleared Spotify cached.")
-    })
-    .catch(err => {
-      console.log(err)
-    })
-
   axios.get('http://localhost:5000/youtube/clearTokensCache')
-    .then(data => {
-      console.log("Cleared Youtube cached.")
-    })
-    .catch(err => {
-      console.log(err)
-    })
 
   req.logout();
   res.redirect(YOUTUBE_URL);
 });
 
 router.get("/google/signin", passport.authenticate("google", {
-  // scope: ["profile"],
   scope: ['https://www.googleapis.com/auth/userinfo.profile',
     'https://www.googleapis.com/auth/userinfo.email',
     "https://www.googleapis.com/auth/youtube"],

@@ -1,22 +1,16 @@
 require('dotenv').config();
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const google = require("googleapis").google;
 const passport = require("passport");
-// Google's OAuth2 client
-const OAuth2 = google.auth.OAuth2;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const google = require("googleapis").google;
 const youtube = google.youtube("v3");
-const oauth2Client = new OAuth2(
+const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
   "/auth/google/signin/callback",
 );
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const MusicItem = require('./musicItem.js');
 const dbo = require('./db/conn');
 const axios = require('axios');
-// app.use(cors())
-// app.use(bodyParser.json())
 
 passport.use(
   new GoogleStrategy(
@@ -26,6 +20,7 @@ passport.use(
       callbackURL: "/auth/google/signin/callback",
     },
     async function (accessToken, refreshToken, profile, done) {
+      // Set tokens
       oauth2Client.credentials.access_token = accessToken;
       oauth2Client.credentials.refresh_token = refreshToken;
 
@@ -63,6 +58,7 @@ passport.use("google-authz",
       passReqToCallback: true
     },
     async function (req, accessToken, refreshToken, profile, done) {
+      // Set tokens
       oauth2Client.credentials.access_token = accessToken;
       oauth2Client.credentials.refresh_token = refreshToken;
 
@@ -70,8 +66,9 @@ passport.use("google-authz",
         username: profile.id,
         provider: "google",
       }
-      const dbConnect = dbo.getDb();
 
+      const dbConnect = dbo.getDb();
+      // Find main user, and add 2nd account
       const existingUser = await dbConnect.collection('users').findOne({ username: req.user.id });
       if (existingUser) {
         const update = {
@@ -106,14 +103,6 @@ passport.use("google-authz",
 // });
 
 module.exports = function (app) {
-  app.use(
-    cors({
-      origin: "http://localhost:3000",
-      methods: "GET,POST,PUT,DELETE",
-      credentials: true,
-    })
-  );
-
   app.get('/youtube/getInfo', (req, res) => {
     if (!oauth2Client.credentials.access_token) {
       // res.sendStatus(401);
@@ -130,6 +119,7 @@ module.exports = function (app) {
       })
       .catch(error => {
         console.log(error)
+        res.sendStatus(400)
       })
   });
 
@@ -176,6 +166,7 @@ module.exports = function (app) {
         res.send(sendData)
       })
       .catch(e => {
+        console.log("Failed to fetch Youtube's popular songs.")
         console.log(e)
       });
   });
@@ -199,6 +190,7 @@ module.exports = function (app) {
         res.send(sendData)
       })
       .catch(e => {
+        console.log("Failed to fetch user's Youtube playlists.")
         console.log(e)
       });
   })
@@ -222,6 +214,7 @@ module.exports = function (app) {
         res.send(sendData)
       })
       .catch(e => {
+        console.log("Failed to fetch Youtube's random playlists.")
         console.log(e)
       });
   })
@@ -246,6 +239,7 @@ module.exports = function (app) {
         res.send(sendData)
       })
       .catch(e => {
+        console.log("Failed to fetch Youtube's related videos.")
         console.log(e)
       });
   })
@@ -269,6 +263,7 @@ module.exports = function (app) {
         res.send(sendData)
       })
       .catch(e => {
+        console.log("Failed to fetch Youtube's video with id.")
         console.log(e)
       });
   })
@@ -294,6 +289,7 @@ module.exports = function (app) {
         res.send(sendData)
       })
       .catch(e => {
+        console.log("Failed to fetch Youtube's videos with search query.")
         console.log(e)
       });
   })
