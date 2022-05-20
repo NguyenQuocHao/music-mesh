@@ -133,7 +133,7 @@ module.exports = function (app) {
 
   app.get('/spotify/getInfo', (req, res) => {
     if (!spotifyApi.getAccessToken()) {
-      res.sendStatus(401);
+      // res.sendStatus(401);
     }
 
     spotifyApi.getMe()

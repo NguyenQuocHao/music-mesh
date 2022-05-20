@@ -5,12 +5,11 @@ const google = require("googleapis").google;
 const passport = require("passport");
 // Google's OAuth2 client
 const OAuth2 = google.auth.OAuth2;
-const CONFIG = require("./config");
 const youtube = google.youtube("v3");
 const oauth2Client = new OAuth2(
-  CONFIG.oauth2Credentials.client_id,
-  CONFIG.oauth2Credentials.client_secret,
-  CONFIG.oauth2Credentials.redirect_uris[0]
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  "/auth/google/signin/callback",
 );
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const MusicItem = require('./musicItem.js');
@@ -117,7 +116,7 @@ module.exports = function (app) {
 
   app.get('/youtube/getInfo', (req, res) => {
     if (!oauth2Client.credentials.access_token) {
-      res.sendStatus(401);
+      // res.sendStatus(401);
     }
 
     var oauth2 = google.oauth2({
