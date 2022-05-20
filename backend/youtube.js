@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors');
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const google = require("googleapis").google;
@@ -103,6 +104,14 @@ passport.use("google-authz",
 // });
 
 module.exports = function (app) {
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      methods: "GET,POST,PUT,DELETE",
+      credentials: true,
+    })
+  );
+
   app.get('/youtube/getInfo', (req, res) => {
     if (!oauth2Client.credentials.access_token) {
       // res.sendStatus(401);
@@ -168,6 +177,7 @@ module.exports = function (app) {
       .catch(e => {
         console.log("Failed to fetch Youtube's popular songs.")
         console.log(e)
+        res.sendStatus(503)
       });
   });
 
@@ -192,6 +202,7 @@ module.exports = function (app) {
       .catch(e => {
         console.log("Failed to fetch user's Youtube playlists.")
         console.log(e)
+        res.sendStatus(503)
       });
   })
 
@@ -216,6 +227,7 @@ module.exports = function (app) {
       .catch(e => {
         console.log("Failed to fetch Youtube's random playlists.")
         console.log(e)
+        res.sendStatus(503)
       });
   })
 
@@ -241,6 +253,7 @@ module.exports = function (app) {
       .catch(e => {
         console.log("Failed to fetch Youtube's related videos.")
         console.log(e)
+        res.sendStatus(503)
       });
   })
 
@@ -265,6 +278,7 @@ module.exports = function (app) {
       .catch(e => {
         console.log("Failed to fetch Youtube's video with id.")
         console.log(e)
+        res.sendStatus(503)
       });
   })
 
@@ -291,6 +305,7 @@ module.exports = function (app) {
       .catch(e => {
         console.log("Failed to fetch Youtube's videos with search query.")
         console.log(e)
+        res.sendStatus(503)
       });
   })
 }

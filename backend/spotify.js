@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors');
 const passport = require('passport');
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const SpotifyWebApi = require('spotify-web-api-node');
@@ -93,6 +94,14 @@ passport.use('spotify-authz',
 );
 
 module.exports = function (app) {
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      methods: "GET,POST,PUT,DELETE",
+      credentials: true,
+    })
+  );
+
   app.get('/spotify/clearTokensCache', function (req, res) {
     spotifyApi.setAccessToken(null)
     spotifyApi.setRefreshToken(null)
@@ -149,6 +158,7 @@ module.exports = function (app) {
       })
       .catch(function (err) {
         console.log('Failed to fetch user\'s playlists', err);
+        res.sendStatus(503)
       })
   });
 
@@ -167,6 +177,7 @@ module.exports = function (app) {
       })
       .catch(function (err) {
         console.log('Failed to fetch pop playlists', err);
+        res.sendStatus(503)
       });
   })
 
@@ -185,6 +196,7 @@ module.exports = function (app) {
       })
       .catch(function (err) {
         console.log('Failed to fetch top playlists', err);
+        res.sendStatus(503)
       });
   })
 
@@ -203,6 +215,7 @@ module.exports = function (app) {
       })
       .catch(function (err) {
         console.log('Failed to fetch decades playlists', err);
+        res.sendStatus(503)
       });
   })
 
@@ -221,6 +234,7 @@ module.exports = function (app) {
       })
       .catch(function (err) {
         console.log('Failed to fetch mood playlists.', err);
+        res.sendStatus(503)
       });
   })
 
@@ -239,6 +253,7 @@ module.exports = function (app) {
       })
       .catch(function (err) {
         console.log('Failed to fetch chill playlists', err);
+        res.sendStatus(503)
       });
   });
 
@@ -257,6 +272,7 @@ module.exports = function (app) {
       })
       .catch(function (err) {
         console.log('Failed to fetch featured playlists.', err);
+        res.sendStatus(503)
       });
   });
 
@@ -276,6 +292,7 @@ module.exports = function (app) {
       })
       .catch(function (err) {
         console.log('Failed to fetch top playlists', err);
+        res.sendStatus(503)
       });
   })
 
@@ -307,6 +324,7 @@ module.exports = function (app) {
       })
       .catch(err => {
         console.log('Failed to fetch featured playlists.', err);
+        res.sendStatus(503)
       })
   });
 }

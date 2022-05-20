@@ -9,6 +9,26 @@ export default function SearchPage() {
     const [spotifyTracks, setSpotifyTracks] = useState([])
     const [spotifyPlaylists, setSpotifyPlaylists] = useState([])
     const [youtubeTracks, setYoutubeTracks] = useState([])
+    const lists = [
+        {
+            title: "Spotify Tracks",
+            data: spotifyTracks,
+            source: "spotify",
+            type: vars.playlist,
+        },
+        {
+            title: "Spotify Playlists",
+            data: spotifyPlaylists,
+            source: "youtube",
+            type: vars.playlist
+        },
+        {
+            title: "Youtube Tracks",
+            data: youtubeTracks,
+            source: "youtube",
+            type: vars.song
+        },
+    ]
 
     useEffect(() => {
         axios.get('http://localhost:5000/spotify/search/' + query)
@@ -16,20 +36,21 @@ export default function SearchPage() {
                 setSpotifyTracks(data.data.tracks)
                 setSpotifyPlaylists(data.data.playlists)
             })
+            .catch(err => { setSpotifyTracks(null); setSpotifyPlaylists(null) })
 
         axios.get('http://localhost:5000/youtube/search/' + query)
             .then(function (data) {
-                console.log(data)
                 setYoutubeTracks(data.data)
             })
-
+            .catch(err => { setYoutubeTracks(null) })
     }, [])
 
     return (
         <div className="dashboard">
-            <PadList data={spotifyTracks} title="Spotify tracks" source="spotify" location="dashboard" type={vars.song}></PadList>
-            <PadList data={spotifyPlaylists} title="Spotify playlists" source="spotify" location="dashboard" type={vars.playlist}></PadList>
-            <PadList data={youtubeTracks} title="Youtube tracks" source="youtube" location="dashboard" type={vars.song}></PadList>
+            {lists.map(item => item.data != null ?
+                <PadList data={item.data} title={item.title} source={item.source} location="dashboard" type={item.type}></PadList>
+                : null
+            )}
         </div>
     )
 }
