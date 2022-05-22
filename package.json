@@ -2,9 +2,20 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "16.14.2"
+  },
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
+    "devStart": "nodemon --ignore client/ --exec babel-node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "client/*"
+    ]
   },
   "keywords": [],
   "author": "",
