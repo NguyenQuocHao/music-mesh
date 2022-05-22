@@ -9,6 +9,7 @@ const app = express();
 const youtube = require("./youtube")(app)
 const spotify = require("./spotify")(app)
 const dbo = require('./db/conn');
+const path = require("path");
 const PORT = process.env.PORT || 5000;
 
 app.use(cookieParser());
@@ -46,6 +47,9 @@ dbo.connectToServer(function (err) {
     process.exit();
   }
 });
+
+
+
 
 // Start the Express server
 app.listen(PORT, () => {

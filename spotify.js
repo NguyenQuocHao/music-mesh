@@ -8,7 +8,7 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   redirectUri: process.env.SPOTIFY_REDIRECT_URI,
 });
-const MusicItem = require('./musicItem.js');
+const MusicItem = require('./models/musicItem.js');
 const ITEM_LIMIT = 15;
 const dbo = require('./db/conn');
 const axios = require('axios');
