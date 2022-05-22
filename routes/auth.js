@@ -88,7 +88,7 @@ router.get("/logout", (req, res) => {
   axios.get(baseUrl + '/youtube/clearTokensCache')
 
   req.logout();
-  res.redirect(YOUTUBE_REDIRECT_URL);
+  res.redirect(clientBaseUrl);
 });
 
 router.get("/google/signin", passport.authenticate("google", {
