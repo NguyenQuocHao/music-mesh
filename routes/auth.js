@@ -1,14 +1,17 @@
+require('dotenv').config();
 const router = require("express").Router();
 const passport = require("passport");
 const axios = require('axios');
-const YOUTUBE_URL = "http://localhost:3000/youtube";
-const SPOTIFY_URL = "http://localhost:3000/spotify";
+const baseUrl = process.env.BASE_URL || "http://localhost:5000";
+const clientBaseUrl = process.env.BASE_URL || "http://localhost:3000";
+const YOUTUBE_REDIRECT_URL = clientBaseUrl + "/youtube";
+const SPOTIFY_REDIRECT_URL = clientBaseUrl + "/spotify";
 const dbo = require('../db/conn');
 
 router.get("/login/success", async function (req, res) {
   if (req.user) {
     if (req.user.provider === "google") {
-      await axios.get("http://localhost:5000/spotify/getInfo")
+      await axios.get(baseUrl + "/spotify/getInfo")
         .then(res => {
           req.user.linkedAccount = {
             displayName: res.data.display_name,
@@ -21,7 +24,7 @@ router.get("/login/success", async function (req, res) {
         })
     }
     else if (req.user.provider === "spotify") {
-      await axios.get("http://localhost:5000/youtube/getInfo")
+      await axios.get(baseUrl + "/youtube/getInfo")
         .then(res => {
           req.user.linkedAccount = {
             displayName: res.data.name,
@@ -68,12 +71,12 @@ router.get("/unconnect", async function (req, res) {
   var redirectLink;
   // Clear token cache
   if (req.user.linkedAccount.provider === "google") {
-    axios.get('http://localhost:5000/youtube/clearTokensCache')
-    redirectLink = YOUTUBE_URL;
+    axios.get(baseUrl + '/youtube/clearTokensCache')
+    redirectLink = YOUTUBE_REDIRECT_URL;
   }
   else if (req.user.linkedAccount.provider === "spotify") {
-    axios.get('http://localhost:5000/spotify/clearTokensCache')
-    redirectLink = SPOTIFY_URL;
+    axios.get(baseUrl + '/spotify/clearTokensCache')
+    redirectLink = SPOTIFY_REDIRECT_URL;
   }
 
   req.user.linkedAccount = null
@@ -81,11 +84,11 @@ router.get("/unconnect", async function (req, res) {
 });
 
 router.get("/logout", (req, res) => {
-  axios.get('http://localhost:5000/spotify/clearTokensCache')
-  axios.get('http://localhost:5000/youtube/clearTokensCache')
+  axios.get(baseUrl + '/spotify/clearTokensCache')
+  axios.get(baseUrl + '/youtube/clearTokensCache')
 
   req.logout();
-  res.redirect(YOUTUBE_URL);
+  res.redirect(YOUTUBE_REDIRECT_URL);
 });
 
 router.get("/google/signin", passport.authenticate("google", {
@@ -98,7 +101,7 @@ router.get("/google/signin", passport.authenticate("google", {
 router.get(
   "/google/signin/callback",
   passport.authenticate("google", {
-    successRedirect: YOUTUBE_URL,
+    successRedirect: YOUTUBE_REDIRECT_URL,
     failureRedirect: "/login/failed",
   }));
 
@@ -113,7 +116,7 @@ router.get('/google/connect/callback',
   passport.authorize('google-authz', { failureRedirect: "/login/failed" }),
   function (req, res) {
     req.user.linkedAccount = req.account;
-    res.redirect(YOUTUBE_URL)
+    res.redirect(YOUTUBE_REDIRECT_URL)
   }
 );
 
@@ -124,7 +127,7 @@ router.get("/spotify/signin", passport.authenticate("spotify", {
 router.get(
   "/spotify/signin/callback",
   passport.authenticate("spotify", {
-    successRedirect: SPOTIFY_URL,
+    successRedirect: SPOTIFY_REDIRECT_URL,
     failureRedirect: "/login/failed",
   })
 );
@@ -137,7 +140,7 @@ router.get('/spotify/connect/callback',
   passport.authorize('spotify-authz', { failureRedirect: "/login/failed" }),
   function (req, res) {
     req.user.linkedAccount = req.account;
-    res.redirect(SPOTIFY_URL)
+    res.redirect(SPOTIFY_REDIRECT_URL)
   }
 );
 

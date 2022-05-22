@@ -12,6 +12,7 @@ const oauth2Client = new google.auth.OAuth2(
 const MusicItem = require('./models/musicItem.js');
 const dbo = require('./db/conn');
 const axios = require('axios');
+const baseUrl = process.env.BASE_URL || "http://localhost:5000";
 
 passport.use(
   new GoogleStrategy(
@@ -34,8 +35,8 @@ passport.use(
       const existingUser = await dbConnect.collection('users').findOne(user);
       if (existingUser) {
         if (existingUser.linkedAccount) {
-          await axios.get('http://localhost:5000/spotify/setRefreshToken/' + existingUser.linkedAccount.refreshToken)
-          await axios.get('http://localhost:5000/spotify/refreshToken')
+          await axios.get(baseUrl + '/spotify/setRefreshToken/' + existingUser.linkedAccount.refreshToken)
+          await axios.get(baseUrl + '/spotify/refreshToken')
         }
       }
       else {

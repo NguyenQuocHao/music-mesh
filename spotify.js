@@ -6,12 +6,13 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: process.env.SPOTIFY_REDIRECT_URI,
+  redirectUri: process.env.BASE_URL || "http://localhost:3000/spotify",
 });
 const MusicItem = require('./models/musicItem.js');
 const ITEM_LIMIT = 15;
 const dbo = require('./db/conn');
 const axios = require('axios');
+const baseUrl = process.env.BASE_URL || "http://localhost:5000";
 
 passport.use(
   new SpotifyStrategy(
@@ -34,8 +35,8 @@ passport.use(
       const existingUser = await dbConnect.collection('users').findOne(user);
       if (existingUser) {
         if (existingUser.linkedAccount) {
-          await axios.get('http://localhost:5000/youtube/setRefreshToken/' + existingUser.linkedAccount.refreshToken)
-          await axios.get('http://localhost:5000/youtube/refreshToken')
+          await axios.get(baseUrl + '/youtube/setRefreshToken/' + existingUser.linkedAccount.refreshToken)
+          await axios.get(baseUrl + '/youtube/refreshToken')
         }
       }
       else {
