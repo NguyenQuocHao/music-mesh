@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import vars from '../../variables.js';
 import PadList from '../Music/MusicPad/PadList';
+import { HOST } from '../../variables';
 
 export default function SearchPage() {
     const { query } = useParams()
@@ -31,14 +32,14 @@ export default function SearchPage() {
     ]
 
     useEffect(() => {
-        axios.get('http://localhost:5000/spotify/search/' + query)
+        axios.get(HOST + '/spotify/search/' + query)
             .then(function (data) {
                 setSpotifyTracks(data.data.tracks)
                 setSpotifyPlaylists(data.data.playlists)
             })
             .catch(err => { setSpotifyTracks(null); setSpotifyPlaylists(null) })
 
-        axios.get('http://localhost:5000/youtube/search/' + query)
+        axios.get(HOST + '/youtube/search/' + query)
             .then(function (data) {
                 setYoutubeTracks(data.data)
             })

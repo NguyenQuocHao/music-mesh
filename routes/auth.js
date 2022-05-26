@@ -1,17 +1,17 @@
 require('dotenv').config();
+const HOST = require('../variables').HOST;
+const CLIENT = require('../variables').CLIENT;
 const router = require("express").Router();
 const passport = require("passport");
 const axios = require('axios');
-const baseUrl = process.env.BASE_URL || "http://localhost:5000";
-const clientBaseUrl = process.env.BASE_URL || "http://localhost:3000";
-const YOUTUBE_REDIRECT_URL = clientBaseUrl + "/youtube";
-const SPOTIFY_REDIRECT_URL = clientBaseUrl + "/spotify";
+const YOUTUBE_REDIRECT_URL = CLIENT + "/youtube";
+const SPOTIFY_REDIRECT_URL = CLIENT + "/spotify";
 const dbo = require('../db/conn');
 
 router.get("/login/success", async function (req, res) {
   if (req.user) {
     if (req.user.provider === "google") {
-      await axios.get(baseUrl + "/spotify/getInfo")
+      await axios.get(`${HOST}/spotify/getInfo`)
         .then(res => {
           req.user.linkedAccount = {
             displayName: res.data.display_name,
@@ -24,7 +24,7 @@ router.get("/login/success", async function (req, res) {
         })
     }
     else if (req.user.provider === "spotify") {
-      await axios.get(baseUrl + "/youtube/getInfo")
+      await axios.get(`${HOST}/youtube/getInfo`)
         .then(res => {
           req.user.linkedAccount = {
             displayName: res.data.name,
@@ -71,11 +71,11 @@ router.get("/unconnect", async function (req, res) {
   var redirectLink;
   // Clear token cache
   if (req.user.linkedAccount.provider === "google") {
-    axios.get(baseUrl + '/youtube/clearTokensCache')
+    axios.get(`${HOST}/youtube/clearTokensCache`)
     redirectLink = YOUTUBE_REDIRECT_URL;
   }
   else if (req.user.linkedAccount.provider === "spotify") {
-    axios.get(baseUrl + '/spotify/clearTokensCache')
+    axios.get(`${HOST}/spotify/clearTokensCache`)
     redirectLink = SPOTIFY_REDIRECT_URL;
   }
 
@@ -84,11 +84,11 @@ router.get("/unconnect", async function (req, res) {
 });
 
 router.get("/logout", (req, res) => {
-  axios.get(baseUrl + '/spotify/clearTokensCache')
-  axios.get(baseUrl + '/youtube/clearTokensCache')
+  axios.get(`${HOST}/spotify/clearTokensCache`)
+  axios.get(`${HOST}/youtube/clearTokensCache`)
 
   req.logout();
-  res.redirect(clientBaseUrl);
+  res.redirect(CLIENT);
 });
 
 router.get("/google/signin", passport.authenticate("google", {

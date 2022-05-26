@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { clearMySpotifyPlaylists } from '../../redux/reducers/spotifySlice';
 import { clearMyYoutubePlaylists } from '../../redux/reducers/youtubeSlice';
 import { clearQueue } from '../../redux/reducers/queue';
+import { HOST } from '../../variables';
 
 export default function DropdownMenu({ mainAccount }) {
   const [activeMenu, setActiveMenu] = useState('main');
@@ -18,28 +19,28 @@ export default function DropdownMenu({ mainAccount }) {
   }, [])
 
   const unconnect = () => {
-    if (mainAccount.linkedAccount.provider === "spotify"){
+    if (mainAccount.linkedAccount.provider === "spotify") {
       dispatch(clearMySpotifyPlaylists())
     }
-    else if (mainAccount.linkedAccount.provider === "google"){
+    else if (mainAccount.linkedAccount.provider === "google") {
       dispatch(clearMyYoutubePlaylists())
     }
-  
-    window.open("http://localhost:5000/auth/unconnect", "_self");
+
+    window.open(HOST + "/auth/unconnect", "_self");
   };
-  
+
   const logout = () => {
     dispatch(clearMySpotifyPlaylists())
     dispatch(clearMyYoutubePlaylists())
     dispatch(clearQueue())
-  
-    window.open("http://localhost:5000/auth/logout", "_self");
+
+    window.open(HOST + "/auth/logout", "_self");
   };
-  
+
   const goToSpotify = () => {
     window.open("http://localhost:3000/spotify", "_self");
   };
-  
+
   const goToYoutube = () => {
     window.open("http://localhost:3000/youtube", "_self");
   };

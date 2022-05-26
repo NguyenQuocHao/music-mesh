@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import DropdownMenu from './DropdownMenu'
 import './Navbar.scss';
+import { CLIENT } from '../../variables';
 
 function Navbar({ user, sideBarHandler }) {
   const { state } = useLocation();
   const [query, setQuery] = useState("");
 
   const search = () => {
-    window.open("http://localhost:3000/search/" + query, "_self");
+    window.open(CLIENT + "/search/" + query, "_self");
   }
 
   const handleEnterKey = (e) => {

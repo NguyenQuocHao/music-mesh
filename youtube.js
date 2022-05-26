@@ -1,5 +1,5 @@
 require('dotenv').config();
-const cors = require('cors');
+const HOST = require('./variables').HOST;
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const google = require("googleapis").google;
@@ -12,7 +12,6 @@ const oauth2Client = new google.auth.OAuth2(
 const MusicItem = require('./models/musicItem.js');
 const dbo = require('./db/conn');
 const axios = require('axios');
-const baseUrl = process.env.BASE_URL || "http://localhost:5000";
 
 passport.use(
   new GoogleStrategy(
@@ -35,8 +34,8 @@ passport.use(
       const existingUser = await dbConnect.collection('users').findOne(user);
       if (existingUser) {
         if (existingUser.linkedAccount) {
-          await axios.get(baseUrl + '/spotify/setRefreshToken/' + existingUser.linkedAccount.refreshToken)
-          await axios.get(baseUrl + '/spotify/refreshToken')
+          await axios.get(`${HOST}/spotify/setRefreshToken/` + existingUser.linkedAccount.refreshToken)
+          await axios.get(`${HOST}/spotify/refreshToken`)
         }
       }
       else {
@@ -105,14 +104,6 @@ passport.use("google-authz",
 // });
 
 module.exports = function (app) {
-  app.use(
-    cors({
-      origin: "http://localhost:3000",
-      methods: "GET,POST,PUT,DELETE",
-      credentials: true,
-    })
-  );
-
   app.get('/youtube/getInfo', (req, res) => {
     if (!oauth2Client.credentials.access_token) {
       // res.sendStatus(401);

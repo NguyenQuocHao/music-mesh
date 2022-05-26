@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 import vars from '../../variables';
 import PadList from '../Music/MusicPad/PadList';
+import { HOST } from '../../variables';
 
 export default function SpotifyDashboard() {
   const [spotifyPlaylists, setSpotifyPlaylists] = useState([])
@@ -50,37 +51,37 @@ export default function SpotifyDashboard() {
   ]
 
   useEffect(() => {
-    axios.get('http://localhost:5000/spotify/userPlaylists')
+    axios.get(HOST + '/spotify/userPlaylists')
       .then(function (data) {
         setSpotifyPlaylists(data.data);
       })
       .catch(err => { setSpotifyPlaylists(null) })
 
-    axios.get('http://localhost:5000/spotify/topLists')
+    axios.get(HOST + '/spotify/topLists')
       .then(function (data) {
         setTopPlaylists(data.data)
       })
       .catch(err => { setTopPlaylists(null) })
 
-    axios.get('http://localhost:5000/spotify/featuredPlaylists')
+    axios.get(HOST + '/spotify/featuredPlaylists')
       .then(function (data) {
         setFeaturedPlaylists(data.data)
       })
       .catch(err => { setFeaturedPlaylists(null) })
 
-    axios.get('http://localhost:5000/youtube/popularSongs')
+    axios.get(HOST + '/youtube/popularSongs')
       .then(data => {
         setPopularSongs(data.data)
       })
       .catch(err => { setPopularSongs(null) })
 
-    axios.get('http://localhost:5000/youtube/myPlaylists')
+    axios.get(HOST + '/youtube/myPlaylists')
       .then(data => {
         setYoutubePlaylists(data.data)
       })
       .catch(err => { setYoutubePlaylists(null) })
 
-    axios.get('http://localhost:5000/youtube/randomPlaylists')
+    axios.get(HOST + '/youtube/randomPlaylists')
       .then(data => {
         setRandomPlaylists(data.data)
       })

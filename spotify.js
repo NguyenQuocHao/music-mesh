@@ -1,25 +1,25 @@
 require('dotenv').config();
-const cors = require('cors');
+const HOST = require('./variables').HOST;
+const CLIENT = require('./variables').CLIENT;
 const passport = require('passport');
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const SpotifyWebApi = require('spotify-web-api-node');
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: process.env.BASE_URL || "http://localhost:3000/spotify",
+  redirectUri: `${CLIENT}/spotify`,
 });
 const MusicItem = require('./models/musicItem.js');
 const ITEM_LIMIT = 15;
 const dbo = require('./db/conn');
 const axios = require('axios');
-const baseUrl = process.env.BASE_URL || "http://localhost:5000";
 
 passport.use(
   new SpotifyStrategy(
     {
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: 'http://localhost:5000/auth/spotify/signin/callback'
+      callbackURL: `${HOST}/auth/spotify/signin/callback`
     },
     async function (accessToken, refreshToken, expires_in, profile, done) {
       // Set tokens
@@ -35,8 +35,8 @@ passport.use(
       const existingUser = await dbConnect.collection('users').findOne(user);
       if (existingUser) {
         if (existingUser.linkedAccount) {
-          await axios.get(baseUrl + '/youtube/setRefreshToken/' + existingUser.linkedAccount.refreshToken)
-          await axios.get(baseUrl + '/youtube/refreshToken')
+          await axios.get(`${HOST}/youtube/setRefreshToken/` + existingUser.linkedAccount.refreshToken)
+          await axios.get(`${HOST}/youtube/refreshToken`)
         }
       }
       else {
@@ -56,7 +56,7 @@ passport.use('spotify-authz',
     {
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: 'http://localhost:5000/auth/spotify/connect/callback',
+      callbackURL: `${HOST}/auth/spotify/connect/callback`,
       passReqToCallback: true
     },
     async function (req, accessToken, refreshToken, expires_in, profile, done) {
@@ -95,14 +95,6 @@ passport.use('spotify-authz',
 );
 
 module.exports = function (app) {
-  app.use(
-    cors({
-      origin: "http://localhost:3000",
-      methods: "GET,POST,PUT,DELETE",
-      credentials: true,
-    })
-  );
-
   app.get('/spotify/clearTokensCache', function (req, res) {
     spotifyApi.setAccessToken(null)
     spotifyApi.setRefreshToken(null)

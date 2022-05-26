@@ -1,10 +1,11 @@
 import Google from "../../assets/img/google.png";
 import Spotify from "../../assets/img/spotify.png";
 import './Login.scss'
+import { HOST } from '../../variables';
 
 const Login = ({ site }) => {
   const google = () => {
-    var authLink = "http://localhost:5000/auth/google";
+    var authLink = HOST + "/auth/google";
     if (site == undefined) {
       authLink += "/signin"
     }
@@ -16,7 +17,7 @@ const Login = ({ site }) => {
   };
 
   const spotify = () => {
-    var authLink = "http://localhost:5000/auth/spotify";
+    var authLink = HOST + "/auth/spotify";
     if (site == undefined) {
       authLink += "/signin"
     }

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addTrack, } from '../../../redux/reducers/queue';
 import axios from 'axios';
 import { FaEllipsisH, FaTrashAlt } from "react-icons/fa";
-import { CSSTransition } from 'react-transition-group';
+import { HOST } from '../../../variables';
 
 export default function PlaylistPage() {
   const [url, setUrl] = useState("")
@@ -23,7 +23,7 @@ export default function PlaylistPage() {
       if (currentLink.includes("song")) {
         embededLink = "https://www.youtube.com/embed/" + id
 
-        axios.get('http://localhost:5000/youtube/getTrack/' + id)
+        axios.get(HOST + '/youtube/getTrack/' + id)
           .then(data => {
             setInfo({
               id: data.data[0].id,
@@ -42,7 +42,7 @@ export default function PlaylistPage() {
       if (currentLink.includes("song")) {
         embededLink = "https://open.spotify.com/embed/track/" + id
 
-        axios.get('http://localhost:5000/spotify/getTrack/' + id)
+        axios.get(HOST + '/spotify/getTrack/' + id)
           .then(data => {
             console.log(data)
             setInfo({
@@ -84,14 +84,14 @@ export default function PlaylistPage() {
           <FaEllipsisH onClick={() => { setShowDropDown(!showDropDown); }} />
           {showDropDown &&
             <div className='track-dropdown'>
-              <div className='track-dropdown-item' onClick={() => { addTrackToQueue(); setShowNoti(true); setTimeout(closeNoti, 2000)}}>Add to Queue</div>
+              <div className='track-dropdown-item' onClick={() => { addTrackToQueue(); setShowNoti(true); setTimeout(closeNoti, 2000) }}>Add to Queue</div>
             </div>}
         </div>
       }
       {/* <CSSTransition in={showNoti} classNames="noti-effect" onEnter={() => {setTimeout(closeNoti, 1000); }} unmountOnExit>
         <div className='notifications' id="float">{notificationsMessage}</div>
       </CSSTransition> */}
-      { showNoti && <div className='notifications float'>{notificationsMessage}</div>}
+      {showNoti && <div className='notifications float'>{notificationsMessage}</div>}
     </div>
   )
 }

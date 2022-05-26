@@ -5,6 +5,7 @@ import vars from '../../variables.js';
 import { useDispatch } from 'react-redux';
 import { getMyYoutubePlaylists } from '../../redux/reducers/youtubeSlice';
 import PadList from '../Music/MusicPad/PadList';
+import { HOST } from '../../variables';
 
 export default function YoutubeDashboard() {
   const dispatch = useDispatch()
@@ -30,22 +31,22 @@ export default function YoutubeDashboard() {
   ]
 
   useEffect(() => {
-    axios.get('http://localhost:5000/youtube/refreshToken')
+    axios.get(HOST + '/youtube/refreshToken')
 
-    axios.get('http://localhost:5000/youtube/popularSongs')
+    axios.get(HOST + '/youtube/popularSongs')
       .then(data => {
         setPopularSongs(data.data)
       })
       .catch(err => { setPopularSongs(null) })
 
-    axios.get('http://localhost:5000/youtube/myPlaylists')
+    axios.get(HOST + '/youtube/myPlaylists')
       .then(data => {
         dispatch(getMyYoutubePlaylists(data.data))
         setMyPlaylists(data.data)
       })
       .catch(err => { setMyPlaylists(null) })
 
-    axios.get('http://localhost:5000/youtube/randomPlaylists')
+    axios.get(HOST + '/youtube/randomPlaylists')
       .then(data => {
         setRandomPlaylists(data.data)
       })

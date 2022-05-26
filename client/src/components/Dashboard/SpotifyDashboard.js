@@ -4,6 +4,7 @@ import vars from '../../variables';
 import { useDispatch } from 'react-redux';
 import { getMySpotifyPlaylists } from '../../redux/reducers/spotifySlice';
 import PadList from '../Music/MusicPad/PadList';
+import { HOST } from '../../variables';
 
 export default function SpotifyDashboard() {
   const dispatch = useDispatch()
@@ -46,46 +47,46 @@ export default function SpotifyDashboard() {
   ]
 
   useEffect(() => {
-    axios.get('http://localhost:5000/spotify/refreshToken')
+    axios.get(HOST + '/spotify/refreshToken')
 
-    axios.get('http://localhost:5000/spotify/userPlaylists')
+    axios.get(HOST + '/spotify/userPlaylists')
       .then(function (data) {
         dispatch(getMySpotifyPlaylists(data.data))
         setUserPlaylists(data.data);
       })
       .catch(err => { setDecadesPlaylists(null) })
 
-    axios.get('http://localhost:5000/spotify/pop')
+    axios.get(HOST + '/spotify/pop')
       .then(function (data) {
         setPopPlaylists(data.data)
       })
       .catch(err => { setDecadesPlaylists(null) })
 
-    axios.get('http://localhost:5000/spotify/topLists')
+    axios.get(HOST + '/spotify/topLists')
       .then(function (data) {
         setTopPlaylists(data.data)
       })
       .catch(err => { setDecadesPlaylists(null) })
 
-    axios.get('http://localhost:5000/spotify/decades')
+    axios.get(HOST + '/spotify/decades')
       .then(function (data) {
         setDecadesPlaylists(data.data)
       })
       .catch(err => { setDecadesPlaylists(null) })
 
-    axios.get('http://localhost:5000/spotify/mood')
+    axios.get(HOST + '/spotify/mood')
       .then(function (data) {
         setMoodPlaylists(data.data)
       })
       .catch(err => { setDecadesPlaylists(null) })
 
-    axios.get('http://localhost:5000/spotify/chill')
+    axios.get(HOST + '/spotify/chill')
       .then(function (data) {
         setChillPlaylists(data.data)
       })
       .catch(err => { setDecadesPlaylists(null) })
 
-    axios.get('http://localhost:5000/spotify/featuredPlaylists')
+    axios.get(HOST + '/spotify/featuredPlaylists')
       .then(function (data) {
         setFeaturedPlaylists(data.data)
       })

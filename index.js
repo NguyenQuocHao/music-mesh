@@ -1,4 +1,5 @@
 require('dotenv').config()
+const CLIENT = require('./variables').CLIENT;
 const cookieSession = require("cookie-session");
 const cookieParser = require('cookie-parser');
 const express = require("express");
@@ -6,8 +7,6 @@ const cors = require("cors");
 const passport = require("passport");
 const authRoute = require("./routes/auth");
 const app = express();
-const youtube = require("./youtube")(app)
-const spotify = require("./spotify")(app)
 const dbo = require('./db/conn');
 const path = require("path");
 const PORT = process.env.PORT || 5000;
@@ -25,11 +24,14 @@ app.use(passport.session());
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: CLIENT,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
 );
+
+require("./youtube")(app)
+require("./spotify")(app)
 
 app.use("/auth", authRoute);
 
