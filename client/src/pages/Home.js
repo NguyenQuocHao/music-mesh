@@ -1,15 +1,16 @@
-import React from 'react'
-import '../components/Dashboard/Dashboard.scss'
-import { useState, useEffect } from 'react'
-import Login from '../components/Login/Login'
-import HomeDashboard from '../components/Dashboard/HomeDashboard'
+import React from 'react';
+import '../components/Dashboard/Dashboard.scss';
+import { useState, useEffect } from 'react';
+import Login from '../components/Login/Login';
+import HomeDashboard from '../components/Dashboard/HomeDashboard';
+import { HOST } from '../variables';
 
 function Home() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     const getUser = () => {
-      fetch("http://localhost:5000/auth/login/success", {
+      fetch(`${HOST}/auth/login/success`, {
         method: "GET",
         credentials: "include",
         headers: {

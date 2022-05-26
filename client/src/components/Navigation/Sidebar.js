@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './Navbar.scss';
-import { useSelector } from 'react-redux'
-import { myYoutubePlaylists } from '../../redux/reducers/youtubeSlice'
-import { mySpotifyPlaylists } from '../../redux/reducers/spotifySlice'
-import GetRedirectLink from '../../utils/redirect'
+import { useSelector } from 'react-redux';
+import { myYoutubePlaylists } from '../../redux/reducers/youtubeSlice';
+import { mySpotifyPlaylists } from '../../redux/reducers/spotifySlice';
+import GetRedirectLink from '../../utils/redirect';
 import Logo from "../../assets/img/music mesh-logos_transparent.png";
 
 function Sidebar({ show, sideBarHandler }) {

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { clearMySpotifyPlaylists } from '../../redux/reducers/spotifySlice';
 import { clearMyYoutubePlaylists } from '../../redux/reducers/youtubeSlice';
 import { clearQueue } from '../../redux/reducers/queue';
-import { HOST } from '../../variables';
+import { HOST, CLIENT } from '../../variables';
 
 export default function DropdownMenu({ mainAccount }) {
   const [activeMenu, setActiveMenu] = useState('main');
@@ -38,11 +38,11 @@ export default function DropdownMenu({ mainAccount }) {
   };
 
   const goToSpotify = () => {
-    window.open("http://localhost:3000/spotify", "_self");
+    window.open(`${CLIENT}/spotify`, "_self");
   };
 
   const goToYoutube = () => {
-    window.open("http://localhost:3000/youtube", "_self");
+    window.open(`${CLIENT}/youtube`, "_self");
   };
 
   function calcHeight(el) {

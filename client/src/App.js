@@ -10,6 +10,7 @@ import Login from './components/Login/Login';
 import PlaylistPage from './components/Music/DisplayPage/PlaylistPage';
 import SearchPage from './components/Dashboard/SearchPage';
 import QueuePage from './components/Music/DisplayPage/QueuePage';
+import { HOST } from './variables';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,7 +18,7 @@ function App() {
 
   const showSidebar = () => setSidebar(!sidebar);
   const getUser = () => {
-    fetch("http://localhost:5000/auth/login/success", {
+    fetch(`${HOST}/auth/login/success`, {
       method: "GET",
       credentials: "include",
       headers: {

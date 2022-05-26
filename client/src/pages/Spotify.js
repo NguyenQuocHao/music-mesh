@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react'
-import Login from '../components/Login/Login'
-import SpotifyDashboard from '../components/Dashboard/SpotifyDashboard'
+import { useState, useEffect } from 'react';
+import Login from '../components/Login/Login';
+import SpotifyDashboard from '../components/Dashboard/SpotifyDashboard';
+import { HOST } from '../variables';
 
 function Spotify() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     const getUser = () => {
-      fetch("http://localhost:5000/auth/login/success", {
+      fetch(`${HOST}/auth/login/success`, {
         method: "GET",
         credentials: "include",
         headers: {
