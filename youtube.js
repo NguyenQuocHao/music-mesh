@@ -4,7 +4,10 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const google = require("googleapis").google;
 const youtube = google.youtube("v3");
-const oauth2Client = new google.auth.OAuth2();
+const oauth2Client = new google.auth.OAuth2({
+  clientId: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET
+});
 const MusicItem = require('./models/musicItem.js');
 const dbo = require('./db/conn');
 const axios = require('axios');
