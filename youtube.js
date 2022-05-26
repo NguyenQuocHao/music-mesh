@@ -4,11 +4,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const google = require("googleapis").google;
 const youtube = google.youtube("v3");
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  "/auth/google/signin/callback",
-);
+const oauth2Client = new google.auth.OAuth2();
 const MusicItem = require('./models/musicItem.js');
 const dbo = require('./db/conn');
 const axios = require('axios');
@@ -18,7 +14,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/signin/callback",
+      callbackURL: `${HOST}/auth/google/signin/callback`,
     },
     async function (accessToken, refreshToken, profile, done) {
       // Set tokens
@@ -55,7 +51,7 @@ passport.use("google-authz",
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/connect/callback",
+      callbackURL: `${HOST}/auth/google/connect/callback`,
       passReqToCallback: true
     },
     async function (req, accessToken, refreshToken, profile, done) {
