@@ -37,9 +37,7 @@ function Youtube() {
   }, []);
 
   return (
-    <div>
-      <Display user={user} />
-    </div>
+    <Display user={user} />
   )
 }
 

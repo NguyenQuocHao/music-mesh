@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Youtube from './pages/Youtube';
 import Spotify from './pages/Spotify';
+import NotFoundPage from './pages/NotFoundPage';
 import Login from './components/Login/Login';
 import PlaylistPage from './components/Music/DisplayPage/PlaylistPage';
 import SearchPage from './components/Dashboard/SearchPage';
@@ -64,6 +65,7 @@ function App() {
                   <Route path='/youtube/song/:id' component={PlaylistPage} />
                   <Route path='/search/:query' component={SearchPage} />
                   <Route path='/myQueue' component={QueuePage} />
+                  <Route path='*' component={NotFoundPage} />
                 </Switch>
               </div>
             </div>

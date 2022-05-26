@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player/youtube';
 import { myQueue } from '../../../redux/reducers/queue';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeTrackByIndex } from '../../../redux/reducers/queue';
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaMusic } from "react-icons/fa";
 
 export default function QueuePage() {
     const queue = useSelector(myQueue);
@@ -30,9 +30,15 @@ export default function QueuePage() {
 
     return (
         <div className="background">
-            {console.log(queue)}
-            Queue
-            {queue.length == 0 ? <div>Empty</div> :
+            {queue.length == 0 ?
+                <div className="error-message">
+                    <div className="error-message">
+                        <FaMusic style={{ fontSize: "25px" }} />
+                        <span style={{ margin: "10px" }}>Queue is empty.</span>
+                        <FaMusic style={{ fontSize: "25px" }} />
+                    </div>
+                </div>
+                :
                 <div>
                     {getPlayer(queue[currentTrackIndex])}
                     <div>
@@ -45,7 +51,7 @@ export default function QueuePage() {
                                         <div className='artist-name'>{track.artist}</div>
                                     </span>
                                 </a>
-                                <a href='#' onClick={() => { removeTrack(index) }} className='more-options'><FaTrashAlt style={{marginRight: '5px'}}/>Remove</a>
+                                <a href='#' onClick={() => { removeTrack(index) }} className='more-options'><FaTrashAlt style={{ marginRight: '5px' }} />Remove</a>
                             </div>
                         </div>)}
                     </div>

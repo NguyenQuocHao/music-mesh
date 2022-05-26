@@ -18,6 +18,15 @@ a {
   display: flex;
 }
 
+.error-message{
+  color: white;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
 .home{
   display: flex;
   height: 90vh;
