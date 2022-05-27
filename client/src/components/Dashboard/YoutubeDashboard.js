@@ -55,8 +55,8 @@ export default function YoutubeDashboard() {
 
   return (
     <div className="dashboard">
-      {lists.map(item => item.data != null ?
-        <PadList data={item.data} title={item.title} source="youtube" location="dashboard" type={item.type}></PadList>
+      {lists.map((item, index) => item.data != null ?
+        <PadList key={index} data={item.data} title={item.title} source="youtube" location="dashboard" type={item.type}></PadList>
         : null
       )}
     </div>

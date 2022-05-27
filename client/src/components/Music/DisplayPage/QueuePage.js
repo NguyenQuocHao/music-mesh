@@ -42,7 +42,7 @@ export default function QueuePage() {
                 <div>
                     {getPlayer(queue[currentTrackIndex])}
                     <div>
-                        {queue.map((track, index) => <div key={track.id}>
+                        {queue.map((track, index) => <div key={index + ":" + track.id}>
                             <div className={index != currentTrackIndex ? 'queue-item unactive-track' : 'queue-item'}>
                                 <a href='#' onClick={() => setCurrentTrackIndex(index)} className="queue-item-left">
                                     <img className={'queue-item-image'} src={track.image} />

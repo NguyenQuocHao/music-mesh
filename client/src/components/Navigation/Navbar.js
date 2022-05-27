@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import DropdownMenu from './DropdownMenu'
 import './Navbar.scss';
 import { CLIENT } from '../../variables';
 
 function Navbar({ user, sideBarHandler }) {
-  const { state } = useLocation();
   const [query, setQuery] = useState("");
 
   const search = () => {
@@ -26,17 +24,19 @@ function Navbar({ user, sideBarHandler }) {
       </div>
       <div>
         {user ? (
-          <ul className="navbar-list login-nav">
-            <li className="navbar-list-item">
-              <NavItem icon={<img
-                src={user.photos[0]?.value}
-                alt=""
-                className="avatar"
-              />}>
+          <div className="navbar-list login-nav">
+            <div className="navbar-list-item">
+              <NavItem
+                icon={<img
+                  src={user.photos[0]?.value}
+                  alt=""
+                  className="avatar"
+                />}
+              >
                 <DropdownMenu mainAccount={user}></DropdownMenu>
               </NavItem>
-            </li>
-          </ul>
+            </div>
+          </div>
         ) : (
           null
         )}
@@ -50,9 +50,9 @@ function NavItem(props) {
 
   return (
     <li className="nav-item">
-      <a href="#" className="icon-button" onClick={() => setOpen(!open)}>
+      <div className="icon-button" onClick={() => setOpen(!open)}>
         {props.icon}
-      </a>
+      </div>
 
       {open && props.children}
     </li>

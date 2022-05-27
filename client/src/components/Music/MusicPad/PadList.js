@@ -60,7 +60,7 @@ export default function PadList({ data, title, source, location, type }) {
 
   return (
     <div>
-      <h3 className="music-title">{title}</h3>
+      <h3 className="padlist-title">{title}</h3>
       <div className={"song-list-" + location}>
         {firstIndex >= DEFAULT_RANGE ? <NavButton isLeft handler={moveLeft}></NavButton> : null}
         {list}

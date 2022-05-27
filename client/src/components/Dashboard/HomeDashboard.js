@@ -4,13 +4,13 @@ import vars from '../../variables';
 import PadList from '../Music/MusicPad/PadList';
 import { HOST } from '../../variables';
 
-export default function SpotifyDashboard() {
-  const [spotifyPlaylists, setSpotifyPlaylists] = useState([])
-  const [topPlaylists, setTopPlaylists] = useState([])
-  const [featuredPlaylists, setFeaturedPlaylists] = useState([])
-  const [youtubePlaylists, setYoutubePlaylists] = useState([])
-  const [popularSongs, setPopularSongs] = useState([])
-  const [randomPlaylists, setRandomPlaylists] = useState([])
+export default function HomeDashboard({ user }) {
+  const [spotifyPlaylists, setSpotifyPlaylists] = useState(null)
+  const [topPlaylists, setTopPlaylists] = useState(null)
+  const [featuredPlaylists, setFeaturedPlaylists] = useState(null)
+  const [youtubePlaylists, setYoutubePlaylists] = useState(null)
+  const [popularSongs, setPopularSongs] = useState(null)
+  const [randomPlaylists, setRandomPlaylists] = useState(null)
   const lists = [
     {
       title: "My Spotify Playlists",
@@ -51,47 +51,51 @@ export default function SpotifyDashboard() {
   ]
 
   useEffect(() => {
-    axios.get(HOST + '/spotify/userPlaylists')
-      .then(function (data) {
-        setSpotifyPlaylists(data.data);
-      })
-      .catch(err => { setSpotifyPlaylists(null) })
+    if (user.provider === 'google' || user.linkedAccount?.provider === 'google') {
+      axios.get(HOST + '/youtube/popularSongs')
+        .then(data => {
+          setPopularSongs(data.data)
+        })
+        .catch(err => { setPopularSongs(null) })
 
-    axios.get(HOST + '/spotify/topLists')
-      .then(function (data) {
-        setTopPlaylists(data.data)
-      })
-      .catch(err => { setTopPlaylists(null) })
+      axios.get(HOST + '/youtube/myPlaylists')
+        .then(data => {
+          setYoutubePlaylists(data.data)
+        })
+        .catch(err => { setYoutubePlaylists(null) })
 
-    axios.get(HOST + '/spotify/featuredPlaylists')
-      .then(function (data) {
-        setFeaturedPlaylists(data.data)
-      })
-      .catch(err => { setFeaturedPlaylists(null) })
+      axios.get(HOST + '/youtube/randomPlaylists')
+        .then(data => {
+          setRandomPlaylists(data.data)
+        })
+        .catch(err => { setRandomPlaylists(null) })
+    }
 
-    axios.get(HOST + '/youtube/popularSongs')
-      .then(data => {
-        setPopularSongs(data.data)
-      })
-      .catch(err => { setPopularSongs(null) })
+    if (user.provider === 'spotify' || user.linkedAccount?.provider === 'spotify') {
+      axios.get(HOST + '/spotify/userPlaylists')
+        .then(function (data) {
+          setSpotifyPlaylists(data.data);
+        })
+        .catch(err => { setSpotifyPlaylists(null) })
 
-    axios.get(HOST + '/youtube/myPlaylists')
-      .then(data => {
-        setYoutubePlaylists(data.data)
-      })
-      .catch(err => { setYoutubePlaylists(null) })
+      axios.get(HOST + '/spotify/topLists')
+        .then(function (data) {
+          setTopPlaylists(data.data)
+        })
+        .catch(err => { setTopPlaylists(null) })
 
-    axios.get(HOST + '/youtube/randomPlaylists')
-      .then(data => {
-        setRandomPlaylists(data.data)
-      })
-      .catch(err => { setRandomPlaylists(null) })
+      axios.get(HOST + '/spotify/featuredPlaylists')
+        .then(function (data) {
+          setFeaturedPlaylists(data.data)
+        })
+        .catch(err => { setFeaturedPlaylists(null) })
+    }
   }, [])
 
   return (
     <div className="dashboard">
-      {lists.map(item => item.data != null ?
-        <PadList data={item.data} title={item.title} source={item.source} location="dashboard" type={item.type}></PadList>
+      {lists.map((item, index) => item.data != null ?
+        <PadList key={index} data={item.data} title={item.title} source={item.source} location="dashboard" type={item.type}></PadList>
         : null
       )}
     </div>

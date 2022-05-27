@@ -95,8 +95,8 @@ export default function SpotifyDashboard() {
 
   return (
     <div className="dashboard">
-      {lists.map(item => item.data != null ?
-        <PadList data={item.data} title={item.title} source="spotify" location="dashboard" type={vars.playlist}></PadList>
+      {lists.map((item, index) => item.data != null ?
+        <PadList key={index} data={item.data} title={item.title} source="spotify" location="dashboard" type={vars.playlist}></PadList>
         : null
       )}
     </div>

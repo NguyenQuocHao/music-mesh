@@ -55,7 +55,7 @@ function Sidebar({ show, sideBarHandler }) {
           </a>
         </li>
         <br></br>
-        <div>Main</div>
+        <div className='sidebar-title'>Main</div>
         {SidebarData.map((item, index) => {
           return (
             <li key={index} className={item.cName}>
@@ -67,17 +67,17 @@ function Sidebar({ show, sideBarHandler }) {
           );
         })}
         <br></br>
-        <div>My Playlists</div>
-        <ul className='sidebar-youtube-playlists'>
+        <div className='sidebar-title'>My Playlists</div>
+        <div className='sidebar-youtube-playlists'>
           {
             getYoutubePlaylists()
           }
-        </ul>
-        <ul className='sidebar-spotify-playlists'>
+        </div>
+        <div className='sidebar-spotify-playlists'>
           {
             getSpotifyPlaylists()
           }
-        </ul>
+        </div>
       </ul>
     </nav>
   );

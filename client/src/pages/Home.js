@@ -42,7 +42,7 @@ const Display = props => {
   let { user } = props;
 
   if (user) {
-    return <HomeDashboard />;
+    return <HomeDashboard user={user} />;
   } else {
     return <Login />;
   }

@@ -49,9 +49,10 @@ span {
   border-radius: 50%;
   padding: 0px 14px 6px 14px;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.search-input{
+.search-input {
   border-radius: 10px;
   height: 30px;
   margin-left: 50px;
@@ -59,12 +60,13 @@ span {
   padding: 0px 10px;
 }
 
-.search-button{
+.search-button {
   height: 30px;
   border-radius: 10px;
   margin-left: 15px;
   padding: 0px 10px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .sidebar-toggle {
@@ -83,9 +85,10 @@ span {
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 5px 16px;
+  padding: 5px 20px;
   border-radius: 4px;
   font-size: 15px;
+  transition-duration: 0.25s;
 }
 
 .sidebar-text a:hover {
@@ -108,18 +111,30 @@ span {
   color: white;
 }
 
+.sidebar-spotify-playlists {
+  margin: 0px 10px;
+  transition-duration: 1s;
+}
+
 .sidebar-spotify-playlists:hover {
   background-color: rgba(30, 215, 96, 0.3);
-  ;
   opacity: 0.9;
   border-radius: 15px;
 }
 
+.sidebar-youtube-playlists {
+  margin: 0px 10px;
+  transition-duration: 1s;
+}
+
 .sidebar-youtube-playlists:hover {
   background-color: rgba(255, 0, 0, 0.3);
-  ;
   opacity: 0.9;
   border-radius: 15px;
+}
+
+.sidebar-title {
+  padding: 5px;
 }
 
 /* Dropdown Menu */

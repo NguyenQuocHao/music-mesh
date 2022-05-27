@@ -58,11 +58,11 @@ export default function DropdownMenu({ mainAccount }) {
     }
 
     return (
-      <a href="#" className="menu-item" onClick={props.handler ? props.handler : goToMenu}>
+      <div className="menu-item" onClick={props.handler ? props.handler : goToMenu}>
         {props.leftIcon ? <span className="icon-button">{props.leftIcon}</span> : null}
         {props.children}
         <span className="icon-right">{props.rightIcon}</span>
-      </a>
+      </div>
     );
   }
 

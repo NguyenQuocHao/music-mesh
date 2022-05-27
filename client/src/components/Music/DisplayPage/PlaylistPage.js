@@ -44,7 +44,6 @@ export default function PlaylistPage() {
 
         axios.get(HOST + '/spotify/getTrack/' + id)
           .then(data => {
-            console.log(data)
             setInfo({
               id: data.data.id,
               title: data.data.title,
@@ -64,7 +63,6 @@ export default function PlaylistPage() {
 
   const addTrackToQueue = () => {
     dispatch(addTrack(info));
-    console.log(info)
   }
 
   const closeNoti = () => {

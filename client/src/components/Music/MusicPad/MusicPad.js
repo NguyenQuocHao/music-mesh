@@ -8,6 +8,7 @@ export default function MusicPad({ image, title, subTitle, id, site, page, type 
         to={{
           pathname: `/${site}/${type}/${id}`
         }}
+        title={title}
       >
         <img src={image} alt="Empty" className={"musicpad-" + page + "-image"} />
         <div className={"music-title"}>{title}</div>
