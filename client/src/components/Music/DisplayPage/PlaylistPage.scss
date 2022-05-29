@@ -6,7 +6,9 @@
   height: calc(100vh - #{$navbarHeight});
 }
 
-.more-options {}
+.more-options {
+  cursor: pointer;
+}
 
 .queue-item-image {
   height: 75px;
@@ -18,11 +20,13 @@
   align-items: center;
   justify-content: space-between;
   margin: 5px 20px;
+  color: white;
 }
 
 .queue-item-left {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .unactive-track {

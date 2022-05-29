@@ -44,14 +44,14 @@ export default function QueuePage() {
                     <div>
                         {queue.map((track, index) => <div key={index + ":" + track.id}>
                             <div className={index != currentTrackIndex ? 'queue-item unactive-track' : 'queue-item'}>
-                                <a href='#' onClick={() => setCurrentTrackIndex(index)} className="queue-item-left">
+                                <div onClick={() => setCurrentTrackIndex(index)} className="queue-item-left">
                                     <img className={'queue-item-image'} src={track.image} />
                                     <span>
                                         <div>{track.title}</div>
                                         <div className='artist-name'>{track.artist}</div>
                                     </span>
-                                </a>
-                                <a href='#' onClick={() => { removeTrack(index) }} className='more-options'><FaTrashAlt style={{ marginRight: '5px' }} />Remove</a>
+                                </div>
+                                <div onClick={() => { removeTrack(index) }} className='more-options'><FaTrashAlt style={{ marginRight: '5px' }} />Remove</div>
                             </div>
                         </div>)}
                     </div>
