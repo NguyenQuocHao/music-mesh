@@ -26,7 +26,7 @@
 }
 
 .unactive-track {
-  opacity: 50%;
+  opacity: 0.5;
 }
 
 .artist-name {
@@ -55,11 +55,11 @@
 }
 
 .track-dropdown-item {
-  opacity: 70%;
+  opacity: 0.7;
 }
 
 .track-dropdown-item:hover {
-  opacity: 100%;
+  opacity: 1;
 }
 
 .notifications {
@@ -70,30 +70,30 @@
   position: fixed;
   top: 90%;
   left: 50%;
-  opacity: 70%;
+  opacity: 0.7;
   border-radius: 8px;
 }
 
 .noti-effect-enter {
   position: absolute;
-  opacity: 0%;
+  opacity: 0;
 }
 
 .noti-effect-enter-active {
   transform: translateY(0%);
   transition: opacity 200ms;
-  opacity: 70%;
+  opacity: 0.7;
 }
 
 .noti-effect-exit {
   position: absolute;
-  opacity: 70%;
+  opacity: 0.7;
 }
 
 .noti-effect-exit-active {
   // transform: translateX(-110%);
   transition: opacity 200ms;
-  opacity: 0%;
+  opacity: 0;
 }
 
 .float {

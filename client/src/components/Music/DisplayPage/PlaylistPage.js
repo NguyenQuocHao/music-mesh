@@ -1,10 +1,10 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import './PlaylistPage.scss';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addTrack, } from '../../../redux/reducers/queue';
 import axios from 'axios';
-import { FaEllipsisH, FaTrashAlt } from "react-icons/fa";
+import { FaEllipsisH } from "react-icons/fa";
 import { HOST } from '../../../variables';
 
 export default function PlaylistPage() {
@@ -74,9 +74,6 @@ export default function PlaylistPage() {
       <div className="main-media">
         <iframe src={url} width="100%" height="380" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen=""></iframe>
       </div>
-      {/* <div className="song-list">
-        <SongList data={relatedVideos} tiFtle="Related music" site="youtube" page="display"></SongList>
-      </div> */}
       {!window.location.href.includes("playlist") &&
         <div className='ellipsis'>
           <FaEllipsisH onClick={() => { setShowDropDown(!showDropDown); }} />
