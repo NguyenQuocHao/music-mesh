@@ -6,15 +6,16 @@ import { addTrack, } from '../../../redux/reducers/queue';
 import axios from 'axios';
 import { FaEllipsisH } from "react-icons/fa";
 import { HOST } from '../../../variables';
+import { useAlert } from "react-alert";
 
 export default function PlaylistPage() {
   const [url, setUrl] = useState("")
   const { id } = useParams()
   const dispatch = useDispatch();
   const [info, setInfo] = useState();
-  const [showNoti, setShowNoti] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
-  const notificationsMessage = "Track added ✔";
+  const notificationsMessage = "Track added";
+  const alert = useAlert();
 
   useEffect(() => {
     var embededLink = ""
@@ -63,10 +64,7 @@ export default function PlaylistPage() {
 
   const addTrackToQueue = () => {
     dispatch(addTrack(info));
-  }
-
-  const closeNoti = () => {
-    setShowNoti(false)
+    alert.success(notificationsMessage);
   }
 
   return (
@@ -79,14 +77,10 @@ export default function PlaylistPage() {
           <FaEllipsisH onClick={() => { setShowDropDown(!showDropDown); }} />
           {showDropDown &&
             <div className='track-dropdown'>
-              <div className='track-dropdown-item' onClick={() => { addTrackToQueue(); setShowNoti(true); setTimeout(closeNoti, 2000) }}>Add to Queue</div>
+              <div className='track-dropdown-item' onClick={() => { addTrackToQueue(); }}>Add to Queue</div>
             </div>}
         </div>
       }
-      {/* <CSSTransition in={showNoti} classNames="noti-effect" onEnter={() => {setTimeout(closeNoti, 1000); }} unmountOnExit>
-        <div className='notifications' id="float">{notificationsMessage}</div>
-      </CSSTransition> */}
-      {showNoti && <div className='notifications float'>{notificationsMessage}</div>}
     </div>
   )
 }

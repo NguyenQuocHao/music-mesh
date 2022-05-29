@@ -7,14 +7,24 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+import { transitions, positions, Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 
 let persistor = persistStore(store);
+const alertOptions = {
+  position: positions.BOTTOM_CENTER,
+  timeout: 3000,
+  offset: '30px',
+  transition: transitions.SCALE
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <AlertProvider template={AlertTemplate} {...alertOptions}>
+          <App />
+        </AlertProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>,
