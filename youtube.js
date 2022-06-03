@@ -178,7 +178,7 @@ module.exports = function (app) {
         auth: oauth2Client,
         part: "snippet,contentDetails",
         mine: true,
-        maxResults: 15
+        maxResults: 50
       })
       .then(data => {
         const sendData = data.data.items.map(item =>
@@ -202,7 +202,8 @@ module.exports = function (app) {
       .list({
         auth: oauth2Client,
         part: "snippet,contentDetails",
-        playlistId: req.params.playlistId
+        playlistId: req.params.playlistId,
+        maxResults: 50
       })
       .then(data => {
         const sendData = data.data.items.map(item =>

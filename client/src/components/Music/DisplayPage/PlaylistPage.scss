@@ -8,6 +8,8 @@
 
 .more-options {
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .queue-item-image {
@@ -29,7 +31,7 @@
   cursor: pointer;
 }
 
-.unactive-track {
+.unactive {
   opacity: 0.5;
 }
 
@@ -42,23 +44,30 @@
   width: 100%;
 }
 
-.ellipsis {
+.queue-item-right {
+  position: relative;
   color: white;
   float: right;
   margin: 30px 50px;
   cursor: pointer;
 }
 
+.queue-item-right:hover{
+  opacity: 1;
+}
+
 .track-dropdown {
   position: absolute;
   width: 200px;
   background-color: #242526;
-  right: 35px;
+  right: 0;
   border-radius: 8px;
   padding: 1rem;
+  z-index: 1;
 }
 
 .track-dropdown-item {
+  margin: 10px 0px;
   opacity: 0.7;
 }
 
