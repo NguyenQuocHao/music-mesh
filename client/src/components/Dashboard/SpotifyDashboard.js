@@ -40,10 +40,6 @@ export default function SpotifyDashboard() {
       title: "Pop",
       data: popPlaylists
     },
-    {
-      title: "Decades",
-      data: decadesPlaylists
-    },
   ]
 
   useEffect(() => {
@@ -68,11 +64,6 @@ export default function SpotifyDashboard() {
       })
       .catch(err => { setDecadesPlaylists(null) })
 
-    axios.get(HOST + '/spotify/decades')
-      .then(function (data) {
-        setDecadesPlaylists(data.data)
-      })
-      .catch(err => { setDecadesPlaylists(null) })
 
     axios.get(HOST + '/spotify/mood')
       .then(function (data) {

@@ -284,7 +284,26 @@ module.exports = function (app) {
         res.send(sendData)
       })
       .catch(function (err) {
-        console.log('Failed to fetch top playlists', err);
+        console.log('Failed to fetch Spotify track.', err);
+        res.sendStatus(503)
+      });
+  })
+
+  app.get('/spotify/getPlaylistTracks/:id', (req, res) => {
+    spotifyApi.getPlaylistTracks(req.params.id, { limit: ITEM_LIMIT })
+      .then(function (data) {
+        const sendData = data.body.items.map(item =>
+          new MusicItem(item.track.id,
+            item.track.name,
+            "",
+            item.track.artists[0].name,
+            item.track.album.images[0]?.url
+          ))
+
+        res.send(sendData)
+      })
+      .catch(function (err) {
+        console.log('Failed to fetch Spotify playlist tracks.', err);
         res.sendStatus(503)
       });
   })

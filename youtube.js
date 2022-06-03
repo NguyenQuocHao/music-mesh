@@ -186,12 +186,36 @@ module.exports = function (app) {
             item.snippet.title,
             item.snippet.description,
             item.snippet.channelTitle,
-            item.snippet.thumbnails.high.url
+            item.snippet.thumbnails.high?.url
           ))
         res.send(sendData)
       })
       .catch(e => {
         console.log("Failed to fetch user's Youtube playlists.")
+        console.log(e)
+        res.sendStatus(503)
+      });
+  })
+
+  app.get('/youtube/getPlaylistTracks/:playlistId', (req, res) => {
+    youtube.playlistItems
+      .list({
+        auth: oauth2Client,
+        part: "snippet,contentDetails",
+        playlistId: req.params.playlistId
+      })
+      .then(data => {
+        const sendData = data.data.items.map(item =>
+          new MusicItem(item.contentDetails.videoId,
+            item.snippet.title,
+            item.snippet.description,
+            item.snippet.channelTitle,
+            item.snippet.thumbnails.high?.url
+          ))
+        res.send(sendData)
+      })
+      .catch(e => {
+        console.log("Failed to fetch Youtube playlist's items.")
         console.log(e)
         res.sendStatus(503)
       });
@@ -257,13 +281,12 @@ module.exports = function (app) {
       maxResults: 1,
     })
       .then(data => {
-        const sendData = data.data.items.map(item =>
-          new MusicItem(item.id,
-            item.snippet.title,
-            item.snippet.description,
-            item.snippet.channelTitle,
-            item.snippet.thumbnails.high.url
-          ))
+        const sendData = new MusicItem(data.data.items[0].id,
+            data.data.items[0].snippet.title,
+            data.data.items[0].snippet.description,
+            data.data.items[0].snippet.channelTitle,
+            data.data.items[0].snippet.thumbnails.high.url
+          )
         res.send(sendData)
       })
       .catch(e => {
