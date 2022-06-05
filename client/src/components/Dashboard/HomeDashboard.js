@@ -3,12 +3,15 @@ import axios from "axios";
 import vars from '../../variables';
 import PadList from '../Music/MusicPad/PadList';
 import { HOST } from '../../variables';
+import { myYoutubePlaylists } from '../../redux/reducers/youtubeSlice';
+import { mySpotifyPlaylists } from '../../redux/reducers/spotifySlice';
+import { useSelector } from 'react-redux';
 
 export default function HomeDashboard({ user }) {
-  const [spotifyPlaylists, setSpotifyPlaylists] = useState(null)
   const [topPlaylists, setTopPlaylists] = useState(null)
   const [featuredPlaylists, setFeaturedPlaylists] = useState(null)
-  const [youtubePlaylists, setYoutubePlaylists] = useState(null)
+  const youtubePlaylists = useSelector(myYoutubePlaylists);
+  const spotifyPlaylists = useSelector(mySpotifyPlaylists);
   const [popularSongs, setPopularSongs] = useState(null)
   const [randomPlaylists, setRandomPlaylists] = useState(null)
   const lists = [
@@ -58,12 +61,6 @@ export default function HomeDashboard({ user }) {
         })
         .catch(err => { setPopularSongs(null) })
 
-      axios.get(HOST + '/youtube/myPlaylists')
-        .then(data => {
-          setYoutubePlaylists(data.data)
-        })
-        .catch(err => { setYoutubePlaylists(null) })
-
       axios.get(HOST + '/youtube/randomPlaylists')
         .then(data => {
           setRandomPlaylists(data.data)
@@ -72,12 +69,6 @@ export default function HomeDashboard({ user }) {
     }
 
     if (user.provider === 'spotify' || user.linkedAccount?.provider === 'spotify') {
-      axios.get(HOST + '/spotify/userPlaylists')
-        .then(function (data) {
-          setSpotifyPlaylists(data.data);
-        })
-        .catch(err => { setSpotifyPlaylists(null) })
-
       axios.get(HOST + '/spotify/topLists')
         .then(function (data) {
           setTopPlaylists(data.data)

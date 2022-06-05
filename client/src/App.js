@@ -1,5 +1,6 @@
 import './App.scss';
 import { useEffect, useState } from "react";
+import axios from "axios";
 import Navbar from './components/Navigation/Navbar';
 import Sidebar from './components/Navigation/Sidebar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -14,6 +15,8 @@ import QueuePage from './components/Music/DisplayPage/QueuePage';
 import { HOST } from './variables';
 import { setUser, user } from './redux/reducers/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { getMySpotifyPlaylists } from './redux/reducers/spotifySlice';
+import { getMyYoutubePlaylists } from './redux/reducers/youtubeSlice';
 
 function App() {
   const userInfo = useSelector(user);
@@ -40,6 +43,19 @@ function App() {
         })
         .then((resObject) => {
           dispatch(setUser(resObject.user))
+
+          if (resObject.user.provider === "google" || resObject.user.linkedAccount) {
+            axios.get(`${HOST}/youtube/myPlaylists`)
+              .then(data => {
+                dispatch(getMyYoutubePlaylists(data.data))
+              })
+          }
+          if (resObject.user.provider === "spotify" || resObject.user.linkedAccount) {
+            axios.get(`${HOST}/spotify/userPlaylists`)
+              .then(function (data) {
+                dispatch(getMySpotifyPlaylists(data.data))
+              })
+          }
         })
         .catch((err) => {
           console.log(err);

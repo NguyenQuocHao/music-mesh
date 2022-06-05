@@ -3,7 +3,7 @@ import DropdownMenu from './DropdownMenu';
 import './Navbar.scss';
 import { CLIENT } from '../../variables';
 
-function Navbar({ user, sideBarHandler }) {
+function Navbar({ user }) {
   const [query, setQuery] = useState("");
 
   const search = () => {

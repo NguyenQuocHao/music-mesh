@@ -1,23 +1,22 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import vars from '../../variables';
-import { useDispatch } from 'react-redux';
-import { getMySpotifyPlaylists } from '../../redux/reducers/spotifySlice';
+import { mySpotifyPlaylists } from '../../redux/reducers/spotifySlice';
 import PadList from '../Music/MusicPad/PadList';
 import { HOST } from '../../variables';
+import { useSelector } from 'react-redux';
 
 export default function SpotifyDashboard() {
-  const dispatch = useDispatch()
-  const [userPlaylists, setUserPlaylists] = useState([])
   const [popPlaylists, setPopPlaylists] = useState([])
   const [topPlaylists, setTopPlaylists] = useState([])
   const [moodPlaylists, setMoodPlaylists] = useState([])
   const [chillPlaylists, setChillPlaylists] = useState([])
   const [featuredPlaylists, setFeaturedPlaylists] = useState([])
+  const spotifyPlaylists = useSelector(mySpotifyPlaylists);
   const lists = [
     {
       title: "My Spotify Playlists",
-      data: userPlaylists
+      data: spotifyPlaylists
     },
     {
       title: "Featured by Spotify",
@@ -43,13 +42,6 @@ export default function SpotifyDashboard() {
 
   useEffect(() => {
     axios.get(HOST + '/spotify/refreshToken')
-
-    axios.get(HOST + '/spotify/userPlaylists')
-      .then(function (data) {
-        dispatch(getMySpotifyPlaylists(data.data))
-        setUserPlaylists(data.data);
-      })
-      .catch(err => { setUserPlaylists(null) })
 
     axios.get(HOST + '/spotify/pop')
       .then(function (data) {
