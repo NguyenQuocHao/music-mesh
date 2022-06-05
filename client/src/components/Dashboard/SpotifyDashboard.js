@@ -11,7 +11,6 @@ export default function SpotifyDashboard() {
   const [userPlaylists, setUserPlaylists] = useState([])
   const [popPlaylists, setPopPlaylists] = useState([])
   const [topPlaylists, setTopPlaylists] = useState([])
-  const [decadesPlaylists, setDecadesPlaylists] = useState([])
   const [moodPlaylists, setMoodPlaylists] = useState([])
   const [chillPlaylists, setChillPlaylists] = useState([])
   const [featuredPlaylists, setFeaturedPlaylists] = useState([])
@@ -50,38 +49,38 @@ export default function SpotifyDashboard() {
         dispatch(getMySpotifyPlaylists(data.data))
         setUserPlaylists(data.data);
       })
-      .catch(err => { setDecadesPlaylists(null) })
+      .catch(err => { setUserPlaylists(null) })
 
     axios.get(HOST + '/spotify/pop')
       .then(function (data) {
         setPopPlaylists(data.data)
       })
-      .catch(err => { setDecadesPlaylists(null) })
+      .catch(err => { setPopPlaylists(null) })
 
     axios.get(HOST + '/spotify/topLists')
       .then(function (data) {
         setTopPlaylists(data.data)
       })
-      .catch(err => { setDecadesPlaylists(null) })
+      .catch(err => { setTopPlaylists(null) })
 
 
     axios.get(HOST + '/spotify/mood')
       .then(function (data) {
         setMoodPlaylists(data.data)
       })
-      .catch(err => { setDecadesPlaylists(null) })
+      .catch(err => { setMoodPlaylists(null) })
 
     axios.get(HOST + '/spotify/chill')
       .then(function (data) {
         setChillPlaylists(data.data)
       })
-      .catch(err => { setDecadesPlaylists(null) })
+      .catch(err => { setChillPlaylists(null) })
 
     axios.get(HOST + '/spotify/featuredPlaylists')
       .then(function (data) {
         setFeaturedPlaylists(data.data)
       })
-      .catch(err => { setDecadesPlaylists(null) })
+      .catch(err => { setFeaturedPlaylists(null) })
   }, [])
 
   return (
