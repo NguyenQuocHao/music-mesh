@@ -5,7 +5,7 @@ import vars from '../../variables.js';
 import PadList from '../Music/MusicPad/PadList';
 import { HOST } from '../../variables';
 
-export default function SearchPage({user}) {
+export default function SearchPage() {
     const { query } = useParams()
     const [spotifyTracks, setSpotifyTracks] = useState([])
     const [spotifyPlaylists, setSpotifyPlaylists] = useState([])

@@ -12,35 +12,40 @@ import PlaylistPage from './components/Music/DisplayPage/PlaylistPage';
 import SearchPage from './components/Dashboard/SearchPage';
 import QueuePage from './components/Music/DisplayPage/QueuePage';
 import { HOST } from './variables';
+import { setUser, user } from './redux/reducers/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
-  const [user, setUser] = useState(null);
+  const userInfo = useSelector(user);
   const [sidebar, setSidebar] = useState(false);
-
+  const dispatch = useDispatch();
   const showSidebar = () => setSidebar(!sidebar);
-  const getUser = () => {
-    fetch(`${HOST}/auth/login/success`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true,
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) return response.json();
-        throw new Error("authentication has been failed!");
-      })
-      .then((resObject) => {
-        setUser(resObject.user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   useEffect(() => {
+    const getUser = () => {
+      fetch(`${HOST}/auth/login/success`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            return response.json();
+          }
+          throw new Error("Authentication has been failed!");
+        })
+        .then((resObject) => {
+          dispatch(setUser(resObject.user))
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     getUser();
   }, []);
 
@@ -48,12 +53,12 @@ function App() {
     <Router>
       <div className="App">
         {
-          user ? <div className='appWrapper'>
+          userInfo ? <div className='appWrapper'>
             <div className='sideWrapper'>
               <Sidebar show={sidebar} sideBarHandler={showSidebar} />
             </div>
             <div className='mainWrapper'>
-              <Navbar user={user} sideBarHandler={showSidebar} />
+              <Navbar user={userInfo} sideBarHandler={showSidebar} />
               <div className='main'>
                 <Switch>
                   <Route path='/' exact component={Home} />

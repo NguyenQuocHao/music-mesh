@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DropdownMenu from './DropdownMenu'
+import DropdownMenu from './DropdownMenu';
 import './Navbar.scss';
 import { CLIENT } from '../../variables';
 

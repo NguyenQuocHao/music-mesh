@@ -1,51 +1,17 @@
 import React from 'react';
 import '../components/Dashboard/Dashboard.scss';
-import { useState, useEffect } from 'react';
 import Login from '../components/Login/Login';
 import HomeDashboard from '../components/Dashboard/HomeDashboard';
-import { HOST } from '../variables';
+import { user } from '../redux/reducers/userSlice';
+import { useSelector } from 'react-redux';
 
-function Home() {
-  const [user, setUser] = useState(null)
+export default function Home() {
+  const userInfo = useSelector(user);
 
-  useEffect(() => {
-    const getUser = () => {
-      fetch(`${HOST}/auth/login/success`, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((response) => {
-          if (response.status === 200) return response.json();
-          throw new Error("authentication has been failed!");
-        })
-        .then(data => {
-          setUser(data.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getUser();
-  }, []);
-
-  return (
-    <Display user={user} />
-  )
-}
-
-const Display = props => {
-  let { user } = props;
-
-  if (user) {
-    return <HomeDashboard user={user} />;
-  } else {
-    return <Login />;
+  if (userInfo) {
+    return <HomeDashboard user={userInfo} />
   }
-};
-
-export default Home
+  else {
+    return <Login />
+  }
+}

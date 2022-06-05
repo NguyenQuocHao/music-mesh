@@ -14,6 +14,7 @@ import {combineReducers} from "redux";
 import youtubeReducer from './reducers/youtubeSlice';
 import spotifyReducer from './reducers/spotifySlice';
 import queueReducer from './reducers/queue';
+import userReducer from './reducers/userSlice';
 
 const persistConfig = {
   key: 'root',
@@ -25,6 +26,7 @@ const reducers = combineReducers({
   youtubePlaylist: youtubeReducer,
   spotifyPlaylist: spotifyReducer,
   queue: queueReducer,
+  user: userReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
