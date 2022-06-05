@@ -17,7 +17,7 @@ function Navbar({ user, sideBarHandler }) {
   }
 
   return (
-    <div className='navbar'>
+    <header className='navbar'>
       <div>
         <input type="search" className="search-input" onInput={e => setQuery(e.target.value)} onKeyPress={handleEnterKey}></input>
         <button onClick={search} className="search-button">Search</button>
@@ -41,7 +41,7 @@ function Navbar({ user, sideBarHandler }) {
           null
         )}
       </div>
-    </div>
+    </header>
   );
 }
 

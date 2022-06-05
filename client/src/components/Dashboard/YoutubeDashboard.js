@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import './Dashboard.scss';
 import vars from '../../variables.js';
 import { useDispatch } from 'react-redux';
 import { getMyYoutubePlaylists } from '../../redux/reducers/youtubeSlice';
@@ -54,11 +53,11 @@ export default function YoutubeDashboard() {
   }, [])
 
   return (
-    <div className="dashboard">
+    <>
       {lists.map((item, index) => item.data != null ?
         <PadList key={index} data={item.data} title={item.title} source="youtube" location="dashboard" type={item.type}></PadList>
         : null
       )}
-    </div>
+    </>
   )
 }

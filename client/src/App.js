@@ -51,15 +51,15 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <>
         {
           userInfo ? <div className='appWrapper'>
-            <div className='sideWrapper'>
+            <div>
               <Sidebar show={sidebar} sideBarHandler={showSidebar} />
             </div>
             <div className='mainWrapper'>
               <Navbar user={userInfo} sideBarHandler={showSidebar} />
-              <div className='main'>
+              <main>
                 <Switch>
                   <Route path='/' exact component={Home} />
                   <Route exact path='/youtube' component={Youtube} />
@@ -72,12 +72,12 @@ function App() {
                   <Route path='/myQueue' component={QueuePage} />
                   <Route path='*' component={NotFoundPage} />
                 </Switch>
-              </div>
+              </main>
             </div>
           </div> :
             <Login />
         }
-      </div>
+      </>
     </Router>
   );
 }

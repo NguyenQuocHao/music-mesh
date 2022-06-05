@@ -1,4 +1,3 @@
-import "../components/Dashboard/Dashboard.scss"
 import { FaSadTear } from 'react-icons/fa';
 
 const NotFoundPage = () => {

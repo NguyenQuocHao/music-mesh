@@ -93,11 +93,11 @@ export default function HomeDashboard({ user }) {
   }, [])
 
   return (
-    <div className="dashboard">
+    <>
       {lists.map((item, index) => item.data != null ?
         <PadList key={index} data={item.data} title={item.title} source={item.source} location="dashboard" type={item.type}></PadList>
         : null
       )}
-    </div>
+    </>
   )
 }

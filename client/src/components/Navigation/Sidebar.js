@@ -26,7 +26,8 @@ function Sidebar({ show, sideBarHandler }) {
           }}>
           {item.title}
         </Link>
-      </div>);
+      </div>
+    );
   }
 
   const getSpotifyPlaylists = () => {
@@ -48,25 +49,23 @@ function Sidebar({ show, sideBarHandler }) {
 
   return (
     <nav className={show ? 'sidebar active' : 'sidebar'}>
-      <ul className='sidebar-items' onClick={sideBarHandler}>
-        <li className='sidebar-toggle'>
+      <div className='sidebar-items' onClick={sideBarHandler}>
+        <div className='sidebar-toggle'>
           <a className='menu-bars' href='/'>
             <img src={Logo} height='100px' />
           </a>
-        </li>
-        <br></br>
+        </div>
         <div className='sidebar-title'>Main</div>
         {SidebarData.map((item, index) => {
           return (
-            <li key={index} className={item.cName}>
+            <div key={index} className={item.cName}>
               <Link to={item.path}>
                 {item.icon}
                 <span>{item.title}</span>
               </Link>
-            </li>
+            </div>
           );
         })}
-        <br></br>
         <div className='sidebar-title'>My Playlists</div>
         <div className='sidebar-youtube-playlists'>
           {
@@ -78,7 +77,7 @@ function Sidebar({ show, sideBarHandler }) {
             getSpotifyPlaylists()
           }
         </div>
-      </ul>
+      </div>
     </nav>
   );
 }

@@ -48,7 +48,7 @@ export default function QueuePage() {
     ]
 
     return (
-        <div className="background">
+        <>
             {queue.length == 0 ?
                 <div className="error-message">
                     <div className="error-message">
@@ -66,6 +66,6 @@ export default function QueuePage() {
                         )}
                     </div>
                 </div>}
-        </div>
+        </>
     )
 }

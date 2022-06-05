@@ -1,5 +1,4 @@
 import React from 'react';
-import '../components/Dashboard/Dashboard.scss';
 import Login from '../components/Login/Login';
 import HomeDashboard from '../components/Dashboard/HomeDashboard';
 import { user } from '../redux/reducers/userSlice';

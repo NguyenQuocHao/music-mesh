@@ -91,7 +91,7 @@ export default function PlaylistPage() {
   ]
 
   return (
-    <div className="background">
+    <>
       <Player source={source} videoId={type === "playlist" ? tracks[currentTrackIndex]?.id : id} onEndedHandler={() => { let setIndex = currentTrackIndex < tracks.length - 1 ? currentTrackIndex + 1 : currentTrackIndex; setCurrentTrackIndex(setIndex) }}></Player>
       {type === "song" && <DropDown items={dropDownItems}></DropDown>}
       <div>
@@ -99,6 +99,6 @@ export default function PlaylistPage() {
           <TrackItem key={track.id} track={track} dropDown={<DropDown items={dropDownItems} trackIndex={index}></DropDown>} chooseTrackHandler={() => { setCurrentTrackIndex(index) }} active={index != currentTrackIndex}></TrackItem>
         )}
       </div>
-    </div>
+    </>
   )
 }

@@ -1,7 +1,0 @@
-@import '../../variables.scss';
-
-.dashboard{
-  background-color: rgba(3,3,3,255);
-  overflow-y: auto;
-  height: calc(100vh - #{$navbarHeight});
-}

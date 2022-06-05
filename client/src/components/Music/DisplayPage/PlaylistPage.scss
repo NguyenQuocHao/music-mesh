@@ -1,11 +1,5 @@
 @import '../../../variables.scss';
 
-.background {
-  overflow-y: auto;
-  background-color: rgba(3, 3, 3, 255);
-  height: calc(100vh - #{$navbarHeight});
-}
-
 .more-options {
   cursor: pointer;
   display: flex;

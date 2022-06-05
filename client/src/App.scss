@@ -14,6 +14,12 @@ a {
   text-decoration: none;
 }
 
+main{
+  background-color: rgba(3,3,3,255);
+  overflow-y: auto;
+  height: calc(100vh - #{$navbarHeight});
+}
+
 .appWrapper{
   display: flex;
 }
@@ -35,7 +41,7 @@ a {
   font-size: 3rem;
 }
 
-html, body, #root, .App {
+html, body, #root {
   height: 100%;
   margin: 0;
 }
