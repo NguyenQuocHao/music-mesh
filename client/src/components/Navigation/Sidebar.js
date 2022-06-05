@@ -55,27 +55,35 @@ function Sidebar({ show, sideBarHandler }) {
             <img src={Logo} height='100px' />
           </a>
         </div>
-        <div className='sidebar-title'>Main</div>
-        {SidebarData.map((item, index) => {
-          return (
-            <div key={index} className={item.cName}>
-              <Link to={item.path}>
-                {item.icon}
-                <span>{item.title}</span>
-              </Link>
+        <div className='sidebar-main'>
+          <div style={{ padding: '10px 0px' }}></div>
+          <div className='sidebar-title'>Main</div>
+          <div className='menu-main'>
+            {SidebarData.map((item, index) => {
+              return (
+                <div key={index} className={item.cName}>
+                  <Link to={item.path}>
+                    {item.icon}
+                    <span>{item.title}</span>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+          <div style={{ padding: '20px 0px' }}></div>
+          <div className='sidebar-title'>My Playlists</div>
+          <div className='playlists'>
+            <div className='sidebar-youtube-playlists'>
+              {
+                getYoutubePlaylists()
+              }
             </div>
-          );
-        })}
-        <div className='sidebar-title'>My Playlists</div>
-        <div className='sidebar-youtube-playlists'>
-          {
-            getYoutubePlaylists()
-          }
-        </div>
-        <div className='sidebar-spotify-playlists'>
-          {
-            getSpotifyPlaylists()
-          }
+            <div className='sidebar-spotify-playlists'>
+              {
+                getSpotifyPlaylists()
+              }
+            </div>
+          </div>
         </div>
       </div>
     </nav>
