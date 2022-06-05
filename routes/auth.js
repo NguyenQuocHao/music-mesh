@@ -121,7 +121,7 @@ router.get('/google/connect/callback',
 );
 
 router.get("/spotify/signin", passport.authenticate("spotify", {
-  scope: ['user-read-email', 'user-read-private'],
+  scope: ['user-read-email', 'user-read-private', 'playlist-read-private'],
 }));
 
 router.get(
@@ -133,7 +133,7 @@ router.get(
 );
 
 router.get("/spotify/connect", passport.authorize("spotify-authz", {
-  scope: ['user-read-email', 'user-read-private'],
+  scope: ['user-read-email', 'user-read-private', 'playlist-read-private'],
 }));
 
 router.get('/spotify/connect/callback',
