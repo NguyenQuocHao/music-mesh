@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import DropdownMenu from './DropdownMenu';
+import DropdownMenu from './DropDown/DropdownMenu';
 import './Navbar.scss';
 import { CLIENT } from '../../variables';
+import OutsideAlerter from './DropDown/OutsideAlerter';
 
 function Navbar({ user }) {
   const [query, setQuery] = useState("");
@@ -49,13 +50,15 @@ function NavItem(props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <li className="nav-item">
-      <div className="icon-button" onClick={() => setOpen(!open)}>
-        {props.icon}
-      </div>
+    <OutsideAlerter handler={() => { setOpen(false) }}>
+      <li className="nav-item">
+        <div className="icon-button" onClick={() => setOpen(!open)}>
+          {props.icon}
+        </div>
 
-      {open && props.children}
-    </li>
+        {open && props.children}
+      </li>
+    </OutsideAlerter>
   );
 }
 

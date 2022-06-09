@@ -10,7 +10,9 @@ export default function MusicPad({ image, title, subTitle, id, site, page, type 
         }}
         title={title}
       >
-        <img src={image} alt="Empty" className={"musicpad-" + page + "-image"} />
+        <div className={`musicpad-${page}-image`}>
+          <img src={image} className={`musicpad-${page}-image`} />
+        </div>
         <div className={"music-title"}>{title}</div>
         <div className={"musicpad-sub-title"}>{subTitle}</div>
       </Link>

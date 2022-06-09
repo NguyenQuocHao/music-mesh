@@ -8,23 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeTrackByIndex, addTrack, setCurrentTrackIndex, currentTrackIndex } from '../../../redux/reducers/queue';
 import OutsideAlerter from "./OutsideAlerter";
 
-export default function DropDown({ items, trackIndex }) {
-    const [open, setOpen] = useState(false);
-
-    return (
-        <div className={open ? 'queue-item-right' : 'queue-item-right unactive'}>
-            <FaEllipsisH onClick={() => { setOpen(!open); }} />
-            {open &&
-                <div className='track-dropdown'>
-                    {items.map((item, index) => <div key={index} className='track-dropdown-item' onClick={() => item.handler(trackIndex)}><span style={{ marginRight: '5px' }}>{item.icon}</span>{item.actionName}</div>)}
-                </div>
-            }
-        </div>
-    )
-}
-
 export function TrackDropDown({ track, trackIndex, add, remove }) {
-    const [display, setDisplay] = useState(false);
+    const [open, setOpen] = useState(false);
     const alertReact = useAlert();
     const dispatch = useDispatch();
     const playingTrackIndex = useSelector(currentTrackIndex);
@@ -46,13 +31,13 @@ export function TrackDropDown({ track, trackIndex, add, remove }) {
     }
 
     function closeDropDown(){
-        setDisplay(false)
+        setOpen(false)
     }
 
     return (
-        <div className={display ? 'queue-item-right' : 'queue-item-right unactive'}>
-            <FaEllipsisH onClick={() => { setDisplay(!display); }} />
-            {display &&
+        <div className={open ? 'queue-item-right' : 'queue-item-right unactive'}>
+            <FaEllipsisH onClick={() => { setOpen(!open); }} />
+            {open &&
                 <OutsideAlerter handler={closeDropDown}>
                     <div className='track-dropdown'>
                         {add &&
