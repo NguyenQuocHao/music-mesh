@@ -18,7 +18,21 @@ export const queueSlice = createSlice({
   }
 })
 
-  export const { addTrack, removeTrackByIndex, clearQueue } = queueSlice.actions
-  export default queueSlice.reducer
+export const currentTrackIndexSlice = createSlice({
+  name: 'currentTrackIndex',
+  initialState: {
+    value: 0
+  },
+  reducers: {
+    setCurrentTrackIndex: (state, action) => {
+      state.value = action.payload
+    },
+  }
+})
 
-  export const myQueue = (state) => state.queue.value
+export default queueSlice.reducer
+export const { addTrack, removeTrackByIndex, clearQueue } = queueSlice.actions
+export const myQueue = (state) => state.queue.value
+export const currentTrackIndexReducer = currentTrackIndexSlice.reducer
+export const { setCurrentTrackIndex } = currentTrackIndexSlice.actions
+export const currentTrackIndex = (state) => state.currentTrackIndex.value

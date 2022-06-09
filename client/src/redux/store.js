@@ -13,7 +13,7 @@ import storage from 'redux-persist/lib/storage';
 import {combineReducers} from "redux"; 
 import youtubeReducer from './reducers/youtubeSlice';
 import spotifyReducer from './reducers/spotifySlice';
-import queueReducer from './reducers/queue';
+import queueReducer, {currentTrackIndexReducer} from './reducers/queue';
 import userReducer from './reducers/userSlice';
 
 const persistConfig = {
@@ -26,6 +26,7 @@ const reducers = combineReducers({
   youtubePlaylist: youtubeReducer,
   spotifyPlaylist: spotifyReducer,
   queue: queueReducer,
+  currentTrackIndex: currentTrackIndexReducer,
   user: userReducer
 });
 
