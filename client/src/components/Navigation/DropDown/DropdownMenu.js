@@ -26,7 +26,7 @@ export default function DropdownMenu({ mainAccount }) {
       dispatch(clearMyYoutubePlaylists())
     }
 
-    window.open(HOST + "/auth/unconnect", "_self");
+    window.open(`${HOST}/auth/unconnect`, "_self");
   };
 
   const logout = () => {
@@ -34,7 +34,7 @@ export default function DropdownMenu({ mainAccount }) {
     dispatch(clearMyYoutubePlaylists())
     dispatch(clearQueue())
 
-    window.open(HOST + "/auth/logout", "_self");
+    window.open(`${HOST}/auth/logout`, "_self");
   };
 
   const goToLogin = () => {

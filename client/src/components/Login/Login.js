@@ -5,7 +5,7 @@ import { HOST } from '../../variables';
 
 const Login = ({ site }) => {
   const google = () => {
-    var authLink = HOST + "/auth/google";
+    var authLink = `${HOST}/auth/google`;
     if (site == undefined) {
       authLink += "/signin"
     }
@@ -17,7 +17,7 @@ const Login = ({ site }) => {
   };
 
   const spotify = () => {
-    var authLink = HOST + "/auth/spotify";
+    var authLink = `${HOST}/auth/spotify`;
     if (site == undefined) {
       authLink += "/signin"
     }

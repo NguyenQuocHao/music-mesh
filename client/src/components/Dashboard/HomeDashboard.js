@@ -7,13 +7,13 @@ import { myYoutubePlaylists } from '../../redux/reducers/youtubeSlice';
 import { mySpotifyPlaylists } from '../../redux/reducers/spotifySlice';
 import { useSelector } from 'react-redux';
 
-export default function HomeDashboard({ user }) {
-  const [topPlaylists, setTopPlaylists] = useState(null)
-  const [featuredPlaylists, setFeaturedPlaylists] = useState(null)
+export default function HomeDashboard() {
+  const [topPlaylists, setTopPlaylists] = useState(null);
+  const [featuredPlaylists, setFeaturedPlaylists] = useState(null);
   const youtubePlaylists = useSelector(myYoutubePlaylists);
   const spotifyPlaylists = useSelector(mySpotifyPlaylists);
-  const [popularSongs, setPopularSongs] = useState(null)
-  const [randomPlaylists, setRandomPlaylists] = useState(null)
+  const [popularSongs, setPopularSongs] = useState(null);
+  const [randomPlaylists, setRandomPlaylists] = useState(null);
   const lists = [
     {
       title: "My Spotify Playlists",
@@ -54,25 +54,25 @@ export default function HomeDashboard({ user }) {
   ]
 
   useEffect(() => {
-    axios.get(HOST + '/youtube/popularSongs')
+    axios.get(`${HOST}/youtube/popularSongs`)
       .then(data => {
         setPopularSongs(data.data)
       })
       .catch(err => { setPopularSongs(null) })
 
-    axios.get(HOST + '/youtube/randomPlaylists')
+    axios.get(`${HOST}/youtube/randomPlaylists`)
       .then(data => {
         setRandomPlaylists(data.data)
       })
       .catch(err => { setRandomPlaylists(null) })
 
-    axios.get(HOST + '/spotify/topLists')
+    axios.get(`${HOST}/spotify/topLists`)
       .then(function (data) {
         setTopPlaylists(data.data)
       })
       .catch(err => { setTopPlaylists(null) })
 
-    axios.get(HOST + '/spotify/featuredPlaylists')
+    axios.get(`${HOST}/spotify/featuredPlaylists`)
       .then(function (data) {
         setFeaturedPlaylists(data.data)
       })

@@ -6,10 +6,10 @@ import PadList from '../Music/MusicPad/PadList';
 import { HOST } from '../../variables';
 
 export default function SearchPage() {
-    const { query } = useParams()
-    const [spotifyTracks, setSpotifyTracks] = useState([])
-    const [spotifyPlaylists, setSpotifyPlaylists] = useState([])
-    const [youtubeTracks, setYoutubeTracks] = useState([])
+    const { query } = useParams();
+    const [spotifyTracks, setSpotifyTracks] = useState(null);
+    const [spotifyPlaylists, setSpotifyPlaylists] = useState(null);
+    const [youtubeTracks, setYoutubeTracks] = useState(null);
     const lists = [
         {
             title: "Spotify Tracks",
@@ -32,14 +32,14 @@ export default function SearchPage() {
     ]
 
     useEffect(() => {
-        axios.get(HOST + '/spotify/search/' + query)
+        axios.get(`${HOST}/spotify/search/${query}`)
             .then(function (data) {
                 setSpotifyTracks(data.data.tracks)
                 setSpotifyPlaylists(data.data.playlists)
             })
             .catch(err => { setSpotifyTracks(null); setSpotifyPlaylists(null) })
 
-        axios.get(HOST + '/youtube/search/' + query)
+        axios.get(`${HOST}/youtube/search/${query}`)
             .then(function (data) {
                 setYoutubeTracks(data.data)
             })

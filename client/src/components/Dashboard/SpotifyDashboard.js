@@ -6,12 +6,12 @@ import PadList from '../Music/MusicPad/PadList';
 import { HOST } from '../../variables';
 import { useSelector } from 'react-redux';
 
-export default function SpotifyDashboard({user}) {
-  const [popPlaylists, setPopPlaylists] = useState([])
-  const [topPlaylists, setTopPlaylists] = useState([])
-  const [moodPlaylists, setMoodPlaylists] = useState([])
-  const [chillPlaylists, setChillPlaylists] = useState([])
-  const [featuredPlaylists, setFeaturedPlaylists] = useState([])
+export default function SpotifyDashboard() {
+  const [popPlaylists, setPopPlaylists] = useState(null)
+  const [topPlaylists, setTopPlaylists] = useState(null)
+  const [moodPlaylists, setMoodPlaylists] = useState(null)
+  const [chillPlaylists, setChillPlaylists] = useState(null)
+  const [featuredPlaylists, setFeaturedPlaylists] = useState(null)
   const spotifyPlaylists = useSelector(mySpotifyPlaylists);
   const lists = [
     {
@@ -41,32 +41,32 @@ export default function SpotifyDashboard({user}) {
   ]
 
   useEffect(() => {
-    axios.get(HOST + '/spotify/pop')
+    axios.get(`${HOST}/spotify/pop`)
       .then(function (data) {
         setPopPlaylists(data.data)
       })
       .catch(err => { setPopPlaylists(null) })
 
-    axios.get(HOST + '/spotify/topLists')
+    axios.get(`${HOST}/spotify/topLists`)
       .then(function (data) {
         setTopPlaylists(data.data)
       })
       .catch(err => { setTopPlaylists(null) })
 
 
-    axios.get(HOST + '/spotify/mood')
+    axios.get(`${HOST}/spotify/mood`)
       .then(function (data) {
         setMoodPlaylists(data.data)
       })
       .catch(err => { setMoodPlaylists(null) })
 
-    axios.get(HOST + '/spotify/chill')
+    axios.get(`${HOST}/spotify/chill`)
       .then(function (data) {
         setChillPlaylists(data.data)
       })
       .catch(err => { setChillPlaylists(null) })
 
-    axios.get(HOST + '/spotify/featuredPlaylists')
+    axios.get(`${HOST}/spotify/featuredPlaylists`)
       .then(function (data) {
         setFeaturedPlaylists(data.data)
       })

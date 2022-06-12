@@ -8,8 +8,8 @@ import { useSelector } from 'react-redux';
 
 export default function YoutubeDashboard() {
   const youtubePlaylists = useSelector(myYoutubePlaylists);
-  const [popularSongs, setPopularSongs] = useState([])
-  const [randomPlaylists, setRandomPlaylists] = useState([])
+  const [popularSongs, setPopularSongs] = useState(null);
+  const [randomPlaylists, setRandomPlaylists] = useState(null);
   const lists = [
     {
       title: "My Youtube Playlists",
@@ -29,15 +29,13 @@ export default function YoutubeDashboard() {
   ]
 
   useEffect(() => {
-    axios.get(HOST + '/youtube/refreshToken')
-
-    axios.get(HOST + '/youtube/popularSongs')
+    axios.get(`${HOST}/youtube/popularSongs`)
       .then(data => {
         setPopularSongs(data.data)
       })
       .catch(err => { setPopularSongs(null) })
 
-    axios.get(HOST + '/youtube/randomPlaylists')
+    axios.get(`${HOST}/youtube/randomPlaylists`)
       .then(data => {
         setRandomPlaylists(data.data)
       })

@@ -62,7 +62,9 @@ function App() {
     }
 
     if (userInfo.provider === "google" || userInfo.linkedAccount) {
-      axios.get(`${HOST}/youtube/myPlaylists`)
+      await axios.get(`${HOST}/youtube/refreshToken`)
+
+      await axios.get(`${HOST}/youtube/myPlaylists`)
         .then(data => {
           dispatch(getMyYoutubePlaylists(data.data))
         })
