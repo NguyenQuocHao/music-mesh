@@ -3,12 +3,13 @@ import DropdownMenu from './DropDown/DropdownMenu';
 import './Navbar.scss';
 import { CLIENT } from '../../variables';
 import OutsideAlerter from './DropDown/OutsideAlerter';
+import { Link } from 'react-router-dom';
 
 function Navbar({ user }) {
   const [query, setQuery] = useState("");
 
   const search = () => {
-    window.open(CLIENT + "/search/" + query, "_self");
+    window.open(`${CLIENT}/search/${query}`, "_self");
   }
 
   const handleEnterKey = (e) => {
@@ -24,7 +25,7 @@ function Navbar({ user }) {
         <button onClick={search} className="search-button">Search</button>
       </div>
       <div>
-        {user ? (
+        {user ?
           <div className="navbar-list login-nav">
             <div className="navbar-list-item">
               <NavItem
@@ -38,9 +39,9 @@ function Navbar({ user }) {
               </NavItem>
             </div>
           </div>
-        ) : (
-          null
-        )}
+          :
+          <Link to="/login" className="navbar-list login-nav">Login</Link>
+        }
       </div>
     </header>
   );

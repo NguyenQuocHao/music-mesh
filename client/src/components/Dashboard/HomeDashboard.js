@@ -54,33 +54,29 @@ export default function HomeDashboard({ user }) {
   ]
 
   useEffect(() => {
-    if (user.provider === 'google' || user.linkedAccount?.provider === 'google') {
-      axios.get(HOST + '/youtube/popularSongs')
-        .then(data => {
-          setPopularSongs(data.data)
-        })
-        .catch(err => { setPopularSongs(null) })
+    axios.get(HOST + '/youtube/popularSongs')
+      .then(data => {
+        setPopularSongs(data.data)
+      })
+      .catch(err => { setPopularSongs(null) })
 
-      axios.get(HOST + '/youtube/randomPlaylists')
-        .then(data => {
-          setRandomPlaylists(data.data)
-        })
-        .catch(err => { setRandomPlaylists(null) })
-    }
+    axios.get(HOST + '/youtube/randomPlaylists')
+      .then(data => {
+        setRandomPlaylists(data.data)
+      })
+      .catch(err => { setRandomPlaylists(null) })
 
-    if (user.provider === 'spotify' || user.linkedAccount?.provider === 'spotify') {
-      axios.get(HOST + '/spotify/topLists')
-        .then(function (data) {
-          setTopPlaylists(data.data)
-        })
-        .catch(err => { setTopPlaylists(null) })
+    axios.get(HOST + '/spotify/topLists')
+      .then(function (data) {
+        setTopPlaylists(data.data)
+      })
+      .catch(err => { setTopPlaylists(null) })
 
-      axios.get(HOST + '/spotify/featuredPlaylists')
-        .then(function (data) {
-          setFeaturedPlaylists(data.data)
-        })
-        .catch(err => { setFeaturedPlaylists(null) })
-    }
+    axios.get(HOST + '/spotify/featuredPlaylists')
+      .then(function (data) {
+        setFeaturedPlaylists(data.data)
+      })
+      .catch(err => { setFeaturedPlaylists(null) })
   }, [])
 
   return (

@@ -1,6 +1,6 @@
 import Google from "../../assets/img/google.png";
 import Spotify from "../../assets/img/spotify.png";
-import './Login.scss'
+import './Login.scss';
 import { HOST } from '../../variables';
 
 const Login = ({ site }) => {

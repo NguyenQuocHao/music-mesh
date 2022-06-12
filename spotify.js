@@ -120,6 +120,13 @@ module.exports = function (app) {
       })
   });
 
+  app.get('/spotify/public', (req, res) => {
+    spotifyApi.clientCredentialsGrant()
+    .then(data => {
+      spotifyApi.setAccessToken(data.body.access_token)
+    })
+  })
+
   app.get('/spotify/getInfo', (req, res) => {
     if (!spotifyApi.getAccessToken()) {
       // res.sendStatus(401);

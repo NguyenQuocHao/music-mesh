@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import './PlaylistPage.scss';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { TrackDropDown } from "../../Navigation/DropDown/DropDown";
 import { HOST } from '../../../variables';
@@ -10,7 +9,6 @@ import TrackItem from './TrackItem';
 
 export default function PlaylistPage() {
   const { id } = useParams()
-  const dispatch = useDispatch();
   const [info, setInfo] = useState(null);
   const [tracks, setTracks] = useState([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
@@ -77,7 +75,7 @@ export default function PlaylistPage() {
         {tracks.map((track, index) =>
           <TrackItem key={`${track.id}:${index}`}
             track={track}
-            selectTrackHandler={() => { dispatch(setCurrentTrackIndex(index)) }}
+            selectTrackHandler={() => { setCurrentTrackIndex(index) }}
             active={index != currentTrackIndex}
             dropDown={<TrackDropDown track={track} trackIndex={index} add></TrackDropDown>}>
           </TrackItem>

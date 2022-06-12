@@ -6,7 +6,7 @@ import PadList from '../Music/MusicPad/PadList';
 import { HOST } from '../../variables';
 import { useSelector } from 'react-redux';
 
-export default function SpotifyDashboard() {
+export default function SpotifyDashboard({user}) {
   const [popPlaylists, setPopPlaylists] = useState([])
   const [topPlaylists, setTopPlaylists] = useState([])
   const [moodPlaylists, setMoodPlaylists] = useState([])
@@ -41,8 +41,6 @@ export default function SpotifyDashboard() {
   ]
 
   useEffect(() => {
-    axios.get(HOST + '/spotify/refreshToken')
-
     axios.get(HOST + '/spotify/pop')
       .then(function (data) {
         setPopPlaylists(data.data)

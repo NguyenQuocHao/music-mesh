@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const SpotifySlice = createSlice({
   name: 'spotifyPlaylist',
   initialState: {
-    value: []
+    value: null
   },
   reducers: {
     getMySpotifyPlaylists: (state, action) => {
       state.value = action.payload
     },
     clearMySpotifyPlaylists: (state) => {
-      state.value = []
+      state.value = null
     },
   }
 })

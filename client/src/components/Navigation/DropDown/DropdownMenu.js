@@ -37,12 +37,8 @@ export default function DropdownMenu({ mainAccount }) {
     window.open(HOST + "/auth/logout", "_self");
   };
 
-  const goToSpotify = () => {
-    window.open(`${CLIENT}/spotify`, "_self");
-  };
-
-  const goToYoutube = () => {
-    window.open(`${CLIENT}/youtube`, "_self");
+  const goToLogin = () => {
+    window.open(`${CLIENT}/login`, "_self");
   };
 
   function calcHeight(el) {
@@ -98,7 +94,7 @@ export default function DropdownMenu({ mainAccount }) {
                 {mainAccount.linkedAccount.displayName}
               </DropdownItem>
               :
-              <DropdownItem leftIcon={<AiOutlinePlus />} handler={mainAccount.provider === "google" ? goToSpotify : goToYoutube}>
+              <DropdownItem leftIcon={<AiOutlinePlus />} handler={goToLogin}>
                 Connect account
               </DropdownItem>
           }

@@ -4,9 +4,6 @@ import axios from "axios";
 import Navbar from './components/Navigation/Navbar';
 import Sidebar from './components/Navigation/Sidebar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Youtube from './pages/Youtube';
-import Spotify from './pages/Spotify';
 import NotFoundPage from './pages/NotFoundPage';
 import Login from './components/Login/Login';
 import PlaylistPage from './components/Music/DisplayPage/PlaylistPage';
@@ -17,6 +14,9 @@ import { setUser, user } from './redux/reducers/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMySpotifyPlaylists } from './redux/reducers/spotifySlice';
 import { getMyYoutubePlaylists } from './redux/reducers/youtubeSlice';
+import HomeDashboard from './components/Dashboard/HomeDashboard';
+import YoutubeDashboard from './components/Dashboard/YoutubeDashboard';
+import SpotifyDashboard from './components/Dashboard/SpotifyDashboard';
 
 function App() {
   const userInfo = useSelector(user);
@@ -25,6 +25,10 @@ function App() {
   const showSidebar = () => setSidebar(!sidebar);
 
   useEffect(() => {
+    if (!userInfo || userInfo.provider !== 'spotify') {
+      axios.get(`${HOST}/spotify/public`)
+    }
+
     const getUser = () => {
       fetch(`${HOST}/auth/login/success`, {
         method: "GET",
@@ -43,19 +47,6 @@ function App() {
         })
         .then((resObject) => {
           dispatch(setUser(resObject.user))
-
-          if (resObject.user.provider === "google" || resObject.user.linkedAccount) {
-            axios.get(`${HOST}/youtube/myPlaylists`)
-              .then(data => {
-                dispatch(getMyYoutubePlaylists(data.data))
-              })
-          }
-          if (resObject.user.provider === "spotify" || resObject.user.linkedAccount) {
-            axios.get(`${HOST}/spotify/userPlaylists`)
-              .then(function (data) {
-                dispatch(getMySpotifyPlaylists(data.data))
-              })
-          }
         })
         .catch((err) => {
           console.log(err);
@@ -65,11 +56,33 @@ function App() {
     getUser();
   }, []);
 
+  useEffect(async () => {
+    if (!userInfo) {
+      return;
+    }
+
+    if (userInfo.provider === "google" || userInfo.linkedAccount) {
+      axios.get(`${HOST}/youtube/myPlaylists`)
+        .then(data => {
+          dispatch(getMyYoutubePlaylists(data.data))
+        })
+    }
+    if (userInfo.provider === "spotify" || userInfo.linkedAccount) {
+      // Only signed-in user user refresh token (via OAuth)
+      await axios.get(`${HOST}/spotify/refreshToken`)
+
+      await axios.get(`${HOST}/spotify/userPlaylists`)
+        .then(function (data) {
+          dispatch(getMySpotifyPlaylists(data.data))
+        })
+    }
+  }, [userInfo])
+
   return (
     <Router>
       <>
         {
-          userInfo ? <div className='appWrapper'>
+          <div className='appWrapper'>
             <div>
               <Sidebar show={sidebar} sideBarHandler={showSidebar} />
             </div>
@@ -77,9 +90,10 @@ function App() {
               <Navbar user={userInfo} sideBarHandler={showSidebar} />
               <main>
                 <Switch>
-                  <Route path='/' exact component={Home} />
-                  <Route exact path='/youtube' component={Youtube} />
-                  <Route exact path='/spotify' component={Spotify} />
+                  <Route path='/' exact children={<HomeDashboard user={userInfo}></HomeDashboard>} />
+                  <Route exact path='/login' children={<Login site={userInfo?.provider}></Login>} />
+                  <Route exact path='/youtube' children={<YoutubeDashboard user={userInfo}></YoutubeDashboard>} />
+                  <Route exact path='/spotify' children={<SpotifyDashboard user={userInfo}></SpotifyDashboard>} />
                   <Route path='/spotify/playlist/:id' component={PlaylistPage} />
                   <Route path='/spotify/song/:id' component={PlaylistPage} />
                   <Route path='/youtube/playlist/:id' component={PlaylistPage} />
@@ -90,8 +104,7 @@ function App() {
                 </Switch>
               </main>
             </div>
-          </div> :
-            <Login />
+          </div>
         }
       </>
     </Router>

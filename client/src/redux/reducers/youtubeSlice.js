@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 export const YoutubeSlice = createSlice({
   name: 'youtubePlaylist',
   initialState: {
-    value: []
+    value: null
   },
   reducers: {
     getMyYoutubePlaylists: (state, action) => {
       state.value = action.payload
     },
     clearMyYoutubePlaylists: (state) => {
-      state.value = []
+      state.value = null
     },
   }
 })
