@@ -86,12 +86,17 @@ span {
 }
 
 .search-button {
+  display: inline-block;
   height: 30px;
   border-radius: 10px;
   margin-left: 15px;
   padding: 0px 10px;
   font-weight: bold;
   cursor: pointer;
+}
+
+.search-wrapper-left {
+  display: inline-block;
 }
 
 .sidebar-toggle {

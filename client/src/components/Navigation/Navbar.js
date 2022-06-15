@@ -39,7 +39,7 @@ function Navbar({ user }) {
   return (
     <header className='navbar'>
       <div className='search'>
-        <OutsideAlerter handler={() => { setShowSuggest(false) }}>
+        <OutsideAlerter className='search-wrapper-left' handler={() => { setShowSuggest(false) }}>
           <input type="search" className="search-input" onInput={handleInput}
             onKeyPress={handleEnterKey} onClick={() => { setShowSuggest(true) }} value={query}>
           </input>

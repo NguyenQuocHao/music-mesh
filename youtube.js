@@ -16,7 +16,6 @@ oauth2Client.apiKey = process.env.GOOGLE_API_KEY;
 const MusicItem = require('./models/musicItem.js');
 const dbo = require('./db/conn');
 const axios = require('axios');
-const jsonpAdapter = require('axios-jsonp');
 
 passport.use(
   new GoogleStrategy(
