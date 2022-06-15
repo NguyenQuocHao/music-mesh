@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import DropdownMenu from './DropDown/DropdownMenu';
 import './Navbar.scss';
-import { CLIENT } from '../../variables';
+import { CLIENT, HOST } from '../../variables';
 import OutsideAlerter from './DropDown/OutsideAlerter';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Navbar({ user }) {
   const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState(null);
+  const [showSuggest, setShowSuggest] = useState(false);
 
   const search = () => {
     window.open(`${CLIENT}/search/${query}`, "_self");
@@ -18,10 +21,38 @@ function Navbar({ user }) {
     }
   }
 
+  const handleInput = (e) => {
+    const input = e.target.value
+    setQuery(input)
+
+    if (input === "") {
+      setSuggestions(null)
+      return;
+    }
+
+    axios.get(`${HOST}/youtube/suggest/${input}`)
+      .then(data => {
+        setSuggestions(data.data)
+      })
+  }
+
   return (
     <header className='navbar'>
-      <div>
-        <input type="search" className="search-input" onInput={e => setQuery(e.target.value)} onKeyPress={handleEnterKey}></input>
+      <div className='search'>
+        <OutsideAlerter handler={() => { setShowSuggest(false) }}>
+          <input type="search" className="search-input" onInput={handleInput}
+            onKeyPress={handleEnterKey} onClick={() => { setShowSuggest(true) }} value={query}>
+          </input>
+          <div className='search-suggest'>
+            {
+              showSuggest && query && suggestions &&
+              suggestions.map(item =>
+                <Link to={`/search/${item}`} onClick={() => { setQuery(item); setSuggestions(null) }}>
+                  <div className='search-suggest-item'>{item}</div>
+                </Link>)
+            }
+          </div>
+        </OutsideAlerter>
         <button onClick={search} className="search-button">Search</button>
       </div>
       <div>
@@ -33,8 +64,7 @@ function Navbar({ user }) {
                   src={user.photos[0]?.value}
                   alt=""
                   className="avatar"
-                />}
-              >
+                />}>
                 <DropdownMenu mainAccount={user}></DropdownMenu>
               </NavItem>
             </div>
@@ -56,7 +86,6 @@ function NavItem(props) {
         <div className="icon-button" onClick={() => setOpen(!open)}>
           {props.icon}
         </div>
-
         {open && props.children}
       </li>
     </OutsideAlerter>

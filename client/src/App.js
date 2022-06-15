@@ -25,10 +25,6 @@ function App() {
   const showSidebar = () => setSidebar(!sidebar);
 
   useEffect(() => {
-    if (!userInfo || userInfo.provider !== 'spotify') {
-      axios.get(`${HOST}/spotify/public`)
-    }
-
     const getUser = () => {
       fetch(`${HOST}/auth/login/success`, {
         method: "GET",
@@ -57,7 +53,8 @@ function App() {
   }, []);
 
   useEffect(async () => {
-    if (!userInfo) {
+    if (!userInfo || userInfo.provider !== 'spotify') {
+      await axios.get(`${HOST}/spotify/public`)
       return;
     }
 
@@ -82,33 +79,29 @@ function App() {
 
   return (
     <Router>
-      <>
-        {
-          <div className='appWrapper'>
-            <div>
-              <Sidebar show={sidebar} sideBarHandler={showSidebar} />
-            </div>
-            <div className='mainWrapper'>
-              <Navbar user={userInfo} sideBarHandler={showSidebar} />
-              <main>
-                <Switch>
-                  <Route path='/' exact children={<HomeDashboard user={userInfo}></HomeDashboard>} />
-                  <Route exact path='/login' children={<Login site={userInfo?.provider}></Login>} />
-                  <Route exact path='/youtube' children={<YoutubeDashboard user={userInfo}></YoutubeDashboard>} />
-                  <Route exact path='/spotify' children={<SpotifyDashboard user={userInfo}></SpotifyDashboard>} />
-                  <Route path='/spotify/playlist/:id' component={PlaylistPage} />
-                  <Route path='/spotify/song/:id' component={PlaylistPage} />
-                  <Route path='/youtube/playlist/:id' component={PlaylistPage} />
-                  <Route path='/youtube/song/:id' component={PlaylistPage} />
-                  <Route path='/search/:query' component={SearchPage} />
-                  <Route path='/myQueue' component={QueuePage} />
-                  <Route path='*' component={NotFoundPage} />
-                </Switch>
-              </main>
-            </div>
-          </div>
-        }
-      </>
+      <div className='appWrapper'>
+        <div>
+          <Sidebar show={sidebar} sideBarHandler={showSidebar} />
+        </div>
+        <div className='mainWrapper'>
+          <Navbar user={userInfo} sideBarHandler={showSidebar} />
+          <main>
+            <Switch>
+              <Route path='/' exact children={<HomeDashboard user={userInfo}></HomeDashboard>} />
+              <Route exact path='/login' children={<Login site={userInfo?.provider}></Login>} />
+              <Route exact path='/youtube' children={<YoutubeDashboard user={userInfo}></YoutubeDashboard>} />
+              <Route exact path='/spotify' children={<SpotifyDashboard user={userInfo}></SpotifyDashboard>} />
+              <Route path='/spotify/playlist/:id' component={PlaylistPage} />
+              <Route path='/spotify/song/:id' component={PlaylistPage} />
+              <Route path='/youtube/playlist/:id' component={PlaylistPage} />
+              <Route path='/youtube/song/:id' component={PlaylistPage} />
+              <Route path='/search/:query' component={SearchPage} />
+              <Route path='/myQueue' component={QueuePage} />
+              <Route path='*' component={NotFoundPage} />
+            </Switch>
+          </main>
+        </div>
+      </div>
     </Router>
   );
 }

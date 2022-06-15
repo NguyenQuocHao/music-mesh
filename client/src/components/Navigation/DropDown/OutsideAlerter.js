@@ -26,5 +26,5 @@ export default function OutsideAlerter(props) {
     const wrapperRef = useRef(null);
     useOutsideAlerter(wrapperRef, props.handler);
 
-    return <div ref={wrapperRef}>{props.children}</div>;
+    return <span ref={wrapperRef}>{props.children}</span>;
 }

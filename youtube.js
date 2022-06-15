@@ -3,6 +3,9 @@ const HOST = require('./variables').HOST;
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const google = require("googleapis").google;
+const cloudSearch = google.cloudsearch("v1");
+const customSearch = google.searchconsole("v1");
+customSearch.context
 const youtube = google.youtube("v3");
 const oauth2Client = new google.auth.OAuth2({
   clientId: process.env.GOOGLE_CLIENT_ID,
@@ -13,6 +16,7 @@ oauth2Client.apiKey = process.env.GOOGLE_API_KEY;
 const MusicItem = require('./models/musicItem.js');
 const dbo = require('./db/conn');
 const axios = require('axios');
+const jsonpAdapter = require('axios-jsonp');
 
 passport.use(
   new GoogleStrategy(
@@ -146,6 +150,31 @@ module.exports = function (app) {
         res.sendStatus(400)
       })
   })
+
+  app.get('/youtube/suggest/:query', function (req, res) {
+    const GOOGLE_AC_URL = 'https://clients1.google.com/complete/search'; // or 'http://suggestqueries.google.com/complete/search';
+
+    axios({
+      url: GOOGLE_AC_URL,
+      // adapter: jsonpAdapter,
+      params: {
+        client: "youtube",
+        hl: "en",
+        ds: "yt",
+        q: req.params.query,
+      }
+    })
+      .then((data) => {
+        const subString = data.data.substring(data.data.indexOf('(') + 1, data.data.length - 1)
+        const parsedResult = JSON.parse(subString)[1];
+        const result = parsedResult.map(item => item[0]);
+        res.send(result)
+      })
+      .catch(err => {
+        console.log("Failed to fetch search suggestions.")
+        console.log(err)
+      })
+  });
 
   app.get('/youtube/popularSongs', function (req, res) {
     youtube.videos
@@ -285,11 +314,11 @@ module.exports = function (app) {
     })
       .then(data => {
         const sendData = new MusicItem(data.data.items[0].id,
-            data.data.items[0].snippet.title,
-            data.data.items[0].snippet.description,
-            data.data.items[0].snippet.channelTitle,
-            data.data.items[0].snippet.thumbnails.high.url
-          )
+          data.data.items[0].snippet.title,
+          data.data.items[0].snippet.description,
+          data.data.items[0].snippet.channelTitle,
+          data.data.items[0].snippet.thumbnails.high.url
+        )
         res.send(sendData)
       })
       .catch(e => {

@@ -44,7 +44,7 @@ export default function SearchPage() {
                 setYoutubeTracks(data.data)
             })
             .catch(err => { setYoutubeTracks(null) })
-    }, [])
+    }, [query])
 
     return (
         <>
