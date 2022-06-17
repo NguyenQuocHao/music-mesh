@@ -49,7 +49,7 @@ export default function SearchPage() {
     return (
         <>
             {lists.map(item => item.data != null ?
-                <PadList data={item.data} title={item.title} source={item.source} location="dashboard" type={item.type}></PadList>
+                <PadList key={item.title} data={item.data} title={item.title} source={item.source} location="dashboard" type={item.type}></PadList>
                 : null
             )}
         </>
