@@ -30,15 +30,15 @@ export function TrackDropDown({ track, trackIndex, add, remove }) {
         alertReact.success(TrackAddedNoti);
     }
 
-    function closeDropDown(){
+    function closeDropDown() {
         setOpen(false)
     }
 
     return (
         <div className={open ? 'queue-item-right' : 'queue-item-right unactive'}>
-            <FaEllipsisH onClick={() => { setOpen(!open); }} />
-            {open &&
-                <OutsideAlerter handler={closeDropDown}>
+            <OutsideAlerter handler={closeDropDown}>
+                <FaEllipsisH onClick={() => { setOpen(!open); }} />
+                {open &&
                     <div className='track-dropdown'>
                         {add &&
                             <div className='track-dropdown-item' onClick={addTrackToQueue}><span style={{ marginRight: '5px' }}><FaPlus></FaPlus></span>Add to Queue</div>
@@ -47,8 +47,8 @@ export function TrackDropDown({ track, trackIndex, add, remove }) {
                             <div className='track-dropdown-item' onClick={removeTrackFromQueue}><span style={{ marginRight: '5px' }}><FaTrashAlt></FaTrashAlt></span>Remove from Queue</div>
                         }
                     </div>
-                </OutsideAlerter>
-            }
+                }
+            </OutsideAlerter>
         </div>
     )
 }

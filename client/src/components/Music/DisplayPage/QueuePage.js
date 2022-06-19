@@ -30,7 +30,7 @@ export default function QueuePage() {
                     </Player>
                     <div>
                         {queue.map((track, index) =>
-                            <TrackItem key={`${track.id}:${index}`}
+                            <TrackItem key={`${track.id}:${index}:${Date.now()}`}
                                 track={track}
                                 selectTrackHandler={() => { dispatch(setCurrentTrackIndex(index)) }}
                                 active={index != currentIndex}

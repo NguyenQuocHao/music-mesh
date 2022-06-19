@@ -70,17 +70,21 @@ export default function PlaylistPage() {
         videoId={type === "playlist" ? tracks[currentTrackIndex]?.id : id}
         onEndedHandler={() => { setCurrentTrackIndex(currentTrackIndex < tracks.length - 1 ? currentTrackIndex + 1 : currentTrackIndex) }}>
       </Player>
-      {type === "song" && <TrackDropDown track={info} add></TrackDropDown>}
-      <div>
-        {tracks.map((track, index) =>
-          <TrackItem key={`${track.id}:${index}`}
-            track={track}
-            selectTrackHandler={() => { setCurrentTrackIndex(index) }}
-            active={index != currentTrackIndex}
-            dropDown={<TrackDropDown track={track} trackIndex={index} add></TrackDropDown>}>
-          </TrackItem>
-        )}
-      </div>
+      {
+        type === "song" ?
+          <TrackDropDown track={info} add></TrackDropDown>
+          :
+          <div className='player-other'>
+            {tracks.map((track, index) =>
+              <TrackItem key={`${track.id}:${index}`}
+                track={track}
+                selectTrackHandler={() => { setCurrentTrackIndex(index) }}
+                active={index != currentTrackIndex}
+                dropDown={<TrackDropDown track={track} trackIndex={index} add></TrackDropDown>}>
+              </TrackItem>
+            )}
+          </div>
+      }
     </>
   )
 }
