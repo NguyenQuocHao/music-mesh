@@ -5,8 +5,9 @@ import { CLIENT, HOST } from '../../variables';
 import OutsideAlerter from './DropDown/OutsideAlerter';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { FaBars } from "react-icons/fa";
 
-function Navbar({ user }) {
+function Navbar({ user, sideBarHandler }) {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState(null);
   const [showSuggest, setShowSuggest] = useState(false);
@@ -38,6 +39,7 @@ function Navbar({ user }) {
 
   return (
     <header className='navbar'>
+      <FaBars className="sidebar-toggle-button" onClick={sideBarHandler} />
       <div className='search'>
         <OutsideAlerter className='search-wrapper-left' handler={() => { setShowSuggest(false) }}>
           <input type="search" className="search-input" onInput={handleInput}

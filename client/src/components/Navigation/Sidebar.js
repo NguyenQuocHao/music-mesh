@@ -8,7 +8,7 @@ import { mySpotifyPlaylists } from '../../redux/reducers/spotifySlice';
 import GetRedirectLink from '../../utils/redirect';
 import Logo from "../../assets/img/music mesh-logos_transparent.png";
 
-function Sidebar({ show, sideBarHandler }) {
+function Sidebar({ open, sideBarHandler }) {
   const youtubePlaylists = useSelector(myYoutubePlaylists);
   const spotifyPlaylists = useSelector(mySpotifyPlaylists);
 
@@ -48,7 +48,7 @@ function Sidebar({ show, sideBarHandler }) {
   }
 
   return (
-    <nav className={show ? 'sidebar active' : 'sidebar'}>
+    <nav className={open ? 'sidebar active' : 'sidebar'}>
       <div className='sidebar-items' onClick={sideBarHandler}>
         <div className='sidebar-toggle'>
           <a className='menu-bars' href='/'>
@@ -70,20 +70,25 @@ function Sidebar({ show, sideBarHandler }) {
               );
             })}
           </div>
-          <div style={{ padding: '20px 0px' }}></div>
-          <div className='sidebar-title'>My Playlists</div>
-          <div className='playlists'>
-            <div className='sidebar-youtube-playlists'>
-              {
-                getYoutubePlaylists()
-              }
-            </div>
-            <div className='sidebar-spotify-playlists'>
-              {
-                getSpotifyPlaylists()
-              }
-            </div>
-          </div>
+          {
+            (spotifyPlaylists || youtubePlaylists) &&
+            <>
+              <div style={{ padding: '20px 0px' }}></div>
+              <div className='sidebar-title'>My Playlists</div>
+              <div className='playlists'>
+                <div className='sidebar-youtube-playlists'>
+                  {
+                    getYoutubePlaylists()
+                  }
+                </div>
+                <div className='sidebar-spotify-playlists'>
+                  {
+                    getSpotifyPlaylists()
+                  }
+                </div>
+              </div>
+            </>
+          }
         </div>
       </div>
     </nav>

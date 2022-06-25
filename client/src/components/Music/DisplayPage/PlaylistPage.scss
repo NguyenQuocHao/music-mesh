@@ -46,8 +46,17 @@
   cursor: pointer;
 }
 
-.queue-item-right:hover{
+.queue-item-right:hover {
   opacity: 1;
+}
+
+.player {
+  height: 380px;
+}
+
+.player-other{
+  height: 300px;
+  overflow-y: scroll;
 }
 
 .track-dropdown {

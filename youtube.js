@@ -143,6 +143,7 @@ module.exports = function (app) {
     oauth2Client.refreshToken(oauth2Client.credentials.refresh_token)
       .then(data => {
         oauth2Client.credentials.access_token = data.tokens.access_token
+        console.log("Refreshed Youtube access token.")
         res.sendStatus(200)
       })
       .catch(() => {

@@ -17,6 +17,7 @@ import { getMyYoutubePlaylists } from './redux/reducers/youtubeSlice';
 import HomeDashboard from './components/Dashboard/HomeDashboard';
 import YoutubeDashboard from './components/Dashboard/YoutubeDashboard';
 import SpotifyDashboard from './components/Dashboard/SpotifyDashboard';
+import OutsideAlerter from './components/Navigation/DropDown/OutsideAlerter';
 
 function App() {
   const userInfo = useSelector(user);
@@ -53,7 +54,7 @@ function App() {
   }, []);
 
   useEffect(async () => {
-    if (!userInfo || userInfo.provider !== 'spotify') {
+    if (!userInfo || (!userInfo.linkedAccount && userInfo.provider !== 'spotify')) {
       await axios.get(`${HOST}/spotify/public`)
       return;
     }
@@ -81,7 +82,9 @@ function App() {
     <Router>
       <div className='appWrapper'>
         <div>
-          <Sidebar show={sidebar} sideBarHandler={showSidebar} />
+          <OutsideAlerter handler={() => setSidebar(false)}>
+            <Sidebar open={sidebar} />
+          </OutsideAlerter>
         </div>
         <div className='mainWrapper'>
           <Navbar user={userInfo} sideBarHandler={showSidebar} />
