@@ -69,3 +69,9 @@ html, body, #root {
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(113,113,113); 
 }
+
+@media screen and (max-width: 600px) {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}

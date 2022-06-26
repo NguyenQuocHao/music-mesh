@@ -65,6 +65,7 @@ span {
   color: white;
   border-radius: 10px;
   overflow: hidden;
+  z-index: 1;
 }
 
 .search-suggest-item {
@@ -108,7 +109,7 @@ span {
   align-items: center;
 }
 
-.sidebar-toggle-button{
+.sidebar-toggle-button {
   color: white;
   cursor: pointer;
   margin-left: 20px;
@@ -325,4 +326,17 @@ span {
 .menu-secondary-exit-active {
   transform: translateX(110%);
   transition: all var(--speed) ease;
+}
+
+@media screen and (max-width: 600px) {
+  .search-input {
+    width: 90%;
+  }
+  .search-suggest{
+    left: 23%;
+    width: 90%;
+  }
+  .search-button {
+    display: none;
+  }
 }

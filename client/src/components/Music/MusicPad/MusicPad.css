@@ -7,10 +7,18 @@
   text-overflow: ellipsis;
 }
 
+.padlist{
+  margin: 0px 10%;
+}
+
 .padlist-title{
   font-weight: bold;
   color: rgba(245, 245, 245, 255);
   padding: 15px 0px 0px 15px;
+}
+
+.padlist-next{
+  position: fixed;
 }
 
 .musicpad-dashboard {
@@ -44,6 +52,13 @@
 .song-list-dashboard {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
+  overflow-x: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  position: relative;
+}
+
+.song-list-dashboard::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
 }

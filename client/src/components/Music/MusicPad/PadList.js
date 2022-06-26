@@ -42,16 +42,13 @@ export default function PadList({ data, title, source, location, type }) {
       }
 
       return (
-        <div key={itemId}>
-          {firstIndex <= index && index < firstIndex + DEFAULT_RANGE ?
-            <MusicPad type={type} id={itemId}
-              image={item.image}
-              title={item.title}
-              subTitle={item.artist}
-              site={source}
-              page={location}
-            ></MusicPad> : null}
-        </div>
+        <MusicPad key={itemId} type={type} id={itemId}
+          image={item.image}
+          title={item.title}
+          subTitle={item.artist}
+          site={source}
+          page={location}
+        ></MusicPad>
       )
     });
 
@@ -59,12 +56,12 @@ export default function PadList({ data, title, source, location, type }) {
   }, [firstIndex, data])
 
   return (
-    <div>
+    <div className='padlist'>
       <h3 className="padlist-title">{title}</h3>
       <div className={"song-list-" + location}>
-        {firstIndex >= DEFAULT_RANGE ? <NavButton isLeft handler={moveLeft}></NavButton> : null}
+        {/* {firstIndex >= DEFAULT_RANGE ? <NavButton isLeft handler={moveLeft}></NavButton> : null} */}
         {list}
-        {firstIndex + 5 < data.length ? <NavButton handler={moveRight}></NavButton> : null}
+        {/* {firstIndex + 5 < data.length ? <NavButton handler={moveRight}></NavButton> : null} */}
       </div>
     </div>
   )
