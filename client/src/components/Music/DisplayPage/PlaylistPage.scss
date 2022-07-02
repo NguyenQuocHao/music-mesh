@@ -54,8 +54,8 @@
   height: 380px;
 }
 
-.player-other{
-  height: 300px;
+.player-other {
+  height: calc(100vh - 460px);
   overflow-y: scroll;
 }
 
@@ -137,5 +137,14 @@
 
   100% {
     top: 90%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .queue-item {
+    margin: 5px 0px 5px 10px;
+  }
+  .queue-item-right {
+    margin: 30px 20px;
   }
 }
